@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats.core
+package pl.kacper.misterski.rangestats.androidapp.core
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext

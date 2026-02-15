@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats
+package pl.kacper.misterski.rangestats.androidapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
