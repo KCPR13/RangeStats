@@ -7,4 +7,6 @@ plugins {
     alias(libs.plugins.kotlinxSerialization) apply false
     alias(libs.plugins.kmpLibrary) apply false
     alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.android.lint) apply false
+    alias(libs.plugins.ksp) apply false
 }
