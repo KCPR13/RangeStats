@@ -18,6 +18,7 @@ const val DATABASE_NAME = "app_database.db"
     entities = [SettingsEntity::class,
         StatisticsEntity::class],
     autoMigrations = [AutoMigration(from = 1, to = 2)]
+            //spec = Migration1To2Spec::class)]
     )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

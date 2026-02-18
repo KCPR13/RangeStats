@@ -1,3 +1,7 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kmpLibrary)
@@ -15,6 +19,10 @@ kotlin {
         minSdk = libs.versions.android.minSdk.get().toInt()
 
         withHostTestBuilder {
+        }
+
+        androidResources {
+            enable = true
         }
 
         withDeviceTestBuilder {
@@ -70,6 +78,7 @@ kotlin {
                 implementation(libs.androidx.runner)
                 implementation(libs.androidx.core)
                 implementation(libs.androidx.testExt.junit)
+                implementation(libs.androidx.room.testing)
             }
         }
 
@@ -79,7 +88,6 @@ kotlin {
             }
         }
     }
-
 }
 
 dependencies {
