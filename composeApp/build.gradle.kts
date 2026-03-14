@@ -4,14 +4,17 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kmpLibrary)
-
 }
 
 kotlin {
-    androidLibrary {
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
+    android {
         namespace = "pl.kacper.misterski.rangestats.composeapp"
+        compileSdk {
+            version = release(libs.versions.android.compileSdk.get().toInt()) {
+                minorApiLevel = 1
+            }
+        }
+        minSdk = libs.versions.android.minSdk.get().toInt()
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
@@ -24,7 +27,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -33,6 +36,14 @@ kotlin {
             implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
+            implementation(projects.core.domain)
+            implementation(projects.core.ui)
+            implementation(projects.core.data)
+            implementation(projects.feature.session)
+            implementation(projects.feature.history)
+            implementation(projects.feature.ballistics)
+            implementation(projects.feature.settings)
+            implementation(projects.feature.onboarding)
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -46,7 +57,6 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.core)
-
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

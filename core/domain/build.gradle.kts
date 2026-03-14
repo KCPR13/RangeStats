@@ -12,11 +12,11 @@ kotlin {
     android {
         namespace = "pl.kacper.misterski.rangestats.core.domain"
         compileSdk {
-            version = release(36) {
+            version = release(libs.versions.android.compileSdk.get().toInt()) {
                 minorApiLevel = 1
             }
         }
-        minSdk = 30
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         withHostTestBuilder {
         }
