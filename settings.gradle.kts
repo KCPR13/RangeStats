@@ -33,4 +33,11 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":androidApp")
-include(":data:database")
+include(":core:domain")
+include(":core:data")
+include(":core:ui")
+include(":feature:settings")
+include(":feature:onboarding")
+include(":feature:ballistics")
+include(":feature:history")
+include(":feature:session")

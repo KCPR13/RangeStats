@@ -53,6 +53,5 @@ dependencies {
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.core)
     implementation(projects.composeApp)
-    implementation(projects.data.database)
 
 }
