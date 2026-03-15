@@ -1,9 +1,8 @@
 package pl.kacper.misterski.rangestats.core.domain.results
 
-// TODO nullable?
-sealed class AppError(message: String, cause: Throwable? = null) : Exception(message, cause) {
-    class NetworkError(message: String, cause: Throwable? = null) : AppError(message, cause)
-    class DatabaseError(message: String, cause: Throwable? = null) : AppError(message, cause)
-    class VisionError(message: String, cause: Throwable? = null) : AppError(message, cause)
-    class UnknownError(message: String, cause: Throwable? = null) : AppError(message, cause)
+sealed class AppError(cause: Throwable, message: String? = null) : Exception(message, cause) {
+    class NetworkError(cause: Throwable, message: String? = null) : AppError( cause,message)
+    class DatabaseError(cause: Throwable, message: String? = null) : AppError(cause,message)
+    class VisionError(cause: Throwable, message: String? = null) : AppError( cause,message)
+    class UnknownError(cause: Throwable, message: String? = null) : AppError( cause,message)
 }

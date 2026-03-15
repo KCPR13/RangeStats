@@ -1,0 +1,11 @@
+<resources>
+    <string name="login_title">Log in</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Hasło</string>
+    <string name="main_screen_placeholder">Main screen</string>
+    <string name="main_show_login">Show Login</string>
+    <string name="nav_train">Train</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_settings">Ustawienia</string>
+    <string name="nav_about">O aplikacji</string>
+</resources>

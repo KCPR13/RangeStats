@@ -1,0 +1,11 @@
+<resources>
+    <string name="nav_home">Home</string>
+    <string name="nav_history">Historia</string>
+    <string name="nav_new_session">Nowa sesja</string>
+    <string name="nav_ballistics">Balistyka</string>
+    <string name="nav_settings">Ustawienia</string>
+    <string name="weapon_pistol">Pistolet</string>
+    <string name="weapon_revolver">Rewolwer</string>
+    <string name="weapon_shotgun">Strzelba</string>
+    <string name="weapon_rifle">Karabin</string>
+</resources>

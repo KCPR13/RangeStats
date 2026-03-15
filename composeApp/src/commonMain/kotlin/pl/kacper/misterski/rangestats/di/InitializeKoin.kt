@@ -6,6 +6,5 @@ import org.koin.dsl.KoinAppDeclaration
 fun initializeKoin(config: KoinAppDeclaration? = null) {
     startKoin{
         config?.invoke(this)
-        modules( viewModelModule)
     }
 }

@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kmpLibrary)
+    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.android.lint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
 }
 
+//TODO toml bundles
 room {
     schemaDirectory("$projectDir/schemas")
 }
@@ -56,6 +58,13 @@ kotlin {
                 implementation(projects.core.domain)
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.androidx.sqlite.bundled)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.datastore.preferences.core)
                 implementation(libs.koin.core)
             }
         }
@@ -68,6 +77,7 @@ kotlin {
 
         androidMain {
             dependencies {
+                implementation(libs.ktor.client.okhttp)
             }
         }
 
@@ -82,6 +92,7 @@ kotlin {
 
         iosMain {
             dependencies {
+                implementation(libs.ktor.client.darwin)
             }
         }
     }
