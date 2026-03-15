@@ -1,0 +1,40 @@
+package pl.kacper.misterski.rangestats.core.testing.factory
+
+import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
+import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
+import pl.kacper.misterski.rangestats.core.domain.models.Session
+import pl.kacper.misterski.rangestats.core.domain.models.Shot
+
+fun testSession(
+    id: String = "test-session-1",
+    weaponId: String = "test-weapon-1",
+    locationName: String = "Test Range",
+    distanceMeters: Int = 25,
+    targetType: TargetType = TargetType.BULLSEYE,
+    shots: List<Shot> = listOf(testShot(sessionId = id)),
+    startedAt: Long = 1_000_000L,
+    finishedAt: Long? = 1_003_600L,
+    score: Float? = 9.0f,
+): Session = Session(
+    id = id,
+    weaponId = weaponId,
+    locationName = locationName,
+    distanceMeters = distanceMeters,
+    targetType = targetType,
+    shots = shots,
+    startedAt = startedAt,
+    finishedAt = finishedAt,
+    score = score,
+)
+
+fun testShot(
+    id: String = "test-shot-1",
+    sessionId: String = "test-session-1",
+    zoneHit: TargetZone = TargetZone.TEN,
+    timestamp: Long = 1_001_000L,
+): Shot = Shot(
+    id = id,
+    sessionId = sessionId,
+    zoneHit = zoneHit,
+    timestamp = timestamp,
+)

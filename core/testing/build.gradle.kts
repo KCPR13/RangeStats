@@ -50,6 +50,7 @@ kotlin {
                 implementation(projects.core.domain)
                 implementation(projects.core.data)
                 implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.koin.core)
             }
         }
