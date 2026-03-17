@@ -50,15 +50,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.domain)
-                implementation(libs.compose.runtime)
-                implementation(libs.compose.foundation)
-                implementation(libs.compose.material3)
-                implementation(libs.compose.ui)
-                implementation(libs.compose.components.resources)
-                implementation(libs.compose.uiToolingPreview)
+                implementation(libs.bundles.compose)
+                implementation(libs.bundles.lifecycle)
                 implementation(libs.material.icons.extended)
-                implementation(libs.androidx.lifecycle.viewmodelCompose)
-                implementation(libs.androidx.lifecycle.runtimeCompose)
             }
         }
 
@@ -75,9 +69,7 @@ kotlin {
 
         getByName("androidDeviceTest") {
             dependencies {
-                implementation(libs.androidx.runner)
-                implementation(libs.androidx.core)
-                implementation(libs.androidx.testExt.junit)
+                implementation(libs.bundles.android.test)
             }
         }
 

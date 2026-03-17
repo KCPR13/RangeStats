@@ -32,8 +32,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
+            implementation(libs.bundles.koin.android)
         }
         commonMain.dependencies {
             implementation(projects.core.domain)
@@ -44,19 +43,11 @@ kotlin {
             implementation(projects.feature.ballistics)
             implementation(projects.feature.settings)
             implementation(projects.feature.onboarding)
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.bundles.compose)
+            implementation(libs.bundles.lifecycle)
+            implementation(libs.bundles.koin.compose)
             implementation(libs.navigation.compose)
             implementation(libs.material.icons.extended)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

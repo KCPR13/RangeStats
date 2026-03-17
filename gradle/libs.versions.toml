@@ -74,6 +74,44 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 
+[bundles]
+compose = [
+    "compose-runtime",
+    "compose-foundation",
+    "compose-material3",
+    "compose-ui",
+    "compose-components-resources",
+    "compose-uiToolingPreview",
+]
+lifecycle = [
+    "androidx-lifecycle-viewmodelCompose",
+    "androidx-lifecycle-runtimeCompose",
+]
+koin-compose = [
+    "koin-core",
+    "koin-compose",
+    "koin-compose-viewmodel",
+]
+koin-android = [
+    "koin-android",
+    "koin-androidx-compose",
+]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging",
+]
+room = [
+    "androidx-room-runtime",
+    "androidx-sqlite-bundled",
+]
+android-test = [
+    "androidx-runner",
+    "androidx-core",
+    "androidx-testExt-junit",
+]
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

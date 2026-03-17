@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.androidx.room)
 }
 
-//TODO toml bundles
 room {
     schemaDirectory("$projectDir/schemas")
 }
@@ -56,14 +55,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.domain)
-                implementation(libs.androidx.room.runtime)
-                implementation(libs.androidx.sqlite.bundled)
+                implementation(libs.bundles.room)
+                implementation(libs.bundles.ktor)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(libs.ktor.client.logging)
                 implementation(libs.datastore.preferences.core)
                 implementation(libs.koin.core)
             }
@@ -83,9 +78,7 @@ kotlin {
 
         getByName("androidDeviceTest") {
             dependencies {
-                implementation(libs.androidx.runner)
-                implementation(libs.androidx.core)
-                implementation(libs.androidx.testExt.junit)
+                implementation(libs.bundles.android.test)
                 implementation(libs.androidx.room.testing)
             }
         }

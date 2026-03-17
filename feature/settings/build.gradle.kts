@@ -52,17 +52,9 @@ kotlin {
                 implementation(projects.core.domain)
                 implementation(projects.core.ui)
                 implementation(projects.core.data)
-                implementation(libs.compose.runtime)
-                implementation(libs.compose.foundation)
-                implementation(libs.compose.material3)
-                implementation(libs.compose.ui)
-                implementation(libs.compose.components.resources)
-                implementation(libs.compose.uiToolingPreview)
-                implementation(libs.androidx.lifecycle.viewmodelCompose)
-                implementation(libs.androidx.lifecycle.runtimeCompose)
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
-                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.bundles.compose)
+                implementation(libs.bundles.lifecycle)
+                implementation(libs.bundles.koin.compose)
             }
         }
 
@@ -74,16 +66,13 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.koin.android)
-                implementation(libs.koin.androidx.compose)
+                implementation(libs.bundles.koin.android)
             }
         }
 
         getByName("androidDeviceTest") {
             dependencies {
-                implementation(libs.androidx.runner)
-                implementation(libs.androidx.core)
-                implementation(libs.androidx.testExt.junit)
+                implementation(libs.bundles.android.test)
             }
         }
 

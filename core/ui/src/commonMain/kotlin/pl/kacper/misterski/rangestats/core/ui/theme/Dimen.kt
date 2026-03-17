@@ -25,5 +25,6 @@ object Dimen {
     val dp60 = 60.dp
     val dp72 = 72.dp
     val dp76 = 76.dp
+    val dp100 = 100.dp
 }
 
