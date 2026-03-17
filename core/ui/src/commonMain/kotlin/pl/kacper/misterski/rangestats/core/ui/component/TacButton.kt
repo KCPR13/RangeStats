@@ -1,8 +1,8 @@
 package pl.kacper.misterski.rangestats.core.ui.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
+import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorderBright
@@ -27,17 +29,18 @@ fun TacButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(Spacing.dp48),
+        modifier = modifier.height(Dimen.dp56),
         enabled = enabled,
+        shape = RoundedCornerShape(Dimen.dp8),
         colors = ButtonDefaults.buttonColors(
             containerColor = TacAccent,
             contentColor = TacOnAccent,
             disabledContainerColor = TacBgCard,
             disabledContentColor = TacBorderBright,
         ),
-        contentPadding = PaddingValues(horizontal = Spacing.dp24, vertical = Spacing.dp12),
+        contentPadding = PaddingValues(horizontal = Dimen.dp24, vertical = Dimen.dp12),
     ) {
-        Text(text = text)
+        Text(text = text, fontSize = FontSize.sp18)
     }
 }
 
@@ -50,14 +53,14 @@ fun TacSecondaryButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(Spacing.dp48),
+        modifier = modifier.height(Dimen.dp48),
         enabled = enabled,
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = TacTextPrimary,
             disabledContentColor = TacBorderBright,
         ),
-        border = BorderStroke(Spacing.dp1, if (enabled) TacBorderBright else TacBgCard),
-        contentPadding = PaddingValues(horizontal = Spacing.dp24, vertical = Spacing.dp12),
+        border = null,
+        contentPadding = PaddingValues(horizontal = Dimen.dp24, vertical = Dimen.dp12),
     ) {
         Text(text = text)
     }

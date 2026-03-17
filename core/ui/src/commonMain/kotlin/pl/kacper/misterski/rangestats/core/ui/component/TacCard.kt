@@ -8,9 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.PrecisionTrackShapes
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
@@ -30,7 +30,7 @@ fun TacCard(
                 containerColor = TacBgCard,
                 contentColor = TacTextPrimary,
             ),
-            border = BorderStroke(Spacing.dp1, TacBorder),
+            border = BorderStroke(Dimen.dp1, TacBorder),
             content = content,
         )
     } else {
@@ -41,7 +41,7 @@ fun TacCard(
                 containerColor = TacBgCard,
                 contentColor = TacTextPrimary,
             ),
-            border = BorderStroke(Spacing.dp1, TacBorder),
+            border = BorderStroke(Dimen.dp1, TacBorder),
             content = content,
         )
     }

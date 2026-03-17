@@ -3,6 +3,7 @@ package pl.kacper.misterski.rangestats.core.data.datastore
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
@@ -36,10 +37,18 @@ class UserPrefsDataSourceImpl(
         }
     }
 
+    override suspend fun isOnboardingCompleted(): Boolean =
+        dataStore.data.first()[KEY_ONBOARDING_COMPLETED] ?: false
+
+    override suspend fun setOnboardingCompleted() {
+        dataStore.edit { prefs -> prefs[KEY_ONBOARDING_COMPLETED] = true }
+    }
+
     companion object {
         private val KEY_USER_ID = stringPreferencesKey("user_id")
         private val KEY_DISPLAY_NAME = stringPreferencesKey("display_name")
         private val KEY_UNIT_SYSTEM = stringPreferencesKey("unit_system")
         private val KEY_DEFAULT_DISTANCE = intPreferencesKey("default_distance_meters")
+        private val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     }
 }

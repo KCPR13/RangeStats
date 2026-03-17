@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import rangestats.core.ui.generated.resources.Res
 import rangestats.core.ui.generated.resources.weapon_pistol
@@ -52,7 +52,7 @@ private fun WeaponIconAllTypesPreview() {
     RangeStatsTheme {
         Row {
             WeaponType.entries.forEach { type ->
-                WeaponIcon(type = type, modifier = Modifier.padding(Spacing.dp8))
+                WeaponIcon(type = type, modifier = Modifier.padding(Dimen.dp8))
             }
         }
     }

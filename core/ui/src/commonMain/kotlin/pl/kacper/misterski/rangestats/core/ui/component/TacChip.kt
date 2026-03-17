@@ -8,9 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.PrecisionTrackShapes
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccentDim
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -29,7 +29,7 @@ fun TacChip(
         selected = selected,
         onClick = onClick,
         label = { Text(label) },
-        modifier = modifier.height(Spacing.dp32),
+        modifier = modifier.height(Dimen.dp32),
         shape = PrecisionTrackShapes.extraSmall,
         colors = FilterChipDefaults.filterChipColors(
             containerColor = TacBgCard,
@@ -38,7 +38,7 @@ fun TacChip(
             selectedLabelColor = TacOnAccent,
         ),
         border = BorderStroke(
-            width = Spacing.dp1,
+            width = Dimen.dp1,
             color = if (selected) TacAccent else TacBorder,
         ),
     )

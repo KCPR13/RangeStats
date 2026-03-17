@@ -20,3 +20,4 @@ node_modules/
 /arch/
 /IMPLEMENTATION_ORDER.md
 /CLAUDE.md
+/.claude/settings.local.json

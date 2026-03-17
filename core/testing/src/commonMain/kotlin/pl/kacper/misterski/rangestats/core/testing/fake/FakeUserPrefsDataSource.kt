@@ -13,9 +13,17 @@ class FakeUserPrefsDataSource : UserPrefsDataSource {
         defaultDistanceMeters = 25,
     )
 
+    var onboardingCompleted: Boolean = false
+
     override suspend fun getUserProfile(): UserProfile = profile
 
     override suspend fun updateUserProfile(profile: UserProfile) {
         this.profile = profile
+    }
+
+    override suspend fun isOnboardingCompleted(): Boolean = onboardingCompleted
+
+    override suspend fun setOnboardingCompleted() {
+        onboardingCompleted = true
     }
 }

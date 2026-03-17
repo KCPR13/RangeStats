@@ -24,8 +24,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
@@ -68,12 +68,12 @@ fun BottomNavBar(
             onClick = { onNavigate(BottomNavDestination.NewSession) },
             icon = {
                 Box(
-                    modifier = Modifier.size(Spacing.dp56),
+                    modifier = Modifier.size(Dimen.dp56),
                     contentAlignment = Alignment.Center,
                 ) {
                     FloatingActionButton(
                         onClick = { onNavigate(BottomNavDestination.NewSession) },
-                        modifier = Modifier.size(Spacing.dp48),
+                        modifier = Modifier.size(Dimen.dp48),
                         containerColor = TacAccent,
                         contentColor = TacOnAccent,
                         elevation = FloatingActionButtonDefaults.elevation(0.dp),

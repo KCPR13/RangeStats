@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
+import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
+import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.Spacing
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
@@ -33,7 +33,7 @@ fun TacStepper(
     label: String = value.toString(),
 ) {
     Row(
-        modifier = modifier.height(Spacing.dp48),
+        modifier = modifier.height(Dimen.dp48),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         FilledIconButton(
@@ -48,22 +48,22 @@ fun TacStepper(
         ) {
             Text(
                 text = "−",
-                fontSize = 20.sp,
+                fontSize = FontSize.sp20,
                 color = if (value > min) TacAccent else TacBorder,
             )
         }
 
-        Spacer(modifier = Modifier.width(Spacing.dp12))
+        Spacer(modifier = Modifier.width(Dimen.dp12))
 
         Text(
             text = label,
-            modifier = Modifier.width(Spacing.dp72),
+            modifier = Modifier.width(Dimen.dp72),
             color = TacTextPrimary,
             textAlign = TextAlign.Center,
-            fontSize = 16.sp,
+            fontSize = FontSize.sp16,
         )
 
-        Spacer(modifier = Modifier.width(Spacing.dp12))
+        Spacer(modifier = Modifier.width(Dimen.dp12))
 
         FilledIconButton(
             onClick = onIncrement,
@@ -77,7 +77,7 @@ fun TacStepper(
         ) {
             Text(
                 text = "+",
-                fontSize = 20.sp,
+                fontSize = FontSize.sp20,
                 color = if (value < max) TacOnAccent else TacBorder,
             )
         }

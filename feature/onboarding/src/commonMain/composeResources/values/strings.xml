@@ -1,0 +1,43 @@
+<resources>
+    <string name="onboarding_welcome_title">Witaj w\nRangeStats</string>
+    <string name="onboarding_welcome_desc">Analizuj sesje strzeleckie, śledź postępy i obliczaj balistykę — wszystko w jednym miejscu.</string>
+    <string name="onboarding_feature_profile">Profil i arsenał broni</string>
+    <string name="onboarding_feature_ai">Analiza tarcz przez AI</string>
+    <string name="onboarding_feature_stats">Statystyki i postępy</string>
+    <string name="onboarding_btn_start">Zaczynamy</string>
+
+    <string name="onboarding_camera_title">Dostęp do\nkamery</string>
+    <string name="onboarding_camera_desc">Kamera jest niezbędna do fotografowania tarcz i automatycznej analizy przez AI. Zdjęcia nie są nigdzie wysyłane bez Twojej zgody.</string>
+    <string name="onboarding_camera_perm_title">Kamera</string>
+    <string name="onboarding_camera_perm_desc">Zdjęcia tarcz, analiza AI</string>
+    <string name="onboarding_camera_perm_badge">Wymagana</string>
+    <string name="onboarding_btn_allow_camera">Zezwól na kamerę</string>
+
+    <string name="onboarding_location_title">Lokalizacja\nstrzelnic</string>
+    <string name="onboarding_location_desc">Używamy lokalizacji żeby automatycznie wykryć strzelnię podczas sesji. Możesz to włączyć później w ustawieniach.</string>
+    <string name="onboarding_location_perm_title">Lokalizacja</string>
+    <string name="onboarding_location_perm_desc">Wykrywanie strzelnic</string>
+    <string name="onboarding_location_perm_badge">Opcjonalna</string>
+    <string name="onboarding_btn_allow_location">Zezwól na lokalizację</string>
+    <string name="onboarding_btn_not_now">Nie teraz</string>
+
+    <string name="onboarding_profile_title">Twój profil</string>
+    <string name="onboarding_profile_desc">Nadaj sobie nazwę i ustaw domyślne.</string>
+    <string name="onboarding_label_name">Imię / pseudonim</string>
+    <string name="onboarding_label_units">Jednostki</string>
+    <string name="onboarding_unit_metric">Metryczne</string>
+    <string name="onboarding_unit_imperial">Imperialne</string>
+    <string name="onboarding_label_distance">Domyślny dystans</string>
+    <string name="onboarding_distance_hint">możesz zmienić w sesji</string>
+    <string name="onboarding_btn_next">Dalej</string>
+
+    <string name="onboarding_arsenal_title">Twój arsenał</string>
+    <string name="onboarding_arsenal_desc">Dodaj teraz lub uzupełnij później w ustawieniach.</string>
+    <string name="onboarding_btn_back">Wróć</string>
+    <string name="onboarding_btn_done">Gotowe</string>
+    <string name="onboarding_btn_skip">Pomiń</string>
+    <string name="onboarding_arsenal_add_weapon">Dodaj broń</string>
+    <string name="onboarding_arsenal_add_icon">+</string>
+    <string name="onboarding_placeholder_name">Operator</string>
+    <string name="onboarding_placeholder_distance">%d m</string>
+</resources>

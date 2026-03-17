@@ -2,9 +2,15 @@ package pl.kacper.misterski.rangestats.di
 
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import pl.kacper.misterski.rangestats.core.data.di.dataModule
+import pl.kacper.misterski.rangestats.feature.onboarding.di.onboardingModule
 
 fun initializeKoin(config: KoinAppDeclaration? = null) {
-    startKoin{
+    startKoin {
         config?.invoke(this)
+        modules(
+            dataModule,
+            onboardingModule,
+        )
     }
 }
