@@ -9,5 +9,6 @@ sealed class OnboardingAction {
     data object Complete : OnboardingAction()
     data class UpdateDisplayName(val name: String) : OnboardingAction()
     data class SelectUnitSystem(val system: UnitSystem) : OnboardingAction()
-    data class UpdateDistance(val meters: Int) : OnboardingAction()
+    data object IncrementDistance : OnboardingAction()
+    data object DecrementDistance : OnboardingAction()
 }

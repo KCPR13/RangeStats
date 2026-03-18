@@ -15,6 +15,7 @@ kotlin {
             }
         }
         minSdk = libs.versions.android.minSdk.get().toInt()
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 
         withHostTestBuilder {
         }

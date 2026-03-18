@@ -39,5 +39,5 @@
     <string name="onboarding_arsenal_add_weapon">Dodaj broń</string>
     <string name="onboarding_arsenal_add_icon">+</string>
     <string name="onboarding_placeholder_name">Operator</string>
-    <string name="onboarding_placeholder_distance">%d m</string>
+    <string name="onboarding_placeholder_distance">%1$d m</string>
 </resources>

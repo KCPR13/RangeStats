@@ -56,8 +56,6 @@ import rangestats.feature.onboarding.generated.resources.onboarding_profile_titl
 import rangestats.feature.onboarding.generated.resources.onboarding_unit_imperial
 import rangestats.feature.onboarding.generated.resources.onboarding_unit_metric
 
-//TODO hardcoded
-//TODO business logic
 @Composable
 internal fun ProfilePage(
     state: OnboardingUiModel,
@@ -145,11 +143,11 @@ internal fun ProfilePage(
 
         TacStepper(
             value = state.defaultDistanceMeters,
-            onDecrement = { onAction(OnboardingAction.UpdateDistance(state.defaultDistanceMeters - 5)) },
-            onIncrement = { onAction(OnboardingAction.UpdateDistance(state.defaultDistanceMeters + 5)) },
-            min = 5,
-            max = 1000,
-            label = "${state.defaultDistanceMeters} m",
+            onDecrement = { onAction(OnboardingAction.DecrementDistance) },
+            onIncrement = { onAction(OnboardingAction.IncrementDistance) },
+            min = state.minDistance,
+            max = state.maxDistance,
+            label = state.distanceLabel,
         )
 
         Spacer(Modifier.weight(1f))

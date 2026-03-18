@@ -2,6 +2,8 @@ package pl.kacper.misterski.rangestats.core.ui.theme
 
 import androidx.compose.ui.unit.dp
 
+
+//TODO review.md
 object Dimen {
     val dp1 = 1.dp
     val dp2 = 2.dp

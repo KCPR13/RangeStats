@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -20,16 +21,18 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
+import rangestats.core.ui.generated.resources.Res
+import rangestats.core.ui.generated.resources.core_minus
+import rangestats.core.ui.generated.resources.core_plus
 
-//TODO hardcoded
 @Composable
 fun TacStepper(
     value: Int,
     onDecrement: () -> Unit,
     onIncrement: () -> Unit,
+    min: Int,
+    max: Int,
     modifier: Modifier = Modifier,
-    min: Int = 0,
-    max: Int = Int.MAX_VALUE,
     label: String = value.toString(),
 ) {
     Row(
@@ -47,7 +50,7 @@ fun TacStepper(
             ),
         ) {
             Text(
-                text = "−",
+                text = stringResource(Res.string.core_minus),
                 fontSize = FontSize.sp20,
                 color = if (value > min) TacAccent else TacBorder,
             )
@@ -76,7 +79,7 @@ fun TacStepper(
             ),
         ) {
             Text(
-                text = "+",
+                text = stringResource(Res.string.core_plus),
                 fontSize = FontSize.sp20,
                 color = if (value < max) TacOnAccent else TacBorder,
             )
@@ -88,7 +91,11 @@ fun TacStepper(
 @Composable
 private fun TacStepperPreview() {
     RangeStatsTheme {
-        TacStepper(value = 25, onDecrement = {}, onIncrement = {})
+        TacStepper(
+            value = 25, onDecrement = {}, onIncrement = {},
+            min = 0,
+            max = 100,
+        )
     }
 }
 
@@ -96,6 +103,9 @@ private fun TacStepperPreview() {
 @Composable
 private fun TacStepperAtMinPreview() {
     RangeStatsTheme {
-        TacStepper(value = 0, onDecrement = {}, onIncrement = {}, min = 0)
+        TacStepper(
+            value = 0, onDecrement = {}, onIncrement = {}, min = 0,
+            max = 100,
+        )
     }
 }
