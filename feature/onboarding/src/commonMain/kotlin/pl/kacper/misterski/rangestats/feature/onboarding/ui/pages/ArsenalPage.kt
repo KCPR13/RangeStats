@@ -68,7 +68,7 @@ internal fun ArsenalPage(onAction: (OnboardingAction) -> Unit) {
                 .fillMaxWidth()
                 .clip(PrecisionTrackShapes.medium)
                 .border(Dimen.dp1, TacBorder, PrecisionTrackShapes.medium)
-                .clickable { }
+                .clickable { } // TODO
                 .padding(Dimen.dp12),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
@@ -76,20 +76,19 @@ internal fun ArsenalPage(onAction: (OnboardingAction) -> Unit) {
             Text(
                 text = stringResource(Res.string.onboarding_arsenal_add_icon),
                 color = TacTextMuted,
-                fontSize = FontSize.sp14
+                fontSize = FontSize.sp18
             )
             Spacer(Modifier.width(Dimen.dp8))
             Text(
                 text = stringResource(Res.string.onboarding_arsenal_add_weapon),
                 color = TacTextMuted,
-                fontSize = FontSize.sp10,
+                fontSize = FontSize.sp18,
                 letterSpacing = FontSize.sp0_1,
             )
         }
 
         Spacer(Modifier.weight(1f))
 
-        //TODO fix button size
         TacButton(
             text = stringResource(Res.string.onboarding_btn_done),
             onClick = { onAction(OnboardingAction.Complete) },
