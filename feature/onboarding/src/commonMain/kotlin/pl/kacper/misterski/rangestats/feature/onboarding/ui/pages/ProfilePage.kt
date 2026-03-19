@@ -46,7 +46,6 @@ import pl.kacper.misterski.rangestats.feature.onboarding.ui.common.OnboardingTit
 import rangestats.feature.onboarding.generated.resources.Res
 import rangestats.feature.onboarding.generated.resources.ic_ob_profile
 import rangestats.feature.onboarding.generated.resources.onboarding_btn_next
-import rangestats.feature.onboarding.generated.resources.onboarding_distance_hint
 import rangestats.feature.onboarding.generated.resources.onboarding_label_distance
 import rangestats.feature.onboarding.generated.resources.onboarding_label_name
 import rangestats.feature.onboarding.generated.resources.onboarding_label_units
@@ -134,11 +133,6 @@ internal fun ProfilePage(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SectionLabel(stringResource(Res.string.onboarding_label_distance))
-            Text(
-                text = stringResource(Res.string.onboarding_distance_hint),
-                color = TacTextMuted,
-                fontSize = FontSize.sp9,
-            )
         }
 
         TacStepper(
@@ -165,7 +159,7 @@ internal fun ProfilePage(
 @Composable
 private fun SectionLabel(text: String) {
     Text(
-        text = text.uppercase(),
+        text = text,
         color = TacTextMuted,
         fontSize = FontSize.sp9,
         letterSpacing = FontSize.sp0_1,

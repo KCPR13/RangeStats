@@ -23,12 +23,11 @@
 
     <string name="onboarding_profile_title">Twój profil</string>
     <string name="onboarding_profile_desc">Nadaj sobie nazwę i ustaw domyślne.</string>
-    <string name="onboarding_label_name">Imię / pseudonim</string>
-    <string name="onboarding_label_units">Jednostki</string>
+    <string name="onboarding_label_name">IMIĘ / PSUDONIM</string>
+    <string name="onboarding_label_units">JEDNOSTKI</string>
     <string name="onboarding_unit_metric">Metryczne</string>
     <string name="onboarding_unit_imperial">Imperialne</string>
-    <string name="onboarding_label_distance">Domyślny dystans</string>
-    <string name="onboarding_distance_hint">możesz zmienić w sesji</string>
+    <string name="onboarding_label_distance">DOMYŚLNY DYSTANS (możesz zmienić w sesji)</string>
     <string name="onboarding_btn_next">Dalej</string>
 
     <string name="onboarding_arsenal_title">Twój arsenał</string>
