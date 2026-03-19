@@ -4,7 +4,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LineHeight
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
 
@@ -13,9 +14,9 @@ fun OnboardingTitle(text: String) {
     Text(
         text = text,
         color = TacTextPrimary,
-        fontSize = 32.sp,
+        fontSize = FontSize.sp32,
         fontWeight = FontWeight.SemiBold,
-        lineHeight = 40.sp,
+        lineHeight = LineHeight.sp40,
     )
 }
 

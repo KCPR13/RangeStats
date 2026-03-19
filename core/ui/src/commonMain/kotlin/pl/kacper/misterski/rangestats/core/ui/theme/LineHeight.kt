@@ -3,7 +3,7 @@ package pl.kacper.misterski.rangestats.core.ui.theme
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
-object FontSize {
+object LineHeight {
     val sp9: TextUnit = 9.sp
     val sp10: TextUnit = 10.sp
     val sp11: TextUnit = 11.sp
@@ -15,6 +15,5 @@ object FontSize {
     val sp19: TextUnit = 19.sp
     val sp20: TextUnit = 20.sp
     val sp24: TextUnit = 24.sp
-    val sp32: TextUnit = 32.sp
-    val sp0_1: TextUnit = 0.1.sp
+    val sp40: TextUnit = 49.sp
 }

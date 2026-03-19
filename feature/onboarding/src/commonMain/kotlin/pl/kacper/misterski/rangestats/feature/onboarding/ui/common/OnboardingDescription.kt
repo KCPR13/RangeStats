@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LineHeight
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 
@@ -13,7 +14,7 @@ fun OnboardingDescription(text: String) {
         text = text,
         color = TacTextMuted,
         fontSize = FontSize.sp16,
-        lineHeight = FontSize.sp20, // TODO special object?
+        lineHeight = LineHeight.sp20,
     )
 }
 

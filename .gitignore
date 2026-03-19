@@ -21,3 +21,4 @@ node_modules/
 /IMPLEMENTATION_ORDER.md
 /CLAUDE.md
 /.claude/settings.local.json
+/review.sh
