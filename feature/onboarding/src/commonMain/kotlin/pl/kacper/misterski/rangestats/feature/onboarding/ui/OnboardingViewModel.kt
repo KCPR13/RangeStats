@@ -13,7 +13,6 @@ import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.Complete
 import rangestats.feature.onboarding.generated.resources.Res
 import rangestats.feature.onboarding.generated.resources.onboarding_placeholder_distance
 
-//TODO hardcoded
 class OnboardingViewModel(
     private val completeOnboarding: CompleteOnboardingUseCase,
 ) : ViewModel() {
@@ -89,7 +88,6 @@ class OnboardingViewModel(
         viewModelScope.launch {
             completeOnboarding(
                 UserProfile(
-                    id = "default",
                     displayName = state.displayName,
                     units = state.unitSystem,
                     defaultDistanceMeters = state.defaultDistanceMeters,

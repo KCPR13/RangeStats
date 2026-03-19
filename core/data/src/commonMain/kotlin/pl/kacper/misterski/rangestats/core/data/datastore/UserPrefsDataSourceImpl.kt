@@ -19,8 +19,7 @@ class UserPrefsDataSourceImpl(
     override suspend fun getUserProfile(): UserProfile =
         dataStore.data.first().let { prefs ->
             UserProfile(
-                id = prefs[KEY_USER_ID] ?: "default",
-                displayName = prefs[KEY_DISPLAY_NAME] ?: "",
+                displayName = prefs[KEY_DISPLAY_NAME].orEmpty(),
                 units = prefs[KEY_UNIT_SYSTEM]
                     ?.let { runCatching { UnitSystem.valueOf(it) }.getOrNull() }
                     ?: UnitSystem.METRIC,
@@ -30,7 +29,6 @@ class UserPrefsDataSourceImpl(
 
     override suspend fun updateUserProfile(profile: UserProfile) {
         dataStore.edit { prefs ->
-            prefs[KEY_USER_ID] = profile.id
             prefs[KEY_DISPLAY_NAME] = profile.displayName
             prefs[KEY_UNIT_SYSTEM] = profile.units.name
             prefs[KEY_DEFAULT_DISTANCE] = profile.defaultDistanceMeters
@@ -45,7 +43,6 @@ class UserPrefsDataSourceImpl(
     }
 
     companion object {
-        private val KEY_USER_ID = stringPreferencesKey("user_id")
         private val KEY_DISPLAY_NAME = stringPreferencesKey("display_name")
         private val KEY_UNIT_SYSTEM = stringPreferencesKey("unit_system")
         private val KEY_DEFAULT_DISTANCE = intPreferencesKey("default_distance_meters")
