@@ -30,6 +30,7 @@ class OnboardingViewModel(
             is OnboardingAction.SelectUnitSystem -> _uiModel.update { it.copy(unitSystem = action.system) }
             OnboardingAction.DecrementDistance -> decrementDistance()
             OnboardingAction.IncrementDistance -> incrementDistance()
+            OnboardingAction.AddNewWeapon -> TODO()
         }
     }
 

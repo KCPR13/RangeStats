@@ -69,7 +69,7 @@ internal fun ArsenalPage(onAction: (OnboardingAction) -> Unit) {
                 .fillMaxWidth()
                 .clip(PrecisionTrackShapes.medium)
                 .border(Dimen.dp1, TacBorder, PrecisionTrackShapes.medium)
-                .singleClickable { } // TODO
+                .singleClickable { onAction(OnboardingAction.AddNewWeapon) }
                 .padding(Dimen.dp12),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,

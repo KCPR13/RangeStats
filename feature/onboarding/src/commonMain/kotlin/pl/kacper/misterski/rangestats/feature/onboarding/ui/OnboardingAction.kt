@@ -11,4 +11,5 @@ sealed class OnboardingAction {
     data class SelectUnitSystem(val system: UnitSystem) : OnboardingAction()
     data object IncrementDistance : OnboardingAction()
     data object DecrementDistance : OnboardingAction()
+    data object AddNewWeapon : OnboardingAction()
 }
