@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
@@ -88,7 +89,7 @@ internal fun WelcomePage(onAction: (OnboardingAction) -> Unit) {
 
         TacButton(
             text = stringResource(Res.string.onboarding_btn_start),
-            onClick = { onAction(OnboardingAction.NextPage) },
+            onClick = rememberSingleClick { onAction(OnboardingAction.NextPage) },
             modifier = Modifier.fillMaxWidth(),
         )
 

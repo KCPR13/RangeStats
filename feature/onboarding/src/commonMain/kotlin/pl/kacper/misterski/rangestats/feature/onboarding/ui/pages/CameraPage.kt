@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
@@ -65,7 +66,7 @@ internal fun CameraPage(onAction: (OnboardingAction) -> Unit) {
 
         TacButton(
             text = stringResource(Res.string.onboarding_btn_allow_camera),
-            onClick = { onAction(OnboardingAction.NextPage) },
+            onClick = rememberSingleClick { onAction(OnboardingAction.NextPage) },
             modifier = Modifier.fillMaxWidth(),
         )
 

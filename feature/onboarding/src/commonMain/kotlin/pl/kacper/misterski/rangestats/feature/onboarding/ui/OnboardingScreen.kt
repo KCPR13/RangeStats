@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,7 +69,7 @@ fun OnboardingScreen(
             ) {
                 if (state.showBackButton) {
                     IconButton(
-                        onClick = { onAction(OnboardingAction.PreviousPage) },
+                        onClick = rememberSingleClick { onAction(OnboardingAction.PreviousPage) },
                         modifier = Modifier.align(Alignment.CenterStart).padding(start = Dimen.dp16),
                     ) {
                         Icon(

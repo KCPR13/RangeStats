@@ -2,7 +2,6 @@ package pl.kacper.misterski.rangestats.feature.onboarding.ui.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
@@ -37,6 +37,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
+import pl.kacper.misterski.rangestats.core.ui.util.singleClickable
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.OnboardingAction
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.OnboardingPage
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.OnboardingUiModel
@@ -148,7 +149,7 @@ internal fun ProfilePage(
 
         TacButton(
             text = stringResource(Res.string.onboarding_btn_next),
-            onClick = { onAction(OnboardingAction.NextPage) },
+            onClick = rememberSingleClick { onAction(OnboardingAction.NextPage) },
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -183,7 +184,7 @@ private fun UnitChip(
                 color = if (selected) TacAccent else TacBorder,
                 shape = PrecisionTrackShapes.small,
             )
-            .clickable { onClick() }
+            .singleClickable { onClick() }
             .padding(vertical = Dimen.dp8),
         contentAlignment = Alignment.Center,
     ) {

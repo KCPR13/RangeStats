@@ -23,9 +23,6 @@ private const val HOME_ROUTE = "home"
 
 //TODO handle camera and location permissions
 
-// TODO single click
-
-
 @Composable
 fun App() {
     RangeStatsTheme {

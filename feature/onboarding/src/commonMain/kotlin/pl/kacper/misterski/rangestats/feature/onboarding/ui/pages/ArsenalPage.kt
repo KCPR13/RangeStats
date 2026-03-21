@@ -2,7 +2,6 @@ package pl.kacper.misterski.rangestats.feature.onboarding.ui.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +29,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
+import pl.kacper.misterski.rangestats.core.ui.util.singleClickable
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.OnboardingAction
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.common.OnboardingDescription
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.common.OnboardingIconBox
@@ -68,7 +69,7 @@ internal fun ArsenalPage(onAction: (OnboardingAction) -> Unit) {
                 .fillMaxWidth()
                 .clip(PrecisionTrackShapes.medium)
                 .border(Dimen.dp1, TacBorder, PrecisionTrackShapes.medium)
-                .clickable { } // TODO
+                .singleClickable { } // TODO
                 .padding(Dimen.dp12),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
@@ -91,7 +92,7 @@ internal fun ArsenalPage(onAction: (OnboardingAction) -> Unit) {
 
         TacButton(
             text = stringResource(Res.string.onboarding_btn_done),
-            onClick = { onAction(OnboardingAction.Complete) },
+            onClick = rememberSingleClick { onAction(OnboardingAction.Complete) },
             modifier = Modifier.fillMaxWidth(),
         )
 
