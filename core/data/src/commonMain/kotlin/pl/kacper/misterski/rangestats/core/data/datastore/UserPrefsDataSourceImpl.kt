@@ -14,7 +14,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 class UserPrefsDataSourceImpl(
     private val dataStore: DataStore<Preferences>,
 ) : UserPrefsDataSource {
-// TODO check that
+
     @Throws(Exception::class)
     override suspend fun getUserProfile(): UserProfile =
         dataStore.data.first().let { prefs ->
@@ -23,7 +23,7 @@ class UserPrefsDataSourceImpl(
                 units = prefs[KEY_UNIT_SYSTEM]
                     ?.let { runCatching { UnitSystem.valueOf(it) }.getOrNull() }
                     ?: UnitSystem.METRIC,
-                defaultDistanceMeters = prefs[KEY_DEFAULT_DISTANCE] ?: 25,
+                defaultDistanceMeters = prefs[KEY_DEFAULT_DISTANCE] ?: DEFAULT_DISTANCE_METERS,
             )
         }
 
@@ -47,5 +47,7 @@ class UserPrefsDataSourceImpl(
         private val KEY_UNIT_SYSTEM = stringPreferencesKey("unit_system")
         private val KEY_DEFAULT_DISTANCE = intPreferencesKey("default_distance_meters")
         private val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+
+        private const val DEFAULT_DISTANCE_METERS = 25
     }
 }
