@@ -39,9 +39,9 @@ internal fun CameraPage(onAction: (OnboardingAction) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = Dimen.dp20),
-        verticalArrangement = Arrangement.spacedBy(Dimen.dp20)
+        verticalArrangement = Arrangement.spacedBy(Dimen.dp16)
     ) {
-        Spacer(Modifier.height(Dimen.dp40))
+        Spacer(Modifier.height(Dimen.dp20))
 
         OnboardingIconBox(
             painter = painterResource(Res.drawable.ic_ob_camera),

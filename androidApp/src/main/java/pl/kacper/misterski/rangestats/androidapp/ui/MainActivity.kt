@@ -6,13 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import pl.kacper.misterski.rangestats.core.App
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
 
+        windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
         setContent {
             App()
         }

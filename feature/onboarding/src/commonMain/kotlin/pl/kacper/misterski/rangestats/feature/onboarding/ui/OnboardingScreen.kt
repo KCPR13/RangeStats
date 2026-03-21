@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -53,47 +54,49 @@ fun OnboardingScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Dimen.dp56)
-                .padding(top = Dimen.dp20, bottom = Dimen.dp8),
+    Scaffold( modifier = Modifier
+        .fillMaxSize()
+        .background(TacBgDeep)) { paddingValues ->
+        Column(
+            modifier = Modifier.padding(paddingValues),
         ) {
-            if (state.showBackButton) {
-                IconButton(
-                    onClick = { onAction(OnboardingAction.PreviousPage) },
-                    modifier = Modifier.align(Alignment.CenterStart).padding(start = Dimen.dp16),
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
-                        contentDescription = stringResource(Res.string.onboarding_btn_back),
-                        tint = TacAccent,
-                    )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(Dimen.dp56)
+                    .padding(top = Dimen.dp20, bottom = Dimen.dp8),
+            ) {
+                if (state.showBackButton) {
+                    IconButton(
+                        onClick = { onAction(OnboardingAction.PreviousPage) },
+                        modifier = Modifier.align(Alignment.CenterStart).padding(start = Dimen.dp16),
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                            contentDescription = stringResource(Res.string.onboarding_btn_back),
+                            tint = TacAccent,
+                        )
+                    }
                 }
+                PageIndicator(
+                    currentPage = state.currentPage.ordinal,
+                    pageCount = OnboardingUiModel.PAGE_COUNT,
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
-            PageIndicator(
-                currentPage = state.currentPage.ordinal,
-                pageCount = OnboardingUiModel.PAGE_COUNT,
-                modifier = Modifier.align(Alignment.Center),
-            )
-        }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.weight(1f),
-            userScrollEnabled = false,
-        ) { page ->
-            when (OnboardingPage.entries[page]) {
-                OnboardingPage.WELCOME -> WelcomePage(onAction = onAction)
-                OnboardingPage.CAMERA -> CameraPage(onAction = onAction)
-                OnboardingPage.LOCATION -> LocationPage(onAction = onAction)
-                OnboardingPage.PROFILE -> ProfilePage(state = state, onAction = onAction)
-                OnboardingPage.ARSENAL -> ArsenalPage(onAction = onAction)
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f),
+                userScrollEnabled = false,
+            ) { page ->
+                when (OnboardingPage.entries[page]) {
+                    OnboardingPage.WELCOME -> WelcomePage(onAction = onAction)
+                    OnboardingPage.CAMERA -> CameraPage(onAction = onAction)
+                    OnboardingPage.LOCATION -> LocationPage(onAction = onAction)
+                    OnboardingPage.PROFILE -> ProfilePage(state = state, onAction = onAction)
+                    OnboardingPage.ARSENAL -> ArsenalPage(onAction = onAction)
+                }
             }
         }
     }
