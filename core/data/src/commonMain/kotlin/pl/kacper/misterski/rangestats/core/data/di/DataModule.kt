@@ -2,6 +2,8 @@ package pl.kacper.misterski.rangestats.core.data.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.dsl.module
+import pl.kacper.misterski.rangestats.core.data.datasource.permission.PermissionDataSource
+import pl.kacper.misterski.rangestats.core.data.datasource.permission.createPermissionDataSource
 import pl.kacper.misterski.rangestats.core.data.datasource.session.SessionDataSource
 import pl.kacper.misterski.rangestats.core.data.datasource.userprefs.UserPrefsDataSource
 import pl.kacper.misterski.rangestats.core.data.datasource.vision.VisionDataSource
@@ -26,6 +28,7 @@ val dataModule = module {
     single<WeaponDataSource> { WeaponDataSourceImpl(get<AppDatabase>().weaponDao()) }
     single<VisionDataSource> { VisionDataSourceImpl(get()) }
     single<UserPrefsDataSource> { UserPrefsDataSourceImpl(createDataStore()) }
+    single<PermissionDataSource> { createPermissionDataSource() }
     single { HttpClientFactory.create() }
     single { AnthropicVisionApiService(get(), getProperty("anthropic.api.key", "")) }
     // TODO add key

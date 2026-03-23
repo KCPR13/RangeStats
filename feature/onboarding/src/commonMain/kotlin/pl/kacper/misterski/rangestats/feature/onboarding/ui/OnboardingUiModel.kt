@@ -7,10 +7,11 @@ data class OnboardingUiModel(
     val unitSystem: UnitSystem = UnitSystem.METRIC,
     val defaultDistanceMeters: Int = 25,
     val isCompleted: Boolean = false,
-    val showBackButton: Boolean = false,
     val distanceLabel: String = "25 m",
     val minDistance: Int = 5,
     val maxDistance: Int = 1000,
+    val showCameraRequired: Boolean = false,
+    val showCameraPermanentlyDenied: Boolean = false,
 ) {
     companion object {
         val PAGE_COUNT = OnboardingPage.entries.size

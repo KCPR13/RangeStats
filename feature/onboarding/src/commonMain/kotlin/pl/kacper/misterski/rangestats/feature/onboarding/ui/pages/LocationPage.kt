@@ -11,16 +11,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacSecondaryButton
-import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
+import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
+import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.OnboardingAction
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.common.OnboardingDescription
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.common.OnboardingIconBox
@@ -37,7 +37,10 @@ import rangestats.feature.onboarding.generated.resources.onboarding_location_per
 import rangestats.feature.onboarding.generated.resources.onboarding_location_title
 
 @Composable
-internal fun LocationPage(onAction: (OnboardingAction) -> Unit) {
+internal fun LocationPage(
+    onAction: (OnboardingAction) -> Unit,
+    requestLocationPermission: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +71,7 @@ internal fun LocationPage(onAction: (OnboardingAction) -> Unit) {
 
         TacButton(
             text = stringResource(Res.string.onboarding_btn_allow_location),
-            onClick = rememberSingleClick { onAction(OnboardingAction.NextPage) },
+            onClick = rememberSingleClick { requestLocationPermission() },
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -87,7 +90,10 @@ internal fun LocationPage(onAction: (OnboardingAction) -> Unit) {
 private fun LocationPagePreview() {
     RangeStatsTheme {
         Box(modifier = Modifier.background(TacBgDeep)) {
-            LocationPage(onAction = {})
+            LocationPage(
+                onAction = {},
+                requestLocationPermission = {}
+            )
         }
     }
 }

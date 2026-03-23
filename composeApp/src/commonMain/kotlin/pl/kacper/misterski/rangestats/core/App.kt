@@ -21,8 +21,6 @@ import pl.kacper.misterski.rangestats.feature.onboarding.ui.onboarding
 
 private const val HOME_ROUTE = "home"
 
-//TODO handle camera and location permissions
-
 @Composable
 fun App() {
     RangeStatsTheme {

@@ -5,26 +5,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import pl.kacper.misterski.rangestats.core.ui.util.rememberSingleClick
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
@@ -36,13 +29,14 @@ import pl.kacper.misterski.rangestats.feature.onboarding.ui.pages.CameraPage
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.pages.LocationPage
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.pages.ProfilePage
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.pages.WelcomePage
-import rangestats.feature.onboarding.generated.resources.Res
-import rangestats.feature.onboarding.generated.resources.onboarding_btn_back
 
 @Composable
 fun OnboardingScreen(
     state: OnboardingUiModel,
     onAction: (OnboardingAction) -> Unit,
+    requestCameraPermission: () -> Unit,
+    requestLocationPermission: () -> Unit,
+    openAppSettings: () -> Unit,
 ) {
     val pagerState = rememberPagerState(
         initialPage = state.currentPage.ordinal,
@@ -55,37 +49,20 @@ fun OnboardingScreen(
         }
     }
 
-    Scaffold( modifier = Modifier
-        .fillMaxSize()
-        .background(TacBgDeep)) { paddingValues ->
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(TacBgDeep)
+    ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues),
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(Dimen.dp56)
-                    .padding(top = Dimen.dp20, bottom = Dimen.dp8),
-            ) {
-                if (state.showBackButton) {
-                    IconButton(
-                        onClick = rememberSingleClick { onAction(OnboardingAction.PreviousPage) },
-                        modifier = Modifier.align(Alignment.CenterStart).padding(start = Dimen.dp16),
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
-                            contentDescription = stringResource(Res.string.onboarding_btn_back),
-                            tint = TacAccent,
-                        )
-                    }
-                }
-                PageIndicator(
-                    currentPage = state.currentPage.ordinal,
-                    pageCount = OnboardingUiModel.PAGE_COUNT,
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
 
+            PageIndicator(
+                currentPage = state.currentPage.ordinal,
+                pageCount = OnboardingUiModel.PAGE_COUNT,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.weight(1f),
@@ -93,8 +70,18 @@ fun OnboardingScreen(
             ) { page ->
                 when (OnboardingPage.entries[page]) {
                     OnboardingPage.WELCOME -> WelcomePage(onAction = onAction)
-                    OnboardingPage.CAMERA -> CameraPage(onAction = onAction)
-                    OnboardingPage.LOCATION -> LocationPage(onAction = onAction)
+                    OnboardingPage.CAMERA -> CameraPage(
+                        showCameraRequired = state.showCameraRequired,
+                        showCameraPermanentlyDenied = state.showCameraPermanentlyDenied,
+                        requestCameraPermission = requestCameraPermission,
+                        openAppSettings = openAppSettings,
+                    )
+
+                    OnboardingPage.LOCATION -> LocationPage(
+                        onAction = onAction,
+                        requestLocationPermission = requestLocationPermission
+                    )
+
                     OnboardingPage.PROFILE -> ProfilePage(state = state, onAction = onAction)
                     OnboardingPage.ARSENAL -> ArsenalPage(onAction = onAction)
                 }
@@ -138,6 +125,11 @@ private fun PageIndicator(
 @Composable
 private fun OnboardingScreenPreview() {
     RangeStatsTheme {
-        OnboardingScreen(state = OnboardingUiModel(currentPage = OnboardingPage.WELCOME), onAction = {})
+        OnboardingScreen(
+            state = OnboardingUiModel(currentPage = OnboardingPage.WELCOME), onAction = {},
+            requestCameraPermission = { },
+            requestLocationPermission = {},
+            openAppSettings = { }
+        )
     }
 }

@@ -39,4 +39,7 @@
     <string name="onboarding_arsenal_add_icon">+</string>
     <string name="onboarding_placeholder_name">Operator</string>
     <string name="onboarding_placeholder_distance">%1$d m</string>
+    <string name="onboarding_camera_required_desc">Bez tego uprawnienia nie możesz korzystać z RangeStats.</string>
+    <string name="onboarding_camera_permanently_denied_desc">Uprawnienie zostało trwale zablokowane. Włącz dostęp do kamery w ustawieniach aplikacji.</string>
+    <string name="onboarding_btn_open_settings">Otwórz ustawienia</string>
 </resources>
