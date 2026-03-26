@@ -16,10 +16,8 @@ import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
-import pl.kacper.misterski.rangestats.feature.onboarding.ui.ONBOARDING_ROUTE
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.onboarding
-
-private const val HOME_ROUTE = "home"
 
 @Composable
 fun App() {
@@ -28,17 +26,17 @@ fun App() {
 
         NavHost(
             navController = navController,
-            startDestination = ONBOARDING_ROUTE,
+            startDestination = AppRoutes.Onboarding.route,
         ) {
             onboarding(
                 onComplete = {
-                    navController.navigate(HOME_ROUTE) {
-                        popUpTo(ONBOARDING_ROUTE) { inclusive = true }
+                    navController.navigate(AppRoutes.Dashboard.route) {
+                        popUpTo(AppRoutes.Onboarding.route) { inclusive = true }
                     }
                 },
             )
 
-            composable(route = HOME_ROUTE) {
+            composable(route = AppRoutes.Dashboard.route) {
                 HomeScreen()
             }
         }

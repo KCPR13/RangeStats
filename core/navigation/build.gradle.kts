@@ -1,21 +1,19 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kmpLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.android.lint)
 }
 
 kotlin {
+
     android {
-        namespace = "pl.kacper.misterski.rangestats.feature.onboarding"
+        namespace = "pl.kacper.misterski.rangestats.core.navigation"
         compileSdk {
             version = release(libs.versions.android.compileSdk.get().toInt()) {
                 minorApiLevel = 1
             }
         }
         minSdk = libs.versions.android.minSdk.get().toInt()
-        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 
         withHostTestBuilder {
         }
@@ -27,7 +25,7 @@ kotlin {
         }
     }
 
-    val xcfName = "feature:onboardingKit"
+    val xcfName = "core:navigationKit"
 
     iosX64 {
         binaries.framework {
@@ -50,15 +48,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.core.domain)
-                implementation(projects.core.ui)
-                implementation(projects.core.data)
-                implementation(projects.core.navigation)
-                implementation(libs.bundles.compose)
-                implementation(libs.bundles.lifecycle)
-                implementation(libs.bundles.koin.compose)
-                implementation(libs.navigation.compose)
-                implementation(libs.material.icons.extended)
+                implementation(libs.kotlin.stdlib)
             }
         }
 
@@ -70,7 +60,6 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.bundles.koin.android)
             }
         }
 
@@ -85,9 +74,5 @@ kotlin {
             }
         }
     }
-}
 
-dependencies {
-    androidRuntimeClasspath(libs.compose.uiTooling)
 }
-

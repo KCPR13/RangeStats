@@ -38,6 +38,7 @@ kotlin {
             implementation(projects.core.domain)
             implementation(projects.core.ui)
             implementation(projects.core.data)
+            implementation(projects.core.navigation)
             implementation(projects.feature.session)
             implementation(projects.feature.history)
             implementation(projects.feature.ballistics)

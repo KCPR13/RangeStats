@@ -10,15 +10,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.util.rememberCameraPermissionRequester
 import pl.kacper.misterski.rangestats.core.ui.util.rememberLocationPermissionRequester
 import pl.kacper.misterski.rangestats.core.ui.util.rememberOpenAppSettings
 
-//TODO move to routes
-const val ONBOARDING_ROUTE = "onboarding"
-
 fun NavGraphBuilder.onboarding(onComplete: () -> Unit) {
-    composable(route = ONBOARDING_ROUTE) {
+    composable(route = AppRoutes.Onboarding.route) {
         val viewModel = koinViewModel<OnboardingViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
 
