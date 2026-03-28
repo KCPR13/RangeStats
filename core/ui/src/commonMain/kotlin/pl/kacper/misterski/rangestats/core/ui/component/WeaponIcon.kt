@@ -6,7 +6,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -30,23 +29,11 @@ fun WeaponIcon(
     modifier: Modifier = Modifier,
     tint: Color = TacAccent,
 ) {
-    val isPreview = LocalInspectionMode.current
     val (painter, contentDesc) = when (type) {
-        WeaponType.PISTOL -> painterResource(Res.drawable.ic_weapon_pistol) to if (isPreview) "Pistol" else stringResource(
-            Res.string.weapon_pistol
-        )
-
-        WeaponType.REVOLVER -> painterResource(Res.drawable.ic_weapon_revolver) to if (isPreview) "Revolver" else stringResource(
-            Res.string.weapon_revolver
-        )
-
-        WeaponType.SHOTGUN -> painterResource(Res.drawable.ic_weapon_shotgun) to if (isPreview) "Shotgun" else stringResource(
-            Res.string.weapon_shotgun
-        )
-
-        WeaponType.RIFLE -> painterResource(Res.drawable.ic_weapon_rifle) to if (isPreview) "Rifle" else stringResource(
-            Res.string.weapon_rifle
-        )
+        WeaponType.PISTOL -> painterResource(Res.drawable.ic_weapon_pistol) to stringResource(Res.string.weapon_pistol)
+        WeaponType.REVOLVER -> painterResource(Res.drawable.ic_weapon_revolver) to stringResource(Res.string.weapon_revolver)
+        WeaponType.SHOTGUN -> painterResource(Res.drawable.ic_weapon_shotgun) to stringResource(Res.string.weapon_shotgun)
+        WeaponType.RIFLE -> painterResource(Res.drawable.ic_weapon_rifle) to stringResource(Res.string.weapon_rifle)
     }
     Icon(
         painter = painter,

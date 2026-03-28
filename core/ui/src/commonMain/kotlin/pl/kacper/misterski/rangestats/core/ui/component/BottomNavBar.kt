@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
@@ -43,7 +42,6 @@ fun BottomNavBar(
     onNavigate: (BottomNavDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isPreview = LocalInspectionMode.current
     NavigationBar(
         modifier = modifier,
         containerColor = TacBgPanel,
@@ -52,15 +50,15 @@ fun BottomNavBar(
         NavigationBarItem(
             selected = selected == BottomNavDestination.Home,
             onClick = { onNavigate(BottomNavDestination.Home) },
-            icon = { Icon(Icons.Default.Home, contentDescription = if (isPreview) "Home" else stringResource(Res.string.nav_home)) },
-            label = { Text(if (isPreview) "Home" else stringResource(Res.string.nav_home)) },
+            icon = { Icon(Icons.Default.Home, contentDescription = stringResource(Res.string.nav_home)) },
+            label = { Text(stringResource(Res.string.nav_home)) },
             colors = navItemColors(),
         )
         NavigationBarItem(
             selected = selected == BottomNavDestination.History,
             onClick = { onNavigate(BottomNavDestination.History) },
-            icon = { Icon(Icons.Default.History, contentDescription = if (isPreview) "History" else stringResource(Res.string.nav_history)) },
-            label = { Text(if (isPreview) "History" else stringResource(Res.string.nav_history)) },
+            icon = { Icon(Icons.Default.History, contentDescription = stringResource(Res.string.nav_history)) },
+            label = { Text(stringResource(Res.string.nav_history)) },
             colors = navItemColors(),
         )
         NavigationBarItem(
@@ -78,7 +76,7 @@ fun BottomNavBar(
                         contentColor = TacOnAccent,
                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = if (isPreview) "New session" else stringResource(Res.string.nav_new_session))
+                        Icon(Icons.Default.Add, contentDescription = stringResource(Res.string.nav_new_session))
                     }
                 }
             },
@@ -88,15 +86,15 @@ fun BottomNavBar(
         NavigationBarItem(
             selected = selected == BottomNavDestination.Ballistics,
             onClick = { onNavigate(BottomNavDestination.Ballistics) },
-            icon = { Icon(Icons.Default.Calculate, contentDescription = if (isPreview) "Ballistics" else stringResource(Res.string.nav_ballistics)) },
-            label = { Text(if (isPreview) "Ballistics" else stringResource(Res.string.nav_ballistics)) },
+            icon = { Icon(Icons.Default.Calculate, contentDescription = stringResource(Res.string.nav_ballistics)) },
+            label = { Text(stringResource(Res.string.nav_ballistics)) },
             colors = navItemColors(),
         )
         NavigationBarItem(
             selected = selected == BottomNavDestination.Settings,
             onClick = { onNavigate(BottomNavDestination.Settings) },
-            icon = { Icon(Icons.Default.Settings, contentDescription = if (isPreview) "Settings" else stringResource(Res.string.nav_settings)) },
-            label = { Text(if (isPreview) "Settings" else stringResource(Res.string.nav_settings)) },
+            icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(Res.string.nav_settings)) },
+            label = { Text(stringResource(Res.string.nav_settings)) },
             colors = navItemColors(),
         )
     }
