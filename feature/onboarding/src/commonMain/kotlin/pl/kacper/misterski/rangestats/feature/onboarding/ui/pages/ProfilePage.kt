@@ -137,6 +137,7 @@ internal fun ProfilePage(
         }
 
         TacStepper(
+            modifier = Modifier.height(Dimen.dp48),
             value = state.defaultDistanceMeters,
             onDecrement = { onAction(OnboardingAction.DecrementDistance) },
             onIncrement = { onAction(OnboardingAction.IncrementDistance) },

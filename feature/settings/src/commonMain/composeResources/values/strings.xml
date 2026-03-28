@@ -1,0 +1,26 @@
+<resources>
+    <string name="settings_title">USTAWIENIA</string>
+    <string name="settings_subtitle">Konfiguracja aplikacji</string>
+    <string name="settings_section_profile">Profil</string>
+    <string name="settings_edit">Edytuj</string>
+    <string name="settings_section_weapons">Moje bronie</string>
+    <string name="settings_add_weapon">Dodaj broń</string>
+    <string name="settings_section_defaults">Domyślne ustawienia sesji</string>
+    <string name="settings_distance_label">Dystans</string>
+    <string name="settings_units_label">Jednostki</string>
+    <string name="settings_metric">Metryczne</string>
+    <string name="settings_imperial">Imperialne</string>
+    <string name="weapon_list_title">MÓJ ARSENAŁ</string>
+    <string name="weapon_list_subtitle">Zarządzaj broniami</string>
+    <string name="add_weapon_title">NOWA BROŃ</string>
+    <string name="add_weapon_name_label">Nazwa własna</string>
+    <string name="add_weapon_name_placeholder">Wpisz nazwę...</string>
+    <string name="add_weapon_type_label">Rodzaj broni</string>
+    <string name="add_weapon_caliber_label">Kaliber</string>
+    <string name="add_weapon_save">Zapisz broń</string>
+    <string name="add_weapon_custom_caliber">+ własny</string>
+    <string name="weapon_badge_pistol">Pistolet</string>
+    <string name="weapon_badge_revolver">Rewolwer</string>
+    <string name="weapon_badge_shotgun">Strzelba</string>
+    <string name="weapon_badge_rifle">Karabin</string>
+</resources>

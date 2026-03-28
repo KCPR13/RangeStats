@@ -36,7 +36,7 @@ fun TacStepper(
     label: String = value.toString(),
 ) {
     Row(
-        modifier = modifier.height(Dimen.dp48),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         FilledIconButton(
@@ -55,9 +55,6 @@ fun TacStepper(
                 color = if (value > min) TacAccent else TacBorder,
             )
         }
-
-        Spacer(modifier = Modifier.width(Dimen.dp12))
-
         Text(
             text = label,
             modifier = Modifier.width(Dimen.dp72),
@@ -65,8 +62,6 @@ fun TacStepper(
             textAlign = TextAlign.Center,
             fontSize = FontSize.sp16,
         )
-
-        Spacer(modifier = Modifier.width(Dimen.dp12))
 
         FilledIconButton(
             onClick = onIncrement,
