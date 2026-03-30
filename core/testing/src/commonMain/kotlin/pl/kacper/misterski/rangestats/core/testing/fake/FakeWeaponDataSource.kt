@@ -9,20 +9,20 @@ class FakeWeaponDataSource : WeaponDataSource {
 
     override suspend fun getAllWeapons(): List<WeaponEntity> = weapons.toList()
 
-    override suspend fun getWeaponById(id: String): WeaponEntity? =
-        weapons.firstOrNull { it.id == id }
+    override suspend fun getWeaponByName(name: String): WeaponEntity? =
+        weapons.firstOrNull { it.name == name }
 
     override suspend fun insertWeapon(entity: WeaponEntity) {
-        weapons.removeAll { it.id == entity.id }
+        weapons.removeAll { it.name == entity.name }
         weapons.add(entity)
     }
 
     override suspend fun updateWeapon(entity: WeaponEntity) {
-        val index = weapons.indexOfFirst { it.id == entity.id }
+        val index = weapons.indexOfFirst { it.name == entity.name }
         if (index >= 0) weapons[index] = entity
     }
 
-    override suspend fun deleteWeapon(id: String) {
-        weapons.removeAll { it.id == id }
+    override suspend fun deleteWeapon(name: String) {
+        weapons.removeAll { it.name == name }
     }
 }

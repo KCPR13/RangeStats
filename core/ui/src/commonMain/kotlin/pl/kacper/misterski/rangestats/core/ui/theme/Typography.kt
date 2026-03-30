@@ -9,12 +9,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.Font
-import rangestats.core.ui.generated.resources.Res
-import rangestats.core.ui.generated.resources.ibm_plex_sans_medium
-import rangestats.core.ui.generated.resources.ibm_plex_sans_regular
-import rangestats.core.ui.generated.resources.oswald_regular
-import rangestats.core.ui.generated.resources.oswald_semibold
-import rangestats.core.ui.generated.resources.share_tech_mono_regular
+import pl.kacper.misterski.rangestats.core.ui.Res
+import pl.kacper.misterski.rangestats.core.ui.ibm_plex_sans_medium
+import pl.kacper.misterski.rangestats.core.ui.ibm_plex_sans_regular
+import pl.kacper.misterski.rangestats.core.ui.oswald_regular
+import pl.kacper.misterski.rangestats.core.ui.oswald_semibold
+import pl.kacper.misterski.rangestats.core.ui.share_tech_mono_regular
+
 
 @Composable
 private fun oswaldFamily() = FontFamily(

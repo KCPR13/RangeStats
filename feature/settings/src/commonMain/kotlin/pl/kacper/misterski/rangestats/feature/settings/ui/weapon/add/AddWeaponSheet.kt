@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -28,6 +30,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
 import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
+import pl.kacper.misterski.rangestats.core.ui.core_x
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -37,7 +40,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import rangestats.feature.settings.generated.resources.Res
 import rangestats.feature.settings.generated.resources.add_weapon_caliber_label
-import rangestats.feature.settings.generated.resources.add_weapon_custom_caliber
 import rangestats.feature.settings.generated.resources.add_weapon_name_label
 import rangestats.feature.settings.generated.resources.add_weapon_name_placeholder
 import rangestats.feature.settings.generated.resources.add_weapon_save
@@ -47,9 +49,6 @@ import rangestats.feature.settings.generated.resources.weapon_badge_pistol
 import rangestats.feature.settings.generated.resources.weapon_badge_revolver
 import rangestats.feature.settings.generated.resources.weapon_badge_rifle
 import rangestats.feature.settings.generated.resources.weapon_badge_shotgun
-
-//TODO separate file
-private val CALIBER_PRESETS = listOf("9mm Para", ".45 ACP", ".40 S&W", "5.56mm", "7.62mm")
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -89,8 +88,11 @@ fun AddWeaponSheet(
                         .clickable(onClick = onDismiss),
                     contentAlignment = Alignment.Center,
                 ) {
-                    //TODO hardcoded
-                    Text(text = "✕", color = TacTextMuted, fontSize = FontSize.sp12)
+                    Text(
+                        text = stringResource(pl.kacper.misterski.rangestats.core.ui.Res.string.core_x),
+                        color = TacTextMuted,
+                        fontSize = FontSize.sp12
+                    )
                 }
             }
 
@@ -124,19 +126,14 @@ fun AddWeaponSheet(
 
             Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
                 FieldLabel(text = stringResource(Res.string.add_weapon_caliber_label))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
-                    CALIBER_PRESETS.forEach { caliber ->
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
+                    items(state.calibers){ caliber ->
                         TacChip(
-                            label = caliber,
-                            selected = state.selectedCaliber == caliber,
+                            label = caliber.name,
+                            selected = caliber.selected,
                             onClick = { onAction(AddWeaponAction.CaliberSelected(caliber)) },
                         )
                     }
-                    TacChip(
-                        label = stringResource(Res.string.add_weapon_custom_caliber),
-                        selected = state.selectedCaliber !in CALIBER_PRESETS,
-                        onClick = {},
-                    )
                 }
             }
 

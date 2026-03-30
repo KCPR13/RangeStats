@@ -6,6 +6,11 @@ plugins {
     alias(libs.plugins.android.lint)
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "pl.kacper.misterski.rangestats.core.ui"
+}
+
 kotlin {
     android {
         namespace = "pl.kacper.misterski.rangestats.core.ui"
@@ -54,6 +59,7 @@ kotlin {
                 implementation(libs.bundles.compose)
                 implementation(libs.bundles.lifecycle)
                 implementation(libs.material.icons.extended)
+                implementation(libs.navigation.compose)
             }
         }
 

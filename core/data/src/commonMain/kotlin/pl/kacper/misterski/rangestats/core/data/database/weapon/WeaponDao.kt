@@ -12,8 +12,8 @@ interface WeaponDao {
     @Query("SELECT * FROM weapons ORDER BY name ASC")
     suspend fun getAllWeapons(): List<WeaponEntity>
 
-    @Query("SELECT * FROM weapons WHERE id = :id")
-    suspend fun getWeaponById(id: String): WeaponEntity?
+    @Query("SELECT * FROM weapons WHERE name = :name")
+    suspend fun getWeaponByName(name: String): WeaponEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeapon(entity: WeaponEntity)
@@ -21,6 +21,6 @@ interface WeaponDao {
     @Update
     suspend fun updateWeapon(entity: WeaponEntity)
 
-    @Query("DELETE FROM weapons WHERE id = :id")
-    suspend fun deleteWeapon(id: String)
+    @Query("DELETE FROM weapons WHERE name = :name")
+    suspend fun deleteWeapon(name: String)
 }

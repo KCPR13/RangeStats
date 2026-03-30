@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7b4b8523fef8b20ba884c9f70dccdfd0",
+    "identityHash": "1d2ab1fa587a747d15643e81d952303d",
     "entities": [
       {
         "tableName": "sessions",
@@ -100,14 +100,8 @@
       },
       {
         "tableName": "weapons",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `caliber` TEXT NOT NULL, `notes` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `type` TEXT NOT NULL, `caliber` TEXT NOT NULL, `notes` TEXT, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -135,14 +129,14 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "name"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7b4b8523fef8b20ba884c9f70dccdfd0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d2ab1fa587a747d15643e81d952303d')"
     ]
   }
 }

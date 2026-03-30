@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = WeaponEntity.TABLE_NAME)
 data class WeaponEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey
     val name: String,
     val type: String,
     val caliber: String,

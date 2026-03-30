@@ -22,19 +22,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
+import pl.kacper.misterski.rangestats.core.ui.Res
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.ui.nav_ballistics
+import pl.kacper.misterski.rangestats.core.ui.nav_history
+import pl.kacper.misterski.rangestats.core.ui.nav_home
+import pl.kacper.misterski.rangestats.core.ui.nav_new_session
+import pl.kacper.misterski.rangestats.core.ui.nav_settings
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
-import rangestats.core.ui.generated.resources.Res
-import rangestats.core.ui.generated.resources.nav_ballistics
-import rangestats.core.ui.generated.resources.nav_history
-import rangestats.core.ui.generated.resources.nav_home
-import rangestats.core.ui.generated.resources.nav_new_session
-import rangestats.core.ui.generated.resources.nav_settings
 
 @Composable
 fun BottomNavBar(

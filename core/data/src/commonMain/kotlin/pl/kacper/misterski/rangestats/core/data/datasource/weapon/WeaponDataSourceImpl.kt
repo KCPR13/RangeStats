@@ -8,8 +8,8 @@ class WeaponDataSourceImpl(private val dao: WeaponDao) : WeaponDataSource {
     override suspend fun getAllWeapons(): List<WeaponEntity> =
         dao.getAllWeapons()
 
-    override suspend fun getWeaponById(id: String): WeaponEntity? =
-        dao.getWeaponById(id)
+    override suspend fun getWeaponByName(name: String): WeaponEntity? =
+        dao.getWeaponByName(name)
 
     override suspend fun insertWeapon(entity: WeaponEntity) {
         dao.insertWeapon(entity)
@@ -19,7 +19,7 @@ class WeaponDataSourceImpl(private val dao: WeaponDao) : WeaponDataSource {
         dao.updateWeapon(entity)
     }
 
-    override suspend fun deleteWeapon(id: String) {
-        dao.deleteWeapon(id)
+    override suspend fun deleteWeapon(name: String) {
+        dao.deleteWeapon(name)
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,11 +35,12 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
-import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
+import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing.em12
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -61,18 +63,19 @@ import rangestats.feature.settings.generated.resources.settings_section_profile
 import rangestats.feature.settings.generated.resources.settings_section_weapons
 import rangestats.feature.settings.generated.resources.settings_title
 import rangestats.feature.settings.generated.resources.settings_units_label
-import rangestats.feature.settings.generated.resources.weapon_badge_pistol
-import rangestats.feature.settings.generated.resources.weapon_badge_revolver
-import rangestats.feature.settings.generated.resources.weapon_badge_rifle
-import rangestats.feature.settings.generated.resources.weapon_badge_shotgun
 
 @Composable
 fun SettingsScreen(
-    state: SettingsUiModel,
+    model: SettingsUiModel,
     onAction: (SettingsAction) -> Unit,
     onNavigateToWeaponList: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
+    LaunchedEffect(Unit) {
+        onAction(SettingsAction.OnStart)
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -84,16 +87,16 @@ fun SettingsScreen(
             modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
         ) {
-            ProfileSection(profile = state.profile)
+            ProfileSection(model = model)
             HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
             WeaponsSection(
-                weapons = state.weapons,
+                weapons = model.weapons,
                 onAddWeapon = onNavigateToWeaponList,
             )
             HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
             DefaultSessionSection(
-                distanceMeters = state.profile.defaultDistanceMeters,
-                units = state.profile.units,
+                distanceMeters = model.profile.defaultDistanceMeters,
+                units = model.profile.units,
                 onAction = onAction,
             )
         }
@@ -113,16 +116,13 @@ private fun SettingsHeader() {
             color = TacAccent,
             fontSize = FontSize.sp11,
             fontWeight = FontWeight.Medium,
-            letterSpacing = androidx.compose.ui.unit.TextUnit(
-                0.12f,
-                androidx.compose.ui.unit.TextUnitType.Em
-            ), // TODO weird
+            letterSpacing = em12,
         )
     }
 }
 
 @Composable
-private fun ProfileSection(profile: UserProfile) {
+private fun ProfileSection(model: SettingsUiModel) {
     Column {
         SectionLabel(text = stringResource(Res.string.settings_section_profile))
         Spacer(Modifier.height(Dimen.dp8))
@@ -142,7 +142,7 @@ private fun ProfileSection(profile: UserProfile) {
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = profile.displayName.take(2).uppercase(), // TODO business logic
+                    text = model.displayNameAbbreviation,
                     color = TacAccent,
                     fontSize = FontSize.sp18,
                     fontWeight = FontWeight.SemiBold,
@@ -150,7 +150,7 @@ private fun ProfileSection(profile: UserProfile) {
             }
             Spacer(Modifier.width(Dimen.dp14))
             Text(
-                text = profile.displayName,
+                text = model.profile.displayName,
                 color = TacTextPrimary,
                 fontSize = FontSize.sp14,
                 fontWeight = FontWeight.Medium,
@@ -174,7 +174,7 @@ private fun ProfileSection(profile: UserProfile) {
 
 @Composable
 private fun WeaponsSection(
-    weapons: List<Weapon>,
+    weapons: List<SettingsUiModel.WeaponUiModel>,
     onAddWeapon: () -> Unit,
 ) {
     Column {
@@ -196,13 +196,7 @@ private fun WeaponsSection(
 }
 
 @Composable
-private fun WeaponRow(weapon: Weapon) {
-    val badgeText = when (weapon.type) { // TODO business logic
-        WeaponType.PISTOL -> stringResource(Res.string.weapon_badge_pistol)
-        WeaponType.REVOLVER -> stringResource(Res.string.weapon_badge_revolver)
-        WeaponType.SHOTGUN -> stringResource(Res.string.weapon_badge_shotgun)
-        WeaponType.RIFLE -> stringResource(Res.string.weapon_badge_rifle)
-    }
+private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -234,7 +228,7 @@ private fun WeaponRow(weapon: Weapon) {
                 .background(TacBgElevated, RoundedCornerShape(Dimen.dp3))
                 .padding(horizontal = Dimen.dp7, vertical = Dimen.dp2),
         ) {
-            Text(text = badgeText, color = TacTextMuted, fontSize = FontSize.sp9)
+            Text(text = weapon.badgeText, color = TacTextMuted, fontSize = FontSize.sp9)
         }
     }
 }
@@ -317,7 +311,10 @@ private fun DistanceTile(
             onIncrement = onIncrement,
             min = 5,
             max = 300,
-            label = "$distanceMeters m", // TODO hardcoded
+            label = stringResource(
+                pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
+                distanceMeters
+            )
         )
     }
 }
@@ -405,11 +402,21 @@ private fun SectionLabel(text: String) {
 private fun SettingsScreenPreview() {
     RangeStatsTheme {
         SettingsScreen(
-            state = SettingsUiModel(
+            model = SettingsUiModel(
                 profile = UserProfile("Operator", UnitSystem.METRIC, 25),
                 weapons = listOf(
-                    Weapon("1", "Glock 17", WeaponType.PISTOL, "9mm Para", null),
-                    Weapon("2", "AR-15", WeaponType.RIFLE, "5.56mm NATO", null),
+                    SettingsUiModel.WeaponUiModel(
+                        "Glock 17",
+                        "pistol",
+                        WeaponType.PISTOL,
+                        "9mm"
+                    ),
+                    SettingsUiModel.WeaponUiModel(
+                        "AR-15",
+                        "carbine",
+                        WeaponType.RIFLE,
+                        "5.56mm"
+                    ),
                 ),
             ),
             onAction = {},

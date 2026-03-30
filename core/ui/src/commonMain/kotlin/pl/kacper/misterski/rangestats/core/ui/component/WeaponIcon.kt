@@ -10,19 +10,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
+import pl.kacper.misterski.rangestats.core.ui.Res
+import pl.kacper.misterski.rangestats.core.ui.ic_weapon_pistol
+import pl.kacper.misterski.rangestats.core.ui.ic_weapon_revolver
+import pl.kacper.misterski.rangestats.core.ui.ic_weapon_rifle
+import pl.kacper.misterski.rangestats.core.ui.ic_weapon_shotgun
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
-import rangestats.core.ui.generated.resources.Res
-import rangestats.core.ui.generated.resources.ic_weapon_pistol
-import rangestats.core.ui.generated.resources.ic_weapon_revolver
-import rangestats.core.ui.generated.resources.ic_weapon_rifle
-import rangestats.core.ui.generated.resources.ic_weapon_shotgun
-import rangestats.core.ui.generated.resources.weapon_pistol
-import rangestats.core.ui.generated.resources.weapon_revolver
-import rangestats.core.ui.generated.resources.weapon_rifle
-import rangestats.core.ui.generated.resources.weapon_shotgun
+import pl.kacper.misterski.rangestats.core.ui.weapon_pistol
+import pl.kacper.misterski.rangestats.core.ui.weapon_revolver
+import pl.kacper.misterski.rangestats.core.ui.weapon_rifle
+import pl.kacper.misterski.rangestats.core.ui.weapon_shotgun
 
+// TODO mapper?
 @Composable
 fun WeaponIcon(
     type: WeaponType,

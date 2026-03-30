@@ -12,7 +12,7 @@ fun NavGraphBuilder.settings(onNavigateToWeaponList: () -> Unit) {
         val viewModel = koinViewModel<SettingsViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
         SettingsScreen(
-            state = state,
+            model = state,
             onAction = viewModel::onAction,
             onNavigateToWeaponList = onNavigateToWeaponList,
         )

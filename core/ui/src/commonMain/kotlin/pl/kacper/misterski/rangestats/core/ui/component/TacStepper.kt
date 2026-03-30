@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
+import pl.kacper.misterski.rangestats.core.ui.Res
+import pl.kacper.misterski.rangestats.core.ui.core_minus
+import pl.kacper.misterski.rangestats.core.ui.core_plus
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -21,9 +24,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
-import rangestats.core.ui.generated.resources.Res
-import rangestats.core.ui.generated.resources.core_minus
-import rangestats.core.ui.generated.resources.core_plus
 
 @Composable
 fun TacStepper(

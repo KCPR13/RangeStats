@@ -5,7 +5,6 @@ import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 
 fun WeaponEntity.toDomain(): Weapon = Weapon(
-    id = id,
     name = name,
     type = WeaponType.valueOf(type),
     caliber = caliber,
@@ -13,7 +12,6 @@ fun WeaponEntity.toDomain(): Weapon = Weapon(
 )
 
 fun Weapon.toEntity(): WeaponEntity = WeaponEntity(
-    id = id,
     name = name,
     type = type.name,
     caliber = caliber,

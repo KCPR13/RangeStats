@@ -33,6 +33,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
+import pl.kacper.misterski.rangestats.core.ui.core_x
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -45,9 +46,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacRed
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
-import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.AddWeaponAction
-import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.AddWeaponSheet
-import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.AddWeaponUiModel
 import rangestats.feature.settings.generated.resources.Res
 import rangestats.feature.settings.generated.resources.settings_add_weapon
 import rangestats.feature.settings.generated.resources.weapon_badge_pistol
@@ -60,17 +58,13 @@ import rangestats.feature.settings.generated.resources.weapon_list_title
 @Composable
 fun WeaponListScreen(
     state: WeaponListUiModel,
-    addState: AddWeaponUiModel,
     onAction: (WeaponListAction) -> Unit,
-    onAddAction: (AddWeaponAction) -> Unit,
     onBack: () -> Unit,
+    showAddWeapon: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(addState.isSaved) {
-        if (addState.isSaved) {
-            onAction(WeaponListAction.HideAddSheet)
-            onAddAction(AddWeaponAction.Reset)
-        }
+    LaunchedEffect(Unit) {
+        onAction(WeaponListAction.OnStart)
     }
 
     Column(
@@ -93,26 +87,18 @@ fun WeaponListScreen(
             items(state.weapons) { weapon ->
                 WeaponListRow(
                     weapon = weapon,
-                    onDelete = { onAction(WeaponListAction.DeleteWeapon(weapon.id)) },
+                    onDelete = { onAction(WeaponListAction.DeleteWeapon(weapon.name)) },
                 )
 
             }
             item {
                 TacButton(
                     text = stringResource(Res.string.settings_add_weapon),
-                    onClick = { onAction(WeaponListAction.ShowAddSheet) },
+                    onClick = showAddWeapon,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
-    }
-
-    if (state.showAddSheet) {
-        AddWeaponSheet(
-            state = addState,
-            onAction = onAddAction,
-            onDismiss = { onAction(WeaponListAction.HideAddSheet) },
-        )
     }
 }
 
@@ -191,7 +177,11 @@ private fun WeaponListRow(
         }
         Spacer(Modifier.width(Dimen.dp8))
         IconButton(onClick = onDelete) {
-            Text(text = "✕", color = TacRed, fontSize = FontSize.sp14)  //TODO hardcoded
+            Text(
+                text = stringResource(pl.kacper.misterski.rangestats.core.ui.Res.string.core_x),
+                color = TacRed,
+                fontSize = FontSize.sp14
+            )
         }
     }
 }
@@ -203,14 +193,13 @@ private fun WeaponListScreenPreview() {
         WeaponListScreen(
             state = WeaponListUiModel(
                 weapons = listOf(
-                    Weapon("1", "Glock 17", WeaponType.PISTOL, "9mm Para", null),
-                    Weapon("2", "AR-15", WeaponType.RIFLE, "5.56mm NATO", null),
+                    Weapon("Glock 17", WeaponType.PISTOL, "9mm", null),
+                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm", null),
                 ),
             ),
-            addState = AddWeaponUiModel(),
             onAction = {},
-            onAddAction = {},
             onBack = {},
+            showAddWeapon = { }
         )
     }
 }

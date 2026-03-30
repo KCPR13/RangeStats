@@ -20,18 +20,26 @@ class AddWeaponViewModel(
         when (action) {
             is AddWeaponAction.NameChanged -> _uiModel.update { it.copy(name = action.name) }
             is AddWeaponAction.TypeSelected -> _uiModel.update { it.copy(selectedType = action.type) }
-            is AddWeaponAction.CaliberSelected -> _uiModel.update { it.copy(selectedCaliber = action.caliber) }
+            is AddWeaponAction.CaliberSelected -> onCaliberSelected(action.caliber)
             AddWeaponAction.Save -> save()
             AddWeaponAction.Reset -> _uiModel.update { AddWeaponUiModel() }
         }
     }
 
+    private fun onCaliberSelected(caliber: AddWeaponUiModel.CaliberUiModel ) {
+        val calibers =_uiModel.value.calibers.toMutableList()
+        val newCalibers = calibers.map { it.copy(selected = it.name == caliber.name) }
+        _uiModel.update { it.copy(calibers = newCalibers) }
+    }
+
     private fun save() {
         val state = _uiModel.value
         if (state.name.isBlank()) return
+        val selectedCaliber = _uiModel.value.calibers.find { it.selected } ?: return
+
         viewModelScope.launch {
             _uiModel.update { it.copy(isSaving = true) }
-            addWeapon(name = state.name, type = state.selectedType, caliber = state.selectedCaliber)
+            addWeapon(name = state.name, type = state.selectedType, caliber = selectedCaliber.name)
                 .onSuccess { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
                 .onFailure { _uiModel.update { it.copy(isSaving = false) } }
         }

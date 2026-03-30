@@ -12,9 +12,8 @@ import pl.kacper.misterski.rangestats.core.data.datasource.permission.Permission
 import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
 import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
-import rangestats.feature.onboarding.generated.resources.Res
-import rangestats.feature.onboarding.generated.resources.onboarding_placeholder_distance
 
 class OnboardingViewModel(
     private val completeOnboarding: CompleteOnboardingUseCase,
@@ -66,7 +65,7 @@ class OnboardingViewModel(
                 it.copy(
                     defaultDistanceMeters = newDistance,
                     distanceLabel = getString(
-                        Res.string.onboarding_placeholder_distance,
+                        pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
                         newDistance
                     ),
                 )
@@ -81,7 +80,7 @@ class OnboardingViewModel(
                 it.copy(
                     defaultDistanceMeters = newDistance,
                     distanceLabel = getString(
-                        Res.string.onboarding_placeholder_distance,
+                        pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
                         newDistance
                     ),
                 )

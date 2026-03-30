@@ -14,7 +14,6 @@ import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.UpdateUser
 import pl.kacper.misterski.rangestats.feature.settings.ui.settings.SettingsViewModel
 import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.WeaponListViewModel
 import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.AddWeaponViewModel
-// TODO usage
 val settingsModule = module {
     viewModelOf(::SettingsViewModel)
     viewModelOf(::WeaponListViewModel)

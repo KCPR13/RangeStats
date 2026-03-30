@@ -18,23 +18,14 @@ class WeaponListViewModel(
     private val _uiModel = MutableStateFlow(WeaponListUiModel())
     val uiModel: StateFlow<WeaponListUiModel> = _uiModel.asStateFlow()
 
-    init {
-        load() // TODO onAction start
-    }
-
     fun onAction(action: WeaponListAction) {
         when (action) {
             is WeaponListAction.DeleteWeapon -> delete(action.id)
-            WeaponListAction.ShowAddSheet -> _uiModel.update { it.copy(showAddSheet = true) }
-            WeaponListAction.HideAddSheet -> _uiModel.update { it.copy(showAddSheet = false) }
+            WeaponListAction.OnStart -> fetchData()
         }
     }
 
-    fun reload() {
-        load()
-    }
-
-    private fun load() {
+    private fun fetchData() {
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
             val weapons = getWeapons().getOrElse { emptyList() }
@@ -45,7 +36,7 @@ class WeaponListViewModel(
     private fun delete(id: String) {
         viewModelScope.launch {
             deleteWeapon(id)
-            load()
+            fetchData()
         }
     }
 }

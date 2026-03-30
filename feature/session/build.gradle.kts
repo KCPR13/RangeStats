@@ -15,6 +15,7 @@ kotlin {
             }
         }
         minSdk = libs.versions.android.minSdk.get().toInt()
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 
         withHostTestBuilder {
         }
@@ -52,9 +53,11 @@ kotlin {
                 implementation(projects.core.domain)
                 implementation(projects.core.ui)
                 implementation(projects.core.data)
+                implementation(projects.core.navigation)
                 implementation(libs.bundles.compose)
                 implementation(libs.bundles.lifecycle)
                 implementation(libs.bundles.koin.compose)
+                implementation(libs.navigation.compose)
             }
         }
 
@@ -81,4 +84,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    androidRuntimeClasspath(libs.compose.uiTooling)
 }

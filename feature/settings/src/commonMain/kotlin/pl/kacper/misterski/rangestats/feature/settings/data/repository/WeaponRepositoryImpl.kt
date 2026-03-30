@@ -17,7 +17,7 @@ class WeaponRepositoryImpl(
         dataSource.insertWeapon(weapon.toEntity())
     }
 
-    override suspend fun deleteWeapon(id: String) {
-        dataSource.deleteWeapon(id)
+    override suspend fun deleteWeapon(name: String) {
+        dataSource.deleteWeapon(name)
     }
 }

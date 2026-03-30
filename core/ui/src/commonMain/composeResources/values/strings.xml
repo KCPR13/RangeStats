@@ -10,4 +10,7 @@
     <string name="weapon_rifle">Karabin</string>
     <string name="core_minus">-</string>
     <string name="core_plus">+</string>
+    <string name="core_placeholder_distance">%1$d m</string>
+    <string name="core_x">x</string>
+
 </resources>
