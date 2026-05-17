@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = SessionEntity.TABLE_NAME)
 data class SessionEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey val id: String,
     val weaponId: String,
     val locationName: String,
     val distanceMeters: Int,

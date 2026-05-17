@@ -11,6 +11,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Shot
 import pl.kacper.misterski.rangestats.feature.session.currentTimeMillis
 import pl.kacper.misterski.rangestats.feature.session.domain.repository.SessionRepository
 import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class SessionRepositoryImpl(
     private val sessionDataSource: SessionDataSource,
@@ -25,6 +26,7 @@ class SessionRepositoryImpl(
         targetType: TargetType,
     ): Session {
         val session = Session(
+            id = Uuid.random().toString(), // TODO K random?
             weaponId = weaponId,
             locationName = locationName,
             distanceMeters = distanceMeters,

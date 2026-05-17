@@ -7,6 +7,7 @@ import pl.kacper.misterski.rangestats.feature.session.domain.repository.SessionR
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AddShotUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
+import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.StartSessionUseCase
 import pl.kacper.misterski.rangestats.feature.session.ui.active.ActiveSessionViewModel
 import pl.kacper.misterski.rangestats.feature.session.ui.dashboard.DashboardViewModel
@@ -22,5 +23,6 @@ val sessionModule = module {
     factory { AddShotUseCase(get()) }
     factory { AnalyzeTargetUseCase(get()) }
     factory { FinishSessionUseCase(get()) }
+    factory { GetSessionUseCase(get()) }
     single<SessionRepository> { SessionRepositoryImpl(get(), get()) }
 }

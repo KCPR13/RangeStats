@@ -8,9 +8,13 @@ data class AddWeaponUiModel(
     val selectedType: WeaponType = WeaponType.PISTOL,
     val isSaving: Boolean = false,
     val isSaved: Boolean = false,
-    val calibers: List<CaliberUiModel> = Caliber.entries.mapIndexed { index, caliber ->
-        CaliberUiModel(name = caliber.label, selected = index == 0)
-    } // TODO move to VM?
+    val calibers: List<CaliberUiModel> = defaultCalibers,
 ) {
     data class CaliberUiModel(val name: String, val selected: Boolean = false)
+
+    companion object { // TODO should be here?
+        val defaultCalibers: List<CaliberUiModel> = Caliber.entries.mapIndexed { index, caliber ->
+            CaliberUiModel(name = caliber.label, selected = index == 0)
+        }
+    }
 }

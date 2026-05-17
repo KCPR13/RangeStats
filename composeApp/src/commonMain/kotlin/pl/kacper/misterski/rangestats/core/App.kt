@@ -34,7 +34,7 @@ fun App() {
             )
 
             activeSession(
-                onSessionFinished = {},
+                onSessionFinished = { _ -> },
                 onBack = {}
             )
 

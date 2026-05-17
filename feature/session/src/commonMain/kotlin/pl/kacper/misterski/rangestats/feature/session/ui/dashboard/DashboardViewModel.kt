@@ -7,12 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
-
-//TODO UNUSED_PARAMETER
-class DashboardViewModel(
-    @Suppress("UNUSED_PARAMETER") finishSessionUseCase: FinishSessionUseCase,
-) : ViewModel() {
+class DashboardViewModel : ViewModel() {
 
     private val _uiModel = MutableStateFlow(DashboardUiModel())
     val uiModel: StateFlow<DashboardUiModel> = _uiModel.asStateFlow()

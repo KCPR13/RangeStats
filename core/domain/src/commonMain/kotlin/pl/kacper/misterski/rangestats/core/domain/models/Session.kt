@@ -3,6 +3,7 @@ package pl.kacper.misterski.rangestats.core.domain.models
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 
 data class Session(
+    val id: String,
     val weaponId: String,
     val locationName: String,
     val distanceMeters: Int,

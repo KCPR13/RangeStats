@@ -16,12 +16,6 @@ class NewSessionViewModel(
     private val _uiModel = MutableStateFlow(NewSessionUiModel())
     val uiModel: StateFlow<NewSessionUiModel> = _uiModel.asStateFlow()
 
-    private var onSessionStarted: ((String) -> Unit)? = null
-
-    fun setOnSessionStarted(callback: (String) -> Unit) {
-        onSessionStarted = callback
-    }
-
     fun onAction(action: NewSessionAction) {
         when (action) {
             is NewSessionAction.LocationChanged -> updateLocation(action.name)
@@ -31,6 +25,7 @@ class NewSessionViewModel(
             is NewSessionAction.TargetTypeSelected -> _uiModel.update { it.copy(targetType = action.type) }
             NewSessionAction.StartSession -> startNewSession()
             NewSessionAction.Back -> Unit
+            NewSessionAction.NavigationHandled -> _uiModel.update { it.copy(navigateToActiveSession = null) }
         }
     }
 
@@ -39,7 +34,7 @@ class NewSessionViewModel(
     }
 
     private fun selectWeapon(weaponId: String) {
-        _uiModel.update { it.copy(selectedWeaponName = weaponId, canStart = it.locationName.isNotBlank()) }
+        _uiModel.update { it.copy(selectedWeaponName = weaponId, canStart = it.locationName.isNotBlank() && weaponId.isNotBlank()) }
     }
 
     private fun changeDistance(delta: Int) {
@@ -58,7 +53,7 @@ class NewSessionViewModel(
                 distanceMeters = state.distanceMeters,
                 targetType = state.targetType,
             ).onSuccess { session ->
-               // onSessionStarted?.invoke(session.id) TODO whats that?
+                _uiModel.update { it.copy(isLoading = false, navigateToActiveSession = session.id) }
             }.onFailure {
                 _uiModel.update { it.copy(isLoading = false) }
             }

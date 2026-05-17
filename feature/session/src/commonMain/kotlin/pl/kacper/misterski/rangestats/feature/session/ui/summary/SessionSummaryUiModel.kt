@@ -14,4 +14,5 @@ data class SessionSummaryUiModel(
     val totalMisses: Int = 0,
     val zoneDistribution: Map<TargetZone, Int> = emptyMap(),
     val isLoading: Boolean = false,
+    val navigateToDashboard: Boolean = false,
 )

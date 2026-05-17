@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -195,22 +193,19 @@ private fun WeaponList(
     selectedWeaponName: String?,
     onSelect: (String) -> Unit,
 ) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
-        items(weapons){weapon ->
+    Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
+        weapons.forEach { weapon ->
             WeaponRow(
                 weapon = weapon,
                 selected = weapon.name == selectedWeaponName,
                 onClick = { onSelect(weapon.name) },
             )
-
         }
-        item {
-            Text(
-                text = stringResource(Res.string.new_session_add_weapon),
-                color = TacAccent,
-                fontSize = FontSize.sp10,
-            )
-        }
+        Text(
+            text = stringResource(Res.string.new_session_add_weapon),
+            color = TacAccent,
+            fontSize = FontSize.sp10,
+        )
     }
 }
 

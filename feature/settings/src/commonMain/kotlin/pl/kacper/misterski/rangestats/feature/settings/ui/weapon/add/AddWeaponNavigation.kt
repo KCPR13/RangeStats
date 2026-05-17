@@ -11,7 +11,7 @@ import pl.kacper.misterski.rangestats.core.ui.bottom_sheet.bottomSheet
 
 fun NavGraphBuilder.addWeapon(onBack: () -> Unit) {
 
-    bottomSheet(route = AppRoutes.WeaponList.route) {
+    bottomSheet(route = AppRoutes.AddWeapon.route) {
         val viewModel = koinViewModel<AddWeaponViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
         AddWeaponSheet(

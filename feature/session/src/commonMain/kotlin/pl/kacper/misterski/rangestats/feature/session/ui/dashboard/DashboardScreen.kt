@@ -129,7 +129,7 @@ private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
     val avgScoreStr = if (state.avgScore > 0f) "${state.avgScore.toInt()}%" else "—"
     val bestScoreStr = if (state.bestScore > 0f) "${state.bestScore.toInt()}%" else "—"
     val shotsStr = if (state.totalShots >= 1000) {
-        "${String.format("%.1f", state.totalShots / 1000f)}k"
+        "${"%.1f".format(state.totalShots / 1000f)}k"
     } else {
         state.totalShots.toString()
     }
@@ -362,6 +362,7 @@ private fun DashboardScreenPreview() {
                 totalShots = 1200,
                 bestScore = 98f,
                 lastSession = Session(
+                    id = "preview",
                     weaponId = "w1",
                     locationName = "Strzelnica Łódź",
                     distanceMeters = 25,

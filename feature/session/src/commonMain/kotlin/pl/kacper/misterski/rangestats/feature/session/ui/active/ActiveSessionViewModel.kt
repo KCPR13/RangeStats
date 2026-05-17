@@ -10,39 +10,39 @@ import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
+import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 
 class ActiveSessionViewModel(
     private val analyzeTarget: AnalyzeTargetUseCase,
     private val finishSession: FinishSessionUseCase,
+    private val getSession: GetSessionUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(ActiveSessionUiModel())
     val uiModel: StateFlow<ActiveSessionUiModel> = _uiModel.asStateFlow()
-
-    //TODO K why?
-    private var onSessionFinished: ((String) -> Unit)? = null
-
-    private fun init(sessionId: String, locationName: String, distanceMeters: Int, caliber: String) { // TODO usage? onStart
-        _uiModel.update {
-            it.copy(
-                sessionId = sessionId,
-                locationName = locationName,
-                distanceMeters = distanceMeters,
-                caliber = caliber,
-            )
-        }
-    }
-
-    fun setOnSessionFinished(callback: (String) -> Unit) {
-        onSessionFinished = callback
-    }
 
     fun onAction(action: ActiveSessionAction) {
         when (action) {
             is ActiveSessionAction.AnalyzeTarget -> analyze(action.imageBytes)
             ActiveSessionAction.FinishSession -> finish()
             ActiveSessionAction.Back -> Unit
-            ActiveSessionAction.OnStart -> init()
+            is ActiveSessionAction.OnStart -> loadSession(action.sessionId)
+            ActiveSessionAction.NavigationHandled -> _uiModel.update { it.copy(navigateToSummary = null) }
+        }
+    }
+
+    private fun loadSession(sessionId: String) {
+        viewModelScope.launch {
+            getSession(sessionId).onSuccess { session ->
+                _uiModel.update {
+                    it.copy(
+                        sessionId = sessionId,
+                        locationName = session.locationName,
+                        distanceMeters = session.distanceMeters,
+                        caliber = session.weaponId,
+                    )
+                }
+            }
         }
     }
 
@@ -92,7 +92,7 @@ class ActiveSessionViewModel(
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
             finishSession(sessionId)
-                .onSuccess { onSessionFinished?.invoke(sessionId) }
+                .onSuccess { _uiModel.update { it.copy(isLoading = false, navigateToSummary = sessionId) } }
                 .onFailure { _uiModel.update { it.copy(isLoading = false) } }
         }
     }

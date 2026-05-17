@@ -8,6 +8,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Session
 import pl.kacper.misterski.rangestats.core.domain.models.Shot
 
 fun SessionEntity.toDomain(shots: List<ShotEntity>): Session = Session(
+    id = id,
     weaponId = weaponId,
     locationName = locationName,
     distanceMeters = distanceMeters,
@@ -19,6 +20,7 @@ fun SessionEntity.toDomain(shots: List<ShotEntity>): Session = Session(
 )
 
 fun Session.toEntity(): SessionEntity = SessionEntity(
+    id = id,
     weaponId = weaponId,
     locationName = locationName,
     distanceMeters = distanceMeters,

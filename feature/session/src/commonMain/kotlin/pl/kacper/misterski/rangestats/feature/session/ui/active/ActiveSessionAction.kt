@@ -4,5 +4,6 @@ sealed class ActiveSessionAction {
     data class AnalyzeTarget(val imageBytes: ByteArray) : ActiveSessionAction()
     data object FinishSession : ActiveSessionAction()
     data object Back : ActiveSessionAction()
-    data object OnStart : ActiveSessionAction()
+    data class OnStart(val sessionId: String) : ActiveSessionAction()
+    data object NavigationHandled : ActiveSessionAction()
 }
