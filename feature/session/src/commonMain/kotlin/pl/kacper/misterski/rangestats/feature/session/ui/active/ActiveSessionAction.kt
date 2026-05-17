@@ -1,0 +1,8 @@
+package pl.kacper.misterski.rangestats.feature.session.ui.active
+
+sealed class ActiveSessionAction {
+    data class AnalyzeTarget(val imageBytes: ByteArray) : ActiveSessionAction()
+    data object FinishSession : ActiveSessionAction()
+    data object Back : ActiveSessionAction()
+    data object OnStart : ActiveSessionAction()
+}

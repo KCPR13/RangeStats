@@ -1,0 +1,10 @@
+package pl.kacper.misterski.rangestats.feature.session.domain.usecase
+
+import pl.kacper.misterski.rangestats.core.domain.models.Session
+import pl.kacper.misterski.rangestats.feature.session.domain.repository.SessionRepository
+
+class FinishSessionUseCase(private val repository: SessionRepository) {
+    suspend operator fun invoke(sessionId: String): Result<Session> = runCatching {
+        repository.finishSession(sessionId)
+    }
+}

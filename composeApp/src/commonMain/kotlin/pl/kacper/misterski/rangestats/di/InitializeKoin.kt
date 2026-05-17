@@ -4,6 +4,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import pl.kacper.misterski.rangestats.core.data.di.dataModule
 import pl.kacper.misterski.rangestats.feature.onboarding.di.onboardingModule
+import pl.kacper.misterski.rangestats.feature.session.di.sessionModule
 import pl.kacper.misterski.rangestats.feature.settings.di.settingsModule
 
 fun initializeKoin(config: KoinAppDeclaration? = null) {
@@ -12,7 +13,8 @@ fun initializeKoin(config: KoinAppDeclaration? = null) {
         modules(
             dataModule,
             onboardingModule,
-            settingsModule
+            settingsModule,
+            sessionModule
         )
     }
 }
