@@ -10,4 +10,10 @@ data class DashboardUiModel(
     val lastSession: Session? = null,
     val recentScores: List<Float> = emptyList(),
     val isLoading: Boolean = false,
-)
+) {
+    val shotsLabel: String get() = if (totalShots >= 1000) {
+        "${totalShots / 1000}.${(totalShots % 1000) / 100}k"
+    } else {
+        totalShots.toString()
+    }
+}

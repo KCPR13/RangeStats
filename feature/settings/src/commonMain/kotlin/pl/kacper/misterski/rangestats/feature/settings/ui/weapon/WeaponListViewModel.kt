@@ -27,16 +27,20 @@ class WeaponListViewModel(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _uiModel.update { it.copy(isLoading = true) }
-            val weapons = getWeapons().getOrElse { emptyList() }
-            _uiModel.update { it.copy(isLoading = false, weapons = weapons) }
+            loadWeapons()
         }
     }
 
     private fun delete(id: String) {
         viewModelScope.launch {
             deleteWeapon(id)
-            fetchData()
+            loadWeapons()
         }
+    }
+
+    private suspend fun loadWeapons() {
+        _uiModel.update { it.copy(isLoading = true) }
+        val weapons = getWeapons().getOrElse { emptyList() }
+        _uiModel.update { it.copy(isLoading = false, weapons = weapons) }
     }
 }

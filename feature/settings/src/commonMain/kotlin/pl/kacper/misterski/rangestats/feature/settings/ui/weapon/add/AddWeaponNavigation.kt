@@ -1,6 +1,7 @@
 package pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add
 
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,6 +15,14 @@ fun NavGraphBuilder.addWeapon(onBack: () -> Unit) {
     bottomSheet(route = AppRoutes.AddWeapon.route) {
         val viewModel = koinViewModel<AddWeaponViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
+
+        LaunchedEffect(state.isSaved) {
+            if (state.isSaved) {
+                viewModel.onAction(AddWeaponAction.Reset)
+                onBack()
+            }
+        }
+
         AddWeaponSheet(
             state = state,
             onAction = viewModel::onAction,

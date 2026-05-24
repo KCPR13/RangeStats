@@ -12,7 +12,7 @@ import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponEntity
 
 @Database(
     entities = [SessionEntity::class, ShotEntity::class, WeaponEntity::class],
-    version = 2,
+    version = 1,
     exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

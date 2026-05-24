@@ -41,8 +41,11 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacRed
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
 import rangestats.feature.session.generated.resources.Res
+import rangestats.feature.session.generated.resources.common_nav_back
+import rangestats.feature.session.generated.resources.summary_location_today_format
 import rangestats.feature.session.generated.resources.summary_save
 import rangestats.feature.session.generated.resources.summary_score_label
+import rangestats.feature.session.generated.resources.summary_session_meta_format
 import rangestats.feature.session.generated.resources.summary_share
 import rangestats.feature.session.generated.resources.summary_stat_hits
 import rangestats.feature.session.generated.resources.summary_stat_misses
@@ -100,7 +103,7 @@ private fun SummaryHeader(onBack: () -> Unit, state: SessionSummaryUiModel) {
                 .clickable(onClick = onBack),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "‹", color = TacTextMuted, fontSize = FontSize.sp18) // TODO hardcoded
+            Text(text = stringResource(Res.string.common_nav_back), color = TacTextMuted, fontSize = FontSize.sp18)
         }
         Column {
             Text(
@@ -114,7 +117,7 @@ private fun SummaryHeader(onBack: () -> Unit, state: SessionSummaryUiModel) {
                 ),
             )
             Text(
-                text = "${state.locationName} · dziś", // TODO hardcoded
+                text = stringResource(Res.string.summary_location_today_format, state.locationName),
                 color = TacTextMuted,
                 fontSize = FontSize.sp13,
             )
@@ -133,7 +136,7 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "${state.score.toInt()}%",// TODO hardcoded
+            text = if (state.score != null) "${state.score.toInt()}%" else "—", // TODO hardcoded
             color = TacAccent,
             fontSize = FontSize.sp48,
             fontWeight = FontWeight.Bold,
@@ -150,7 +153,7 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
-            text = "${state.caliber} · ${state.distanceMeters}m · ${state.durationMinutes} min", // TODO hardcoded
+            text = stringResource(Res.string.summary_session_meta_format, state.caliber, state.distanceMeters, state.durationMinutes),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
         )

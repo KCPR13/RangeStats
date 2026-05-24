@@ -7,12 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import pl.kacper.misterski.rangestats.core.data.datasource.permission.PermissionDataSource
 import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
 import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
-import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
 
 class OnboardingViewModel(
@@ -59,33 +57,15 @@ class OnboardingViewModel(
     }
 
     private fun incrementDistance() {
-        val newDistance = _uiModel.value.defaultDistanceMeters.plus(DISTANCE_STEP_IN_METERS)
-        viewModelScope.launch {
-            _uiModel.update {
-                it.copy(
-                    defaultDistanceMeters = newDistance,
-                    distanceLabel = getString(
-                        pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
-                        newDistance
-                    ),
-                )
-            }
-        }
+        val current = _uiModel.value
+        val newDistance = (current.defaultDistanceMeters + DISTANCE_STEP_IN_METERS).coerceIn(current.minDistance, current.maxDistance)
+        _uiModel.update { it.copy(defaultDistanceMeters = newDistance, distanceLabel = "$newDistance m") }
     }
 
     private fun decrementDistance() {
-        val newDistance = _uiModel.value.defaultDistanceMeters.minus(DISTANCE_STEP_IN_METERS)
-        viewModelScope.launch {
-            _uiModel.update {
-                it.copy(
-                    defaultDistanceMeters = newDistance,
-                    distanceLabel = getString(
-                        pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
-                        newDistance
-                    ),
-                )
-            }
-        }
+        val current = _uiModel.value
+        val newDistance = (current.defaultDistanceMeters - DISTANCE_STEP_IN_METERS).coerceIn(current.minDistance, current.maxDistance)
+        _uiModel.update { it.copy(defaultDistanceMeters = newDistance, distanceLabel = "$newDistance m") }
     }
 
     private fun advancePage() {

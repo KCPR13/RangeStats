@@ -33,8 +33,8 @@ class NewSessionViewModel(
         _uiModel.update { it.copy(locationName = name, canStart = name.isNotBlank() && it.selectedWeaponName != null) }
     }
 
-    private fun selectWeapon(weaponId: String) {
-        _uiModel.update { it.copy(selectedWeaponName = weaponId, canStart = it.locationName.isNotBlank() && weaponId.isNotBlank()) }
+    private fun selectWeapon(weaponName: String) {
+        _uiModel.update { it.copy(selectedWeaponName = weaponName, canStart = it.locationName.isNotBlank() && weaponName.isNotBlank()) }
     }
 
     private fun changeDistance(delta: Int) {

@@ -3,7 +3,6 @@ package pl.kacper.misterski.rangestats.core.data.datasource.permission
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import org.koin.mp.KoinPlatform
 import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
@@ -26,7 +25,7 @@ private class AndroidPermissionDataSource(
         return if (ContextCompat.checkSelfPermission(context, manifestPermission) == PackageManager.PERMISSION_GRANTED) {
             PermissionStatus.GRANTED
         } else {
-            PermissionStatus.NOT_DETERMINED
+            PermissionStatus.DENIED
         }
     }
 }

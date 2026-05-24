@@ -42,14 +42,21 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.session.generated.resources.Res
+import rangestats.feature.session.generated.resources.common_percent_format
+import rangestats.feature.session.generated.resources.dashboard_app_logo
+import rangestats.feature.session.generated.resources.dashboard_distance_m_format
+import rangestats.feature.session.generated.resources.dashboard_empty_dash
 import rangestats.feature.session.generated.resources.dashboard_history_link
 import rangestats.feature.session.generated.resources.dashboard_last_session
+import rangestats.feature.session.generated.resources.dashboard_progress_label
+import rangestats.feature.session.generated.resources.dashboard_score_label
 import rangestats.feature.session.generated.resources.dashboard_stat_avg_score
 import rangestats.feature.session.generated.resources.dashboard_stat_best
 import rangestats.feature.session.generated.resources.dashboard_stat_sessions
 import rangestats.feature.session.generated.resources.dashboard_stat_shots
 import rangestats.feature.session.generated.resources.dashboard_subtitle
 import rangestats.feature.session.generated.resources.dashboard_title
+import rangestats.feature.session.generated.resources.dashboard_total_suffix
 
 @Composable
 fun DashboardScreen(
@@ -115,7 +122,7 @@ private fun DashboardHeader() {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "RS", //TODO hardcoded
+                text = stringResource(Res.string.dashboard_app_logo),
                 color = TacAccent,
                 fontSize = FontSize.sp13,
                 fontWeight = FontWeight.Medium,
@@ -128,11 +135,7 @@ private fun DashboardHeader() {
 private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
     val avgScoreStr = if (state.avgScore > 0f) "${state.avgScore.toInt()}%" else "—"
     val bestScoreStr = if (state.bestScore > 0f) "${state.bestScore.toInt()}%" else "—"
-    val shotsStr = if (state.totalShots >= 1000) {
-        "${"%.1f".format(state.totalShots / 1000f)}k"
-    } else {
-        state.totalShots.toString()
-    }
+    val shotsStr = state.shotsLabel
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -145,7 +148,7 @@ private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
             StatCard(
                 label = stringResource(Res.string.dashboard_stat_sessions),
                 value = state.totalSessions.toString(),
-                valueSuffix = " łącznie", // TODO hardcoded
+                valueSuffix = stringResource(Res.string.dashboard_total_suffix),
                 delta = null,
             )
             StatCard(
@@ -231,7 +234,7 @@ private fun StatCard(
 private fun ProgressSection() {
     Column {
         Text(
-            text = "Postępy — ostatnie 7 sesji", // TODO hardcoded
+            text = stringResource(Res.string.dashboard_progress_label),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
             letterSpacing = androidx.compose.ui.unit.TextUnit(
@@ -249,7 +252,7 @@ private fun ProgressSection() {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "—",  // TODO hardcoded
+                text = stringResource(Res.string.dashboard_empty_dash),
                 color = TacTextMuted,
                 fontSize = FontSize.sp12,
                 textAlign = TextAlign.Center,
@@ -326,7 +329,7 @@ private fun LastSessionCard(session: Session) {
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = "${session.distanceMeters}m", // TODO hardcoded
+                text = stringResource(Res.string.dashboard_distance_m_format, session.distanceMeters),
                 color = TacTextMuted,
                 fontSize = FontSize.sp11,
             )
@@ -335,14 +338,14 @@ private fun LastSessionCard(session: Session) {
         if (score != null) {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    text = "${score.toInt()}%", // TODO hardcoded
+                    text = stringResource(Res.string.common_percent_format, score.toInt()),
                     color = TacAccent,
                     fontSize = FontSize.sp20,
                     fontWeight = FontWeight.SemiBold,
                     lineHeight = FontSize.sp20,
                 )
                 Text(
-                    text = "wynik", // TODO hardcoded
+                    text = stringResource(Res.string.dashboard_score_label),
                     color = TacTextMuted,
                     fontSize = FontSize.sp10,
                 )

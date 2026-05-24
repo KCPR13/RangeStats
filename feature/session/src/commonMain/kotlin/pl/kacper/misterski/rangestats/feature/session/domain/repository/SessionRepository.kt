@@ -17,7 +17,7 @@ interface SessionRepository {
 
     suspend fun analyzeTarget(imageBytes: ByteArray): Result<AnalysisResult>
 
-    suspend fun finishSession(sessionId: String): Session
+    suspend fun finishSession(sessionId: String): Result<Session>
 
     suspend fun getSession(sessionId: String): Session?
 }

@@ -12,7 +12,7 @@ fun SessionEntity.toDomain(shots: List<ShotEntity>): Session = Session(
     weaponId = weaponId,
     locationName = locationName,
     distanceMeters = distanceMeters,
-    targetType = TargetType.valueOf(targetType),
+    targetType = TargetType.entries.find { it.name == targetType } ?: TargetType.ISSF_ROUND,
     shots = shots.map { it.toDomain() },
     startedAt = startedAt,
     finishedAt = finishedAt,
@@ -33,7 +33,7 @@ fun Session.toEntity(): SessionEntity = SessionEntity(
 fun ShotEntity.toDomain(): Shot = Shot(
     id = id,
     sessionId = sessionId,
-    zoneHit = TargetZone.valueOf(zoneHit),
+    zoneHit = TargetZone.entries.find { it.name == zoneHit } ?: TargetZone.MISS,
     timestamp = timestamp,
 )
 

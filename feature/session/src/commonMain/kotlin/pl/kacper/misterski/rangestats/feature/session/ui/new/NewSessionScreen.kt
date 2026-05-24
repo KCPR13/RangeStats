@@ -44,9 +44,13 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.session.generated.resources.Res
+import rangestats.feature.session.generated.resources.common_checkmark
+import rangestats.feature.session.generated.resources.common_nav_back
 import rangestats.feature.session.generated.resources.new_session_add_weapon
 import rangestats.feature.session.generated.resources.new_session_distance_label
+import rangestats.feature.session.generated.resources.new_session_distance_label_format
 import rangestats.feature.session.generated.resources.new_session_location_label
+import rangestats.feature.session.generated.resources.new_session_location_placeholder
 import rangestats.feature.session.generated.resources.new_session_start
 import rangestats.feature.session.generated.resources.new_session_subtitle
 import rangestats.feature.session.generated.resources.new_session_target_label
@@ -78,7 +82,7 @@ fun NewSessionScreen(
                 TacTextField(
                     value = state.locationName,
                     onValueChange = { onAction(NewSessionAction.LocationChanged(it)) },
-                    placeholder = "Strzelnica...", // TODO hardcoded
+                    placeholder = stringResource(Res.string.new_session_location_placeholder),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -98,7 +102,7 @@ fun NewSessionScreen(
                     onIncrement = { onAction(NewSessionAction.IncrementDistance) },
                     min = 5, //  TODO K hardcoded
                     max = 300,
-                    label = "${state.distanceMeters} m", // TODO hardcoded
+                    label = stringResource(Res.string.new_session_distance_label_format, state.distanceMeters),
                 )
             }
             HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
@@ -146,7 +150,7 @@ private fun NewSessionHeader(onBack: () -> Unit) {
                 .clickable(onClick = onBack),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "‹", color = TacTextMuted, fontSize = FontSize.sp18) // TODO hardcoded
+            Text(text = stringResource(Res.string.common_nav_back), color = TacTextMuted, fontSize = FontSize.sp18)
         }
         Column {
             Text(
@@ -269,7 +273,7 @@ private fun WeaponRow(
             )
         }
         if (selected) {
-            Text(text = "✓", color = TacAccent, fontSize = FontSize.sp14) // TODO hardcoded
+            Text(text = stringResource(Res.string.common_checkmark), color = TacAccent, fontSize = FontSize.sp14)
         }
     }
 }

@@ -8,7 +8,7 @@ data class SessionSummaryUiModel(
     val caliber: String = "",
     val distanceMeters: Int = 0,
     val durationMinutes: Int = 0,
-    val score: Float = 0f,
+    val score: Float? = null,
     val targetCount: Int = 0,
     val totalHits: Int = 0,
     val totalMisses: Int = 0,

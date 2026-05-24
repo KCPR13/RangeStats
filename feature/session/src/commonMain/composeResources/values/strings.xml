@@ -36,4 +36,22 @@
     <string name="summary_zone_distribution">Rozkład stref</string>
     <string name="summary_save">Zapisz sesję</string>
     <string name="summary_share">Udostępnij wynik</string>
+    <string name="common_nav_back">‹</string>
+    <string name="common_checkmark">✓</string>
+    <string name="common_percent_format">%1$d%%</string>
+    <string name="dashboard_app_logo">RS</string>
+    <string name="dashboard_total_suffix"> łącznie</string>
+    <string name="dashboard_empty_dash">—</string>
+    <string name="dashboard_distance_m_format">%1$dm</string>
+    <string name="dashboard_score_label">wynik</string>
+    <string name="new_session_location_placeholder">Strzelnica...</string>
+    <string name="new_session_distance_label_format">%1$d m</string>
+    <string name="summary_location_today_format">%1$s · dziś</string>
+    <string name="summary_session_meta_format">%1$s · %2$dm · %3$d min</string>
+    <string name="active_session_target_icon">⬡</string>
+    <string name="active_session_shot_icon">⊙</string>
+    <string name="active_session_targets_added_format">%1$d dodane</string>
+    <string name="active_session_header_meta_format">%1$s · %2$s · %3$dm</string>
+    <string name="active_session_target_label_format">Tarcza #%1$d</string>
+    <string name="active_session_target_meta_format">%1$d trafień · %2$d pudła</string>
 </resources>

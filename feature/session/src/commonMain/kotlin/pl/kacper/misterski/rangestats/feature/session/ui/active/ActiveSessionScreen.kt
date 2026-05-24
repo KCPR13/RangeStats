@@ -40,12 +40,20 @@ import rangestats.feature.session.generated.resources.Res
 import rangestats.feature.session.generated.resources.active_session_analyzing
 import rangestats.feature.session.generated.resources.active_session_camera_hint
 import rangestats.feature.session.generated.resources.active_session_finish
+import rangestats.feature.session.generated.resources.active_session_header_meta_format
 import rangestats.feature.session.generated.resources.active_session_prev_targets
+import rangestats.feature.session.generated.resources.active_session_shot_icon
 import rangestats.feature.session.generated.resources.active_session_stat_avg_score
 import rangestats.feature.session.generated.resources.active_session_stat_hits
 import rangestats.feature.session.generated.resources.active_session_stat_misses
 import rangestats.feature.session.generated.resources.active_session_stat_targets
+import rangestats.feature.session.generated.resources.active_session_target_icon
+import rangestats.feature.session.generated.resources.active_session_target_label_format
+import rangestats.feature.session.generated.resources.active_session_target_meta_format
+import rangestats.feature.session.generated.resources.active_session_targets_added_format
 import rangestats.feature.session.generated.resources.active_session_title
+import rangestats.feature.session.generated.resources.common_nav_back
+import rangestats.feature.session.generated.resources.common_percent_format
 
 @Composable
 fun ActiveSessionScreen(
@@ -74,7 +82,7 @@ fun ActiveSessionScreen(
                 verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
             ) {
                 Text(
-                    text = "⬡", // TODO hardcoded
+                    text = stringResource(Res.string.active_session_target_icon),
                     color = TacTextMuted,
                     fontSize = FontSize.sp32,
                 )
@@ -106,7 +114,7 @@ fun ActiveSessionScreen(
                 ),
             )
             Text(
-                text = "${state.targetCount} dodane", // TODO hardcoded
+                text = stringResource(Res.string.active_session_targets_added_format, state.targetCount),
                 color = TacTextMuted,
                 fontSize = FontSize.sp10,
             )
@@ -149,7 +157,7 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
                 .clickable(onClick = onBack),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "‹", color = TacTextMuted, fontSize = FontSize.sp18) // TODO hardcoded
+            Text(text = stringResource(Res.string.common_nav_back), color = TacTextMuted, fontSize = FontSize.sp18)
         }
         Spacer(Modifier.width(Dimen.dp12))
         Column(modifier = Modifier.weight(1f)) {
@@ -164,7 +172,7 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
                 ),
             )
             Text(
-                text = "${state.locationName} · ${state.caliber} · ${state.distanceMeters}m", // TODO hardcoded
+                text = stringResource(Res.string.active_session_header_meta_format, state.locationName, state.caliber, state.distanceMeters),
                 color = TacTextMuted,
                 fontSize = FontSize.sp11,
             )
@@ -190,7 +198,7 @@ private fun SessionStatsBar(state: ActiveSessionUiModel) {
     ) {
         StatItem(value = state.targetCount.toString(), label = stringResource(Res.string.active_session_stat_targets))
         StatDivider()
-        StatItem(value = "${state.avgScore.toInt()}%", label = stringResource(Res.string.active_session_stat_avg_score)) // TODO hardcoded
+        StatItem(value = stringResource(Res.string.common_percent_format, state.avgScore.toInt()), label = stringResource(Res.string.active_session_stat_avg_score))
         StatDivider()
         StatItem(value = state.totalHits.toString(), label = stringResource(Res.string.active_session_stat_hits))
         StatDivider()
@@ -295,21 +303,24 @@ private fun TargetRow(target: TargetEntry) {
                 .background(TacBgElevated, RoundedCornerShape(Dimen.dp4)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "⊙", color = TacTextMuted, fontSize = FontSize.sp16) // TODO hardcoded
+            Text(text = stringResource(Res.string.active_session_shot_icon), color = TacTextMuted, fontSize = FontSize.sp16)
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "Tarcza #${target.index}", // TODO hardcoded
+                text = stringResource(Res.string.active_session_target_label_format, target.index),
                 color = TacTextSecondary,
                 fontSize = FontSize.sp11,
                 fontWeight = FontWeight.Medium,
             )
-            val meta = target.analysisResult?.let {
-                val misses = it.zones[pl.kacper.misterski.rangestats.core.domain.enums.TargetZone.MISS] ?: 0
-                "${it.shotCount - misses} trafień · $misses pudła" // TODO hardcoded
-            } ?: ""
-            if (meta.isNotEmpty()) {
-                Text(text = meta, color = TacTextMuted, fontSize = FontSize.sp10)
+            val analysisResult = target.analysisResult
+            if (analysisResult != null) {
+                val misses = analysisResult.zones[pl.kacper.misterski.rangestats.core.domain.enums.TargetZone.MISS] ?: 0
+                val hits = analysisResult.shotCount - misses
+                Text(
+                    text = stringResource(Res.string.active_session_target_meta_format, hits, misses),
+                    color = TacTextMuted,
+                    fontSize = FontSize.sp10,
+                )
             }
         }
         if (target.isAnalyzing) {
@@ -339,7 +350,7 @@ private fun TargetRow(target: TargetEntry) {
         } else {
             target.analysisResult?.let {
                 Text(
-                    text = "${it.score.toInt()}%", // TODO hardcoded
+                    text = stringResource(Res.string.common_percent_format, it.score.toInt()),
                     color = TacAccent,
                     fontSize = FontSize.sp16,
                     fontWeight = FontWeight.SemiBold,

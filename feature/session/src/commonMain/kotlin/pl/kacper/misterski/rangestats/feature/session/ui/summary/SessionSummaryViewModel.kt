@@ -47,7 +47,7 @@ class SessionSummaryViewModel(
                             locationName = session.locationName,
                             distanceMeters = session.distanceMeters,
                             durationMinutes = durationMin,
-                            score = session.score ?: 0f,
+                            score = session.score,
                             totalHits = hits,
                             totalMisses = misses,
                             targetCount = session.shots.size,

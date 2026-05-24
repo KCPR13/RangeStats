@@ -6,7 +6,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 
 fun WeaponEntity.toDomain(): Weapon = Weapon(
     name = name,
-    type = WeaponType.valueOf(type),
+    type = WeaponType.entries.find { it.name == type } ?: WeaponType.PISTOL,
     caliber = caliber,
     notes = notes,
 )

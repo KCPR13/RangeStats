@@ -47,13 +47,13 @@ class SessionRepositoryImpl(
     override suspend fun analyzeTarget(imageBytes: ByteArray): Result<AnalysisResult> =
         runCatching { visionDataSource.analyzeTarget(imageBytes) }
 
-    override suspend fun finishSession(sessionId: String): Session {
+    override suspend fun finishSession(sessionId: String): Result<Session> = runCatching {
         val entity = sessionDataSource.getSessionById(sessionId)
             ?: error("Session not found: $sessionId") //TODO
         val shots = sessionDataSource.getShotsForSession(sessionId)
         val updated = entity.copy(finishedAt = currentTimeMillis())
         sessionDataSource.updateSession(updated)
-        return updated.toDomain(shots)
+        updated.toDomain(shots)
     }
 
     override suspend fun getSession(sessionId: String): Session? {
