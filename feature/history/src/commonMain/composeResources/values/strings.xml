@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_nav_back">‹</string>
+    <string name="common_percent_format">%1$d%%</string>
+
+    <string name="history_title">HISTORIA SESJI</string>
+    <string name="history_empty">Brak zapisanych sesji</string>
+    <string name="history_session_distance_format">%1$dm</string>
+    <string name="history_session_shots_format">%1$d strzałów</string>
+    <string name="history_session_score_format">%1$d%%</string>
+
+    <string name="detail_title">SZCZEGÓŁY SESJI</string>
+    <string name="detail_meta_format">%1$s · %2$dm · %3$d min</string>
+    <string name="detail_score_label">WYNIK</string>
+    <string name="detail_stat_shots">Strzałów</string>
+    <string name="detail_stat_hits">Trafień</string>
+    <string name="detail_stat_misses">Pudłów</string>
+    <string name="detail_zone_distribution">ROZKŁAD STREF</string>
+    <string name="detail_delete">Usuń sesję</string>
+</resources>
