@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ballistics_title">KALKULATOR BALISTYCZNY</string>
+    <string name="ballistics_section_presets">PRESET KALIBER</string>
+    <string name="ballistics_field_muzzle_velocity">Prędkość wylotowa (m/s)</string>
+    <string name="ballistics_field_bullet_mass">Masa pocisku (gr)</string>
+    <string name="ballistics_field_bc">Współczynnik BC (G1)</string>
+    <string name="ballistics_field_zero_range">Zerowanie (m)</string>
+    <string name="ballistics_field_distance">Dystans docelowy (m)</string>
+    <string name="ballistics_field_scope_height">Celownik nad lufą (mm)</string>
+    <string name="ballistics_btn_calculate">OBLICZ</string>
+    <string name="ballistics_section_result">WYNIKI</string>
+    <string name="ballistics_result_drop">ODCHYLENIE</string>
+    <string name="ballistics_result_velocity">PRĘDKOŚĆ</string>
+    <string name="ballistics_result_energy">ENERGIA</string>
+    <string name="ballistics_result_tof">CZAS LOTU</string>
+    <string name="ballistics_error_empty_fields">Wypełnij wszystkie pola</string>
+</resources>

@@ -6,6 +6,7 @@ import androidx.navigation.compose.rememberNavController
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
+import pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator.ballistics
 import pl.kacper.misterski.rangestats.feature.history.ui.detail.sessionDetail
 import pl.kacper.misterski.rangestats.feature.history.ui.list.history
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.onboarding
@@ -19,6 +20,7 @@ fun App() {
     RangeStatsTheme {
         val navController = rememberNavController()
 
+        //TODO CLEANUP
         NavHost(
             navController = navController,
             startDestination = AppRoutes.Onboarding.route,
@@ -49,7 +51,11 @@ fun App() {
                             popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
                             launchSingleTop = true
                         }
-                        else -> {} // TODO: Ballistics, Settings — Faza 8
+                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                        else -> {}
                     }
                 },
             )
@@ -94,7 +100,32 @@ fun App() {
                         }
                         BottomNavDestination.NewSession -> navController.navigate(AppRoutes.NewSession.route)
                         BottomNavDestination.History -> navController.navigate(AppRoutes.History.route) {
-                            popUpTo(AppRoutes.History.route) { inclusive = false }
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                        else -> {}
+                    }
+                },
+            )
+
+            ballistics(
+                onNavigate = { destination ->
+                    when (destination) {
+                        BottomNavDestination.Home -> navController.navigate(AppRoutes.Dashboard.route) {
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                        BottomNavDestination.NewSession -> navController.navigate(AppRoutes.NewSession.route)
+                        BottomNavDestination.History -> navController.navigate(AppRoutes.History.route) {
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
+                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
                             launchSingleTop = true
                         }
                         else -> {}
