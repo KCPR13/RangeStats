@@ -74,6 +74,12 @@ kotlin {
             }
         }
 
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(libs.kotlinx.coroutines.test)
+            }
+        }
+
         getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.bundles.android.test)
