@@ -12,7 +12,7 @@ sealed class OnboardingAction {
     data object IncrementDistance : OnboardingAction()
     data object DecrementDistance : OnboardingAction()
     data object AddNewWeapon : OnboardingAction()
-    //TODO event?
+    data object NavigationHandled : OnboardingAction()
     data class CameraPermissionResult(val status: PermissionStatus) : OnboardingAction()
     data class LocationPermissionResult(val status: PermissionStatus) : OnboardingAction()
 }

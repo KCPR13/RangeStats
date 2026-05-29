@@ -14,6 +14,7 @@ fun initializeKoin(config: KoinAppDeclaration? = null) {
         config?.invoke(this)
         modules(
             dataModule,
+            appModule,
             onboardingModule,
             settingsModule,
             sessionModule,

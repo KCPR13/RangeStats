@@ -1,8 +1,12 @@
 package pl.kacper.misterski.rangestats.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -14,16 +18,22 @@ import pl.kacper.misterski.rangestats.feature.session.ui.active.activeSession
 import pl.kacper.misterski.rangestats.feature.session.ui.dashboard.dashboard
 import pl.kacper.misterski.rangestats.feature.session.ui.new.newSession
 import pl.kacper.misterski.rangestats.feature.session.ui.summary.sessionSummary
+import pl.kacper.misterski.rangestats.feature.settings.ui.settings.settings
+import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.weaponList
+import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.addWeapon
 
 @Composable
 fun App() {
     RangeStatsTheme {
+        val viewModel = koinViewModel<AppViewModel>()
+        val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
         val navController = rememberNavController()
+        val route = (startDestination as? AppStartDestination.Ready)?.route ?: return@RangeStatsTheme
 
         //TODO CLEANUP
         NavHost(
             navController = navController,
-            startDestination = AppRoutes.Onboarding.route,
+            startDestination = route,
         ) {
             onboarding(
                 onComplete = {
@@ -40,24 +50,7 @@ fun App() {
                 onOpenHistory = {
                     navController.navigate(AppRoutes.History.route)
                 },
-                onNavigate = { destination ->
-                    when (destination) {
-                        BottomNavDestination.Home -> navController.navigate(AppRoutes.Dashboard.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.NewSession -> navController.navigate(AppRoutes.NewSession.route)
-                        BottomNavDestination.History -> navController.navigate(AppRoutes.History.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        else -> {}
-                    }
-                },
+                onNavigate = { destination -> navController.navigateBottomNav(destination) },
             )
 
             newSession(
@@ -72,7 +65,7 @@ fun App() {
             activeSession(
                 onSessionFinished = { sessionId ->
                     navController.navigate(AppRoutes.SessionSummary(sessionId).createRoute()) {
-                        popUpTo(AppRoutes.ActiveSession("").route) { inclusive = true }
+                        popUpTo(AppRoutes.ActiveSession.ROUTE) { inclusive = true }
                     }
                 },
                 onBack = { navController.navigateUp() },
@@ -92,50 +85,49 @@ fun App() {
                 onOpenDetail = { sessionId ->
                     navController.navigate(AppRoutes.SessionDetail(sessionId).createRoute())
                 },
-                onNavigate = { destination ->
-                    when (destination) {
-                        BottomNavDestination.Home -> navController.navigate(AppRoutes.Dashboard.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.NewSession -> navController.navigate(AppRoutes.NewSession.route)
-                        BottomNavDestination.History -> navController.navigate(AppRoutes.History.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        else -> {}
-                    }
-                },
-            )
-
-            ballistics(
-                onNavigate = { destination ->
-                    when (destination) {
-                        BottomNavDestination.Home -> navController.navigate(AppRoutes.Dashboard.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.NewSession -> navController.navigate(AppRoutes.NewSession.route)
-                        BottomNavDestination.History -> navController.navigate(AppRoutes.History.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        BottomNavDestination.Ballistics -> navController.navigate(AppRoutes.Ballistics.route) {
-                            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                            launchSingleTop = true
-                        }
-                        else -> {}
-                    }
-                },
+                onNavigate = { destination -> navController.navigateBottomNav(destination) },
             )
 
             sessionDetail(
                 onBack = { navController.navigateUp() },
             )
+
+            ballistics(
+                onNavigate = { destination -> navController.navigateBottomNav(destination) },
+            )
+
+            settings(
+                onNavigateToWeaponList = {
+                    navController.navigate(AppRoutes.WeaponList.route)
+                },
+            )
+
+            weaponList(
+                onBack = { navController.navigateUp() },
+                showAddWeapon = {
+                    navController.navigate(AppRoutes.AddWeapon.route)
+                },
+            )
+
+            addWeapon(
+                onBack = { navController.navigateUp() },
+            )
+        }
+    }
+}
+
+private fun NavController.navigateBottomNav(destination: BottomNavDestination) {
+    val route = when (destination) {
+        BottomNavDestination.Home -> AppRoutes.Dashboard.route
+        BottomNavDestination.History -> AppRoutes.History.route
+        BottomNavDestination.NewSession -> AppRoutes.NewSession.route
+        BottomNavDestination.Ballistics -> AppRoutes.Ballistics.route
+        BottomNavDestination.Settings -> AppRoutes.Settings.route
+    }
+    navigate(route) {
+        if (destination != BottomNavDestination.NewSession) {
+            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
+            launchSingleTop = true
         }
     }
 }

@@ -40,7 +40,10 @@ fun NavGraphBuilder.onboarding(onComplete: () -> Unit) {
         }
 
         LaunchedEffect(state.isCompleted) {
-            if (state.isCompleted) onComplete()
+            if (state.isCompleted) {
+                viewModel.onAction(OnboardingAction.NavigationHandled)
+                onComplete()
+            }
         }
 
         OnboardingScreen(

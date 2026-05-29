@@ -31,6 +31,7 @@ class OnboardingViewModel(
             OnboardingAction.DecrementDistance -> decrementDistance()
             OnboardingAction.IncrementDistance -> incrementDistance()
             OnboardingAction.AddNewWeapon -> {} // TODO
+            OnboardingAction.NavigationHandled -> _uiModel.update { it.copy(isCompleted = false) }
             is OnboardingAction.CameraPermissionResult -> handleCameraResult(action.status)
             is OnboardingAction.LocationPermissionResult -> handleLocationResult(action.status)
         }
