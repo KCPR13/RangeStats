@@ -1,6 +1,8 @@
 package pl.kacper.misterski.rangestats.core.ui.component
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,21 +20,21 @@ fun TacScaffold(
     topBar: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    RangeStatsTheme {
-        Scaffold(
-            modifier = modifier,
-            containerColor = TacBgDeep,
-            topBar = topBar,
-            bottomBar = {
-                if (selectedNav != null && onNavigate != null) {
-                    BottomNavBar(
-                        selected = selectedNav,
-                        onNavigate = onNavigate,
-                    )
-                }
-            },
-            content = content,
-        )
+    Scaffold(
+        contentWindowInsets = WindowInsets.safeGestures,
+        modifier = modifier,
+        containerColor = TacBgDeep,
+        topBar = topBar,
+        bottomBar = {
+            if (selectedNav != null && onNavigate != null) {
+                BottomNavBar(
+                    selected = selectedNav,
+                    onNavigate = onNavigate,
+                )
+            }
+        }
+    ) { paddingValues ->
+        content(paddingValues)
     }
 }
 
