@@ -1,6 +1,5 @@
 package pl.kacper.misterski.rangestats.feature.ballistics.domain.usecase
 
-import pl.kacper.misterski.rangestats.core.domain.results.AppResult
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsInput
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsResult
 import kotlin.math.cos
@@ -10,7 +9,7 @@ import kotlin.math.sqrt
 class CalculateTrajectoryUseCase {
 
     // TODO
-    operator fun invoke(input: BallisticsInput): AppResult<BallisticsResult> = runCatching {
+    operator fun invoke(input: BallisticsInput): Result<BallisticsResult> = runCatching {
         require(input.muzzleVelocityMs > 0.0) { "Muzzle velocity must be positive" }
         require(input.ballisticCoefficient > 0.0) { "BC must be positive" }
         require(input.bulletMassGrains > 0.0) { "Bullet mass must be positive" }
