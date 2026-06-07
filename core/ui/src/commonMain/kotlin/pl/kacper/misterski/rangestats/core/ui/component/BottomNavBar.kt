@@ -1,7 +1,10 @@
 package pl.kacper.misterski.rangestats.core.ui.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Calculate
@@ -11,7 +14,10 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
@@ -19,8 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.Res
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
@@ -30,6 +37,7 @@ import pl.kacper.misterski.rangestats.core.ui.nav_home
 import pl.kacper.misterski.rangestats.core.ui.nav_new_session
 import pl.kacper.misterski.rangestats.core.ui.nav_settings
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
+import pl.kacper.misterski.rangestats.core.ui.theme.FontSize.sp12
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
@@ -43,23 +51,24 @@ fun BottomNavBar(
     modifier: Modifier = Modifier,
 ) {
     NavigationBar(
+        windowInsets = NavigationBarDefaults.windowInsets,
         modifier = modifier,
         containerColor = TacBgPanel,
         tonalElevation = 0.dp,
     ) {
-        NavigationBarItem(
-            selected = selected == BottomNavDestination.Home,
-            onClick = { onNavigate(BottomNavDestination.Home) },
-            icon = { Icon(Icons.Default.Home, contentDescription = stringResource(Res.string.nav_home)) },
-            label = { Text(stringResource(Res.string.nav_home)) },
-            colors = navItemColors(),
+        NavItem(
+            destination = BottomNavDestination.Home,
+            selected = selected,
+            onNavigate = onNavigate,
+            icon = Icons.Default.Home,
+            label = stringResource(Res.string.nav_home),
         )
-        NavigationBarItem(
-            selected = selected == BottomNavDestination.History,
-            onClick = { onNavigate(BottomNavDestination.History) },
-            icon = { Icon(Icons.Default.History, contentDescription = stringResource(Res.string.nav_history)) },
-            label = { Text(stringResource(Res.string.nav_history)) },
-            colors = navItemColors(),
+        NavItem(
+            destination = BottomNavDestination.History,
+            selected = selected,
+            onNavigate = onNavigate,
+            icon = Icons.Default.History,
+            label = stringResource(Res.string.nav_history),
         )
         NavigationBarItem(
             selected = false,
@@ -76,28 +85,67 @@ fun BottomNavBar(
                         contentColor = TacOnAccent,
                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = stringResource(Res.string.nav_new_session))
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = stringResource(Res.string.nav_new_session)
+                        )
                     }
                 }
             },
             label = { Text("") },
             colors = navItemColors(),
         )
-        NavigationBarItem(
-            selected = selected == BottomNavDestination.Ballistics,
-            onClick = { onNavigate(BottomNavDestination.Ballistics) },
-            icon = { Icon(Icons.Default.Calculate, contentDescription = stringResource(Res.string.nav_ballistics)) },
-            label = { Text(stringResource(Res.string.nav_ballistics)) },
-            colors = navItemColors(),
+        NavItem(
+            destination = BottomNavDestination.Ballistics,
+            selected = selected,
+            onNavigate = onNavigate,
+            icon = Icons.Default.Calculate,
+            label = stringResource(Res.string.nav_ballistics),
         )
-        NavigationBarItem(
-            selected = selected == BottomNavDestination.Settings,
-            onClick = { onNavigate(BottomNavDestination.Settings) },
-            icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(Res.string.nav_settings)) },
-            label = { Text(stringResource(Res.string.nav_settings)) },
-            colors = navItemColors(),
+        NavItem(
+            destination = BottomNavDestination.Settings,
+            selected = selected,
+            onNavigate = onNavigate,
+            icon = Icons.Default.Settings,
+            label = stringResource(Res.string.nav_settings),
         )
     }
+}
+
+@Composable
+private fun RowScope.NavItem(
+    destination: BottomNavDestination,
+    selected: BottomNavDestination,
+    onNavigate: (BottomNavDestination) -> Unit,
+    icon: ImageVector,
+    label: String,
+) {
+    NavigationBarItem(
+        selected = selected == destination,
+        onClick = { onNavigate(destination) },
+        alwaysShowLabel = false,
+        icon = { Icon(icon, contentDescription = label) },
+        label = { NavBarLabel(text = label) },
+        colors = navItemColors(),
+    )
+}
+
+@Composable
+private fun NavBarLabel(
+    text: String
+) {
+    BasicText(
+        text = text,
+        maxLines = 1,
+        softWrap = false,
+        autoSize = TextAutoSize.StepBased(
+            minFontSize = sp12,
+            maxFontSize = sp12
+        ),
+        style = MaterialTheme.typography.labelMedium.copy(
+            color = LocalContentColor.current,
+        )
+    )
 }
 
 @Composable

@@ -1,5 +1,5 @@
 <resources>
-    <string name="nav_home">Home</string>
+    <string name="nav_home">Start</string>
     <string name="nav_history">Historia</string>
     <string name="nav_new_session">Nowa sesja</string>
     <string name="nav_ballistics">Balistyka</string>
