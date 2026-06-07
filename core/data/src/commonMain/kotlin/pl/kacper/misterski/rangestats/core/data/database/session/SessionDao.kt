@@ -16,18 +16,16 @@ interface SessionDao {
     @Update
     suspend fun updateSession(entity: SessionEntity)
 
-    @Query("SELECT * FROM sessions WHERE id = :id")
+    @Query("SELECT * FROM ${SessionEntity.TABLE_NAME} WHERE id = :id")
     suspend fun getSessionById(id: String): SessionEntity?
 
-    @Query("SELECT * FROM sessions ORDER BY startedAt DESC")
+    @Query("SELECT * FROM ${SessionEntity.TABLE_NAME} ORDER BY startedAt DESC")
     suspend fun getAllSessions(): List<SessionEntity>
 
-    @Query("DELETE FROM sessions WHERE id = :id")
+    @Query("DELETE FROM ${SessionEntity.TABLE_NAME} WHERE id = :id")
     suspend fun deleteSession(id: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShot(entity: ShotEntity)
 
-    @Query("SELECT * FROM shots WHERE sessionId = :sessionId ORDER BY timestamp ASC")
-    suspend fun getShotsForSession(sessionId: String): List<ShotEntity>
 }

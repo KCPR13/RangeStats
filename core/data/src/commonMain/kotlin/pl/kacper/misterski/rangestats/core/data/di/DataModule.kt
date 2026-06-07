@@ -24,7 +24,8 @@ val dataModule = module {
             .setDriver(BundledSQLiteDriver())
             .build()
     }
-    single<SessionDataSource> { SessionDataSourceImpl(get<AppDatabase>().sessionDao()) }
+    single<SessionDataSource> { SessionDataSourceImpl(get<AppDatabase>().sessionDao(),
+        get<AppDatabase>().shotDao()) }
     single<WeaponDataSource> { WeaponDataSourceImpl(get<AppDatabase>().weaponDao()) }
     single<VisionDataSource> { VisionDataSourceImpl(get()) }
     single<UserPrefsDataSource> { UserPrefsDataSourceImpl(createDataStore()) }

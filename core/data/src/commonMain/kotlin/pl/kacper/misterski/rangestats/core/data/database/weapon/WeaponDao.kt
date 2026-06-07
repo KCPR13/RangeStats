@@ -9,10 +9,10 @@ import androidx.room.Update
 @Dao
 interface WeaponDao {
 
-    @Query("SELECT * FROM weapons ORDER BY name ASC")
+    @Query("SELECT * FROM ${WeaponEntity.TABLE_NAME} ORDER BY name ASC")
     suspend fun getAllWeapons(): List<WeaponEntity>
 
-    @Query("SELECT * FROM weapons WHERE name = :name")
+    @Query("SELECT * FROM ${WeaponEntity.TABLE_NAME} WHERE name = :name")
     suspend fun getWeaponByName(name: String): WeaponEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,6 +21,6 @@ interface WeaponDao {
     @Update
     suspend fun updateWeapon(entity: WeaponEntity)
 
-    @Query("DELETE FROM weapons WHERE name = :name")
+    @Query("DELETE FROM ${WeaponEntity.TABLE_NAME} WHERE name = :name")
     suspend fun deleteWeapon(name: String)
 }
