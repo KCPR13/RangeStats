@@ -9,9 +9,7 @@ kotlin {
     android {
         namespace = "pl.kacper.misterski.rangestats.core.navigation"
         compileSdk {
-            version = release(libs.versions.android.compileSdk.get().toInt()) {
-                minorApiLevel = 1
-            }
+            version = release(libs.versions.android.compileSdk.get().toInt())
         }
         minSdk = libs.versions.android.minSdk.get().toInt()
 
