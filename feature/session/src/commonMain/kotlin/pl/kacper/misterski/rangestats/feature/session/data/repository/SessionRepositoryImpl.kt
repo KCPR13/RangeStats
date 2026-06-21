@@ -2,6 +2,7 @@ package pl.kacper.misterski.rangestats.feature.session.data.repository
 
 import pl.kacper.misterski.rangestats.core.data.datasource.session.SessionDataSource
 import pl.kacper.misterski.rangestats.core.data.datasource.vision.VisionDataSource
+import pl.kacper.misterski.rangestats.core.domain.exceptions.SessionNotFoundException
 import pl.kacper.misterski.rangestats.core.data.mapper.toEntity
 import pl.kacper.misterski.rangestats.core.data.mapper.toDomain
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
@@ -49,7 +50,7 @@ class SessionRepositoryImpl(
 
     override suspend fun finishSession(sessionId: String): Result<Session> = runCatching {
         val entity = sessionDataSource.getSessionById(sessionId)
-            ?: error("Session not found: $sessionId") //TODO
+            ?: throw SessionNotFoundException(sessionId)
         val shots = sessionDataSource.getShotsForSession(sessionId)
         val updated = entity.copy(finishedAt = currentTimeMillis())
         sessionDataSource.updateSession(updated)
