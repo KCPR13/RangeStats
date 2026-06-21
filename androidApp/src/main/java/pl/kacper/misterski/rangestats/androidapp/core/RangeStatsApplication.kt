@@ -1,7 +1,6 @@
 package pl.kacper.misterski.rangestats.androidapp.core
 
 import android.app.Application
-import android.os.Build
 import org.koin.android.ext.koin.androidContext
 import pl.kacper.misterski.rangestats.di.initializeKoin
 
