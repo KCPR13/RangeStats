@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -101,10 +102,7 @@ private fun DetailHeader(state: SessionDetailUiModel, onBack: () -> Unit) {
                 color = TacAccent,
                 fontSize = FontSize.sp11,
                 fontWeight = FontWeight.Medium,
-                letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                    0.12f,
-                    androidx.compose.ui.unit.TextUnitType.Em,
-                ),
+                letterSpacing = LetterSpacing.em12,
             )
             Text(
                 text = state.dateLabel,
@@ -136,10 +134,7 @@ private fun DetailHero(state: SessionDetailUiModel) {
             text = stringResource(Res.string.detail_score_label),
             color = TacTextMuted,
             fontSize = FontSize.sp9,
-            letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                0.14f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em14,
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
@@ -183,10 +178,7 @@ private fun ZoneDistributionSection(zoneRows: List<ZoneRowUiModel>) {
             text = stringResource(Res.string.detail_zone_distribution),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
-            letterSpacing = androidx.compose.ui.unit.TextUnit(
-                0.12f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em12,
         )
         Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp5)) {
             zoneRows.forEach { row -> ZoneRow(row = row) }
@@ -246,10 +238,7 @@ private fun DeleteButton(onClick: () -> Unit) {
             text = stringResource(Res.string.detail_delete),
             color = TacRed,
             fontSize = FontSize.sp11,
-            letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                0.1f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em10,
         )
     }
 }

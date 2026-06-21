@@ -34,6 +34,7 @@ import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -158,10 +159,7 @@ private fun NewSessionHeader(onBack: () -> Unit) {
                 color = TacAccent,
                 fontSize = FontSize.sp11,
                 fontWeight = FontWeight.Medium,
-                letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                    0.12f,
-                    androidx.compose.ui.unit.TextUnitType.Em,
-                ),
+                letterSpacing = LetterSpacing.em12,
             )
             Text(
                 text = stringResource(Res.string.new_session_subtitle),
@@ -182,10 +180,7 @@ private fun SectionItem(
             text = label,
             color = TacTextMuted,
             fontSize = FontSize.sp10,
-            letterSpacing = androidx.compose.ui.unit.TextUnit(// TODO
-                0.12f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em12,
         )
         content()
     }

@@ -25,6 +25,7 @@ import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -88,10 +89,7 @@ private fun HistoryTopBar() {
             color = TacAccent,
             fontSize = FontSize.sp11,
             fontWeight = FontWeight.Medium,
-            letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO K
-                0.12f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em12,
         )
     }
 }

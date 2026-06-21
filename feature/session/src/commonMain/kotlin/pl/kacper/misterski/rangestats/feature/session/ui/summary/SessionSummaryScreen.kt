@@ -30,6 +30,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccentDim
@@ -111,10 +112,7 @@ private fun SummaryHeader(onBack: () -> Unit, state: SessionSummaryUiModel) {
                 color = TacAccent,
                 fontSize = FontSize.sp11,
                 fontWeight = FontWeight.Medium,
-                letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                    0.12f,
-                    androidx.compose.ui.unit.TextUnitType.Em,
-                ),
+                letterSpacing = LetterSpacing.em12,
             )
             Text(
                 text = stringResource(Res.string.summary_location_today_format, state.locationName),
@@ -146,10 +144,7 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
             text = stringResource(Res.string.summary_score_label),
             color = TacTextMuted,
             fontSize = FontSize.sp9,
-            letterSpacing = androidx.compose.ui.unit.TextUnit(// TODO
-                0.14f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em14,
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
@@ -216,10 +211,7 @@ private fun ZoneDistributionSection(zones: Map<TargetZone, Int>) {
             text = stringResource(Res.string.summary_zone_distribution),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
-            letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                0.12f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em12,
         )
         Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp5)) { // TODO business logic
             listOf(TargetZone.X, TargetZone.TEN, TargetZone.NINE, TargetZone.EIGHT, TargetZone.SEVEN, TargetZone.SIX, TargetZone.MISS).forEach { zone ->
@@ -293,10 +285,7 @@ private fun ShareButton(onClick: () -> Unit) {
             text = stringResource(Res.string.summary_share),
             color = TacTextMuted,
             fontSize = FontSize.sp11,
-            letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO
-                0.1f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em10,
         )
     }
 }

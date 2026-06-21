@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
+import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
@@ -90,10 +91,7 @@ fun ActiveSessionScreen(
                     text = stringResource(Res.string.active_session_camera_hint),
                     color = TacTextMuted,
                     fontSize = FontSize.sp10,
-                    letterSpacing = androidx.compose.ui.unit.TextUnit( // TODO letterspacing
-                        0.06f,
-                        androidx.compose.ui.unit.TextUnitType.Em,
-                    ),
+                    letterSpacing = LetterSpacing.em6,
                 )
             }
         }
@@ -108,10 +106,7 @@ fun ActiveSessionScreen(
                 text = stringResource(Res.string.active_session_prev_targets),
                 color = TacTextMuted,
                 fontSize = FontSize.sp9,
-                letterSpacing = androidx.compose.ui.unit.TextUnit(// TODO letterspacing
-                    0.12f,
-                    androidx.compose.ui.unit.TextUnitType.Em,
-                ),
+                letterSpacing = LetterSpacing.em12,
             )
             Text(
                 text = stringResource(Res.string.active_session_targets_added_format, state.targetCount),
@@ -166,10 +161,7 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
                 color = TacAccent,
                 fontSize = FontSize.sp11,
                 fontWeight = FontWeight.Medium,
-                letterSpacing = androidx.compose.ui.unit.TextUnit(
-                    0.12f,
-                    androidx.compose.ui.unit.TextUnitType.Em,
-                ),
+                letterSpacing = LetterSpacing.em12,
             )
             Text(
                 text = stringResource(Res.string.active_session_header_meta_format, state.locationName, state.caliber, state.distanceMeters),
@@ -341,10 +333,7 @@ private fun TargetRow(target: TargetEntry) {
                     text = stringResource(Res.string.active_session_analyzing),
                     color = TacAccent,
                     fontSize = FontSize.sp9,
-                    letterSpacing = androidx.compose.ui.unit.TextUnit(
-                        0.1f,
-                        androidx.compose.ui.unit.TextUnitType.Em,
-                    ),
+                    letterSpacing = LetterSpacing.em10,
                 )
             }
         } else {
@@ -376,10 +365,7 @@ private fun FinishButton(onClick: () -> Unit) {
             text = stringResource(Res.string.active_session_finish),
             color = TacTextMuted,
             fontSize = FontSize.sp11,
-            letterSpacing = androidx.compose.ui.unit.TextUnit(
-                0.1f,
-                androidx.compose.ui.unit.TextUnitType.Em,
-            ),
+            letterSpacing = LetterSpacing.em10,
         )
     }
 }
