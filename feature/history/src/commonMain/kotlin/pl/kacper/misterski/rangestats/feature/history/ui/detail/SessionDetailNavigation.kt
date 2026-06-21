@@ -14,7 +14,7 @@ fun NavGraphBuilder.sessionDetail(
     onBack: () -> Unit,
 ) {
     composable(
-        route = AppRoutes.SessionDetail("").route, // TODO
+        route = AppRoutes.SessionDetail.ROUTE,
         arguments = listOf(navArgument(AppRoutes.SessionDetail.ARG) { type = NavType.StringType }),
     ) { backStackEntry ->
         val sessionId = backStackEntry.arguments?.getString(AppRoutes.SessionDetail.ARG).orEmpty()
