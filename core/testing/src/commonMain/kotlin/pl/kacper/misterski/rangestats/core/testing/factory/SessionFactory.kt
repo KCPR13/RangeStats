@@ -1,5 +1,6 @@
 package pl.kacper.misterski.rangestats.core.testing.factory
 
+import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.domain.models.Session
@@ -9,7 +10,7 @@ fun testSession(
     id: String = "test-session-1",
     weaponId: String = "test-weapon-1",
     locationName: String = "Test Range",
-    distanceMeters: Int = 25,
+    distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
     targetType: TargetType = TargetType.BULLSEYE,
     shots: List<Shot> = listOf(testShot(sessionId = id)),
     startedAt: Long = 1_000_000L,

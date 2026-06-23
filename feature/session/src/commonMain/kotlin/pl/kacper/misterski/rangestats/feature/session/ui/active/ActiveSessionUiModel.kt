@@ -1,20 +1,12 @@
 package pl.kacper.misterski.rangestats.feature.session.ui.active
 
-import pl.kacper.misterski.rangestats.core.domain.models.AnalysisResult
+import pl.kacper.misterski.rangestats.core.domain.Constants
 
-//TODO one class per file
-data class TargetEntry(
-    val index: Int,
-    val analysisResult: AnalysisResult?,
-    val isAnalyzing: Boolean,
-)
-
-//TODO default values
 data class ActiveSessionUiModel(
     val sessionId: String = "",
     val locationName: String = "",
     val caliber: String = "",
-    val distanceMeters: Int = 25,
+    val distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
     val elapsedSeconds: Long = 0L,
     val targetCount: Int = 0,
     val avgScore: Float = 0f,
