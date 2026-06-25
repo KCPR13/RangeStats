@@ -36,7 +36,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.history.generated.resources.Res
-import rangestats.feature.history.generated.resources.common_percent_format
+import rangestats.feature.history.generated.resources.common_score_empty
 import rangestats.feature.history.generated.resources.history_empty
 import rangestats.feature.history.generated.resources.history_session_distance_format
 import rangestats.feature.history.generated.resources.history_session_score_format
@@ -140,7 +140,7 @@ private fun SessionCard(item: SessionListItem, onClick: () -> Unit) {
             )
         } else {
             Text(
-                text = "—", // TODO K hardcoded
+                text = stringResource(Res.string.common_score_empty),
                 color = TacTextSecondary,
                 fontSize = FontSize.sp16,
             )

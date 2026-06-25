@@ -52,20 +52,19 @@ class BallisticsViewModel(
         }
     }
 
-    //TODO hardcoded
     private fun calculate() {
         val state = _uiModel.value
         val input = buildInput(state) ?: return
         calculateTrajectory(input)
             .onSuccess { result ->
-                val dropSign = if (result.dropMm >= 0) "↑" else "↓"
+                val dropSign = if (result.dropMm >= 0) SIGN_UP else SIGN_DOWN
                 _uiModel.update {
                     it.copy(
                         result = BallisticsResultUiModel(
                             dropLabel = "$dropSign ${formatMm(kotlin.math.abs(result.dropMm))}",
                             dropAboveLoS = result.dropMm >= 0,
-                            velocityLabel = "${result.remainingVelocityMs.toInt()} m/s",
-                            energyLabel = "${result.energyJoules.toInt()} J",
+                            velocityLabel = "${result.remainingVelocityMs.toInt()}$UNIT_MS",
+                            energyLabel = "${result.energyJoules.toInt()}$UNIT_JOULES",
                             timeOfFlightLabel = formatSeconds(result.timeOfFlightSec),
                         ),
                         showEmptyFieldsError = false,
@@ -100,11 +99,22 @@ class BallisticsViewModel(
         )
     }
 
-    //TODO hardcoded
     private fun formatMm(mm: Double): String = when {
-        mm >= 1000.0 -> "${"%.1f".format(mm / 1000.0)} m"
-        else -> "${mm.toInt()} mm"
+        mm >= MM_PER_METER -> "${FORMAT_ONE_DECIMAL.format(mm / MM_PER_METER)}$UNIT_METERS"
+        else -> "${mm.toInt()}$UNIT_MM"
     }
 
     private fun formatSeconds(sec: Double): String = "${"%.3f".format(sec)} s"
+
+    companion object {
+        private const val SIGN_UP = "↑"
+        private const val SIGN_DOWN = "↓"
+        private const val UNIT_MS = " m/s"
+        private const val UNIT_JOULES = " J"
+        private const val MM_PER_METER = 1000.0
+        private const val FORMAT_ONE_DECIMAL = "%.1f"
+        private const val UNIT_METERS = " m"
+        private const val UNIT_MM = " mm"
+    }
+
 }

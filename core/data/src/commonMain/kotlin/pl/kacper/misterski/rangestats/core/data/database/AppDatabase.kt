@@ -1,9 +1,11 @@
 package pl.kacper.misterski.rangestats.core.data.database
 
+import androidx.room.AutoMigration
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import pl.kacper.misterski.rangestats.core.data.database.migration_spec.DeleteWeaponNotes
 import pl.kacper.misterski.rangestats.core.data.database.session.SessionDao
 import pl.kacper.misterski.rangestats.core.data.database.session.SessionEntity
 import pl.kacper.misterski.rangestats.core.data.database.shot.ShotDao
@@ -13,8 +15,11 @@ import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponEntity
 
 @Database(
     entities = [SessionEntity::class, ShotEntity::class, WeaponEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2, spec = DeleteWeaponNotes::class),
+    ],
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

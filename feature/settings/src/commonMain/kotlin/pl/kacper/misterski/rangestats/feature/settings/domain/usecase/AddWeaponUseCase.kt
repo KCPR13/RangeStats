@@ -11,7 +11,6 @@ class AddWeaponUseCase(private val repo: WeaponRepository) {
                 name = name,
                 type = type,
                 caliber = caliber,
-                notes = null,
             )
             repo.addWeapon(weapon)
         }

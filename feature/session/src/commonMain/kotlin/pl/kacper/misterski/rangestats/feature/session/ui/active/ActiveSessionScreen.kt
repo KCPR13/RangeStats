@@ -370,15 +370,18 @@ private fun FinishButton(onClick: () -> Unit) {
     }
 }
 
+private const val TIME_FORMAT_HMS = "%02d:%02d:%02d"
+private const val TIME_FORMAT_MS = "%02d:%02d"
+
 //TODO business logic
 private fun formatElapsed(seconds: Long): String {
     val h = seconds / 3600
     val m = (seconds % 3600) / 60
     val s = seconds % 60
     return if (h > 0) {
-        "%02d:%02d:%02d".format(h, m, s) // TODO hardcoded
+        TIME_FORMAT_HMS.format(h, m, s)
     } else {
-        "%02d:%02d".format(m, s)
+        TIME_FORMAT_MS.format(m, s)
     }
 }
 

@@ -2,6 +2,7 @@
 <resources>
     <string name="common_nav_back">‹</string>
     <string name="common_percent_format">%1$d%%</string>
+    <string name="common_score_empty">—</string>
 
     <string name="history_title">HISTORIA SESJI</string>
     <string name="history_empty">Brak zapisanych sesji</string>
@@ -17,5 +18,4 @@
     <string name="detail_stat_misses">Pudłów</string>
     <string name="detail_zone_distribution">ROZKŁAD STREF</string>
     <string name="detail_delete">Usuń sesję</string>
-<!--    TODO check if transated to EN-->
 </resources>

@@ -281,8 +281,8 @@ private fun NewSessionScreenPreview() {
             state = NewSessionUiModel(
                 locationName = "Strzelnica Łódź",
                 weapons = listOf(
-                    Weapon( "Glock 17", WeaponType.PISTOL, "9mm", null),
-                    Weapon( "AR-15", WeaponType.RIFLE, "5.56", null),
+                    Weapon( "Glock 17", WeaponType.PISTOL, "9mm"),
+                    Weapon( "AR-15", WeaponType.RIFLE, "5.56"),
                 ),
                 selectedWeaponName = "1",
                 distanceMeters = 25,

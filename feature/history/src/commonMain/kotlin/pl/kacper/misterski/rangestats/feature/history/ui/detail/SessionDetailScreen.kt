@@ -47,6 +47,8 @@ import rangestats.feature.history.generated.resources.detail_stat_hits
 import rangestats.feature.history.generated.resources.detail_stat_misses
 import rangestats.feature.history.generated.resources.detail_stat_shots
 import rangestats.feature.history.generated.resources.detail_title
+import rangestats.feature.history.generated.resources.common_percent_format
+import rangestats.feature.history.generated.resources.common_score_empty
 import rangestats.feature.history.generated.resources.detail_zone_distribution
 
 @Composable
@@ -124,7 +126,7 @@ private fun DetailHero(state: SessionDetailUiModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = if (state.score != null) "${state.score.toInt()}%" else "—", // TODO hardcoded
+            text = if (state.score != null) stringResource(Res.string.common_percent_format, state.score.toInt()) else stringResource(Res.string.common_score_empty),
             color = TacAccent,
             fontSize = FontSize.sp48,
             fontWeight = FontWeight.Bold,

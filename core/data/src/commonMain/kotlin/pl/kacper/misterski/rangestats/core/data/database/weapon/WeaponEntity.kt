@@ -9,7 +9,6 @@ data class WeaponEntity(
     val name: String,
     val type: String,
     val caliber: String,
-    val notes: String?, // TODO whats that?
 ) {
     companion object {
         const val TABLE_NAME = "weapons"

@@ -8,12 +8,10 @@ fun WeaponEntity.toDomain(): Weapon = Weapon(
     name = name,
     type = WeaponType.entries.find { it.name == type } ?: WeaponType.PISTOL,
     caliber = caliber,
-    notes = notes,
 )
 
 fun Weapon.toEntity(): WeaponEntity = WeaponEntity(
     name = name,
     type = type.name,
     caliber = caliber,
-    notes = notes,
 )

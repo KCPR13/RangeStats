@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.StartSessionUseCase
 
 class NewSessionViewModel(
@@ -20,8 +21,8 @@ class NewSessionViewModel(
         when (action) {
             is NewSessionAction.LocationChanged -> updateLocation(action.name)
             is NewSessionAction.WeaponSelected -> selectWeapon(action.weaponId)
-            NewSessionAction.IncrementDistance -> changeDistance(DISTANCE_STEP)
-            NewSessionAction.DecrementDistance -> changeDistance(-DISTANCE_STEP)
+            NewSessionAction.IncrementDistance -> changeDistance(Constants.SESSION_DISTANCE_STEP)
+            NewSessionAction.DecrementDistance -> changeDistance(-Constants.SESSION_DISTANCE_STEP)
             is NewSessionAction.TargetTypeSelected -> _uiModel.update { it.copy(targetType = action.type) }
             NewSessionAction.StartSession -> startNewSession()
             NewSessionAction.Back -> Unit
@@ -38,7 +39,7 @@ class NewSessionViewModel(
     }
 
     private fun changeDistance(delta: Int) {
-        val newDist = (_uiModel.value.distanceMeters + delta).coerceIn(DISTANCE_MIN, DISTANCE_MAX)
+        val newDist = (_uiModel.value.distanceMeters + delta).coerceIn(Constants.SESSION_DISTANCE_MIN, Constants.SESSION_DISTANCE_MAX)
         _uiModel.update { it.copy(distanceMeters = newDist) }
     }
 
@@ -60,10 +61,4 @@ class NewSessionViewModel(
         }
     }
 
-    //TODO global constats?
-    companion object {
-        private const val DISTANCE_STEP = 5
-        private const val DISTANCE_MIN = 5
-        private const val DISTANCE_MAX = 300
-    }
 }

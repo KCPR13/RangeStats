@@ -6,5 +6,4 @@ data class Weapon(
     val name: String,
     val type: WeaponType,
     val caliber: String,
-    val notes: String?,
 )

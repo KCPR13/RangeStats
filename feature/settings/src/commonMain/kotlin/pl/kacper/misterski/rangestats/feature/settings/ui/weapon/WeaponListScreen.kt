@@ -188,8 +188,8 @@ private fun WeaponListScreenPreview() {
         WeaponListScreen(
             state = WeaponListUiModel(
                 weapons = listOf(
-                    Weapon("Glock 17", WeaponType.PISTOL, "9mm", null),
-                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm", null),
+                    Weapon("Glock 17", WeaponType.PISTOL, "9mm"),
+                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm"),
                 ),
             ),
             onAction = {},
