@@ -3,6 +3,7 @@ package pl.kacper.misterski.rangestats.feature.settings.ui.settings
 import org.jetbrains.compose.resources.getString
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
+import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 import rangestats.feature.settings.generated.resources.Res
 import rangestats.feature.settings.generated.resources.weapon_badge_pistol
 import rangestats.feature.settings.generated.resources.weapon_badge_revolver
@@ -19,7 +20,7 @@ suspend fun Weapon.toUiModel(): SettingsUiModel.WeaponUiModel {
 
     return SettingsUiModel.WeaponUiModel(
         name = this.name,
-        type = this.type,
+        icon = this.type.toUiModel(),
         caliber = this.caliber,
         badgeText = badgeText
     )

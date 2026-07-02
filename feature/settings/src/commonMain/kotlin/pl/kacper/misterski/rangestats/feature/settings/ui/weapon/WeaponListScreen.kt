@@ -128,7 +128,7 @@ private fun WeaponListHeader(title: String, subtitle: String, onBack: () -> Unit
 
 @Composable
 private fun WeaponListRow(
-    weapon: Weapon,
+    weapon: WeaponListUiModel.WeaponRowUiModel,
     onDelete: () -> Unit,
 ) {
     val badgeText = when (weapon.type) {
@@ -151,7 +151,7 @@ private fun WeaponListRow(
                 .background(TacBgElevated, RoundedCornerShape(Dimen.dp7)),
             contentAlignment = Alignment.Center,
         ) {
-            WeaponIcon(type = weapon.type, modifier = Modifier.size(Dimen.dp24))
+            WeaponIcon(model = weapon.icon, modifier = Modifier.size(Dimen.dp24))
         }
         Spacer(Modifier.width(Dimen.dp12))
         Column(modifier = Modifier.weight(1f)) {
@@ -188,8 +188,8 @@ private fun WeaponListScreenPreview() {
         WeaponListScreen(
             state = WeaponListUiModel(
                 weapons = listOf(
-                    Weapon("Glock 17", WeaponType.PISTOL, "9mm"),
-                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm"),
+                    Weapon("Glock 17", WeaponType.PISTOL, "9mm").toUiModel(),
+                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm").toUiModel(),
                 ),
             ),
             onAction = {},

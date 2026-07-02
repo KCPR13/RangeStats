@@ -10,35 +10,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
-import pl.kacper.misterski.rangestats.core.ui.Res
-import pl.kacper.misterski.rangestats.core.ui.ic_weapon_pistol
-import pl.kacper.misterski.rangestats.core.ui.ic_weapon_revolver
-import pl.kacper.misterski.rangestats.core.ui.ic_weapon_rifle
-import pl.kacper.misterski.rangestats.core.ui.ic_weapon_shotgun
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
-import pl.kacper.misterski.rangestats.core.ui.weapon_pistol
-import pl.kacper.misterski.rangestats.core.ui.weapon_revolver
-import pl.kacper.misterski.rangestats.core.ui.weapon_rifle
-import pl.kacper.misterski.rangestats.core.ui.weapon_shotgun
 
-// TODO mapper?
 @Composable
 fun WeaponIcon(
-    type: WeaponType,
+    model: WeaponIconUiModel,
     modifier: Modifier = Modifier,
     tint: Color = TacAccent,
 ) {
-    val (painter, contentDesc) = when (type) {
-        WeaponType.PISTOL -> painterResource(Res.drawable.ic_weapon_pistol) to stringResource(Res.string.weapon_pistol)
-        WeaponType.REVOLVER -> painterResource(Res.drawable.ic_weapon_revolver) to stringResource(Res.string.weapon_revolver)
-        WeaponType.SHOTGUN -> painterResource(Res.drawable.ic_weapon_shotgun) to stringResource(Res.string.weapon_shotgun)
-        WeaponType.RIFLE -> painterResource(Res.drawable.ic_weapon_rifle) to stringResource(Res.string.weapon_rifle)
-    }
     Icon(
-        painter = painter,
-        contentDescription = contentDesc,
+        painter = painterResource(model.icon),
+        contentDescription = stringResource(model.title),
         modifier = modifier,
         tint = tint,
     )
@@ -50,7 +34,7 @@ private fun WeaponIconAllTypesPreview() {
     RangeStatsTheme {
         Row {
             WeaponType.entries.forEach { type ->
-                WeaponIcon(type = type, modifier = Modifier.padding(Dimen.dp8))
+                WeaponIcon(model = type.toUiModel(), modifier = Modifier.padding(Dimen.dp8))
             }
         }
     }

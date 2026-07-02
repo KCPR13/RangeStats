@@ -35,6 +35,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
+import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
@@ -206,7 +207,7 @@ private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel) {
                 .background(TacBgElevated, RoundedCornerShape(Dimen.dp7)),
             contentAlignment = Alignment.Center,
         ) {
-            WeaponIcon(type = weapon.type, modifier = Modifier.size(Dimen.dp24))
+            WeaponIcon(model = weapon.icon, modifier = Modifier.size(Dimen.dp24))
         }
         Spacer(Modifier.width(Dimen.dp12))
         Column(modifier = Modifier.weight(1f)) {
@@ -403,13 +404,13 @@ private fun SettingsScreenPreview() {
                     SettingsUiModel.WeaponUiModel(
                         "Glock 17",
                         "pistol",
-                        WeaponType.PISTOL,
+                        WeaponType.PISTOL.toUiModel(),
                         "9mm"
                     ),
                     SettingsUiModel.WeaponUiModel(
                         "AR-15",
                         "carbine",
-                        WeaponType.RIFLE,
+                        WeaponType.RIFLE.toUiModel(),
                         "5.56mm"
                     ),
                 ),

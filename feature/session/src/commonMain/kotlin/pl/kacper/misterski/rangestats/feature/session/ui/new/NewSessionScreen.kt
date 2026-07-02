@@ -188,7 +188,7 @@ private fun SectionItem(
 
 @Composable
 private fun WeaponList(
-    weapons: List<Weapon>,
+    weapons: List<NewSessionUiModel.WeaponRowUiModel>,
     selectedWeaponName: String?,
     onSelect: (String) -> Unit,
 ) {
@@ -210,7 +210,7 @@ private fun WeaponList(
 
 @Composable
 private fun WeaponRow(
-    weapon: Weapon,
+    weapon: NewSessionUiModel.WeaponRowUiModel,
     selected: Boolean,
     onClick: () -> Unit,
 ) {
@@ -238,7 +238,7 @@ private fun WeaponRow(
             contentAlignment = Alignment.Center,
         ) {
             WeaponIcon(
-                type = weapon.type,
+                model = weapon.icon,
                 modifier = Modifier.size(Dimen.dp24),
                 tint = if (selected) TacAccent else TacTextMuted,
             )
@@ -281,8 +281,8 @@ private fun NewSessionScreenPreview() {
             state = NewSessionUiModel(
                 locationName = "Strzelnica Łódź",
                 weapons = listOf(
-                    Weapon( "Glock 17", WeaponType.PISTOL, "9mm"),
-                    Weapon( "AR-15", WeaponType.RIFLE, "5.56"),
+                    Weapon("Glock 17", WeaponType.PISTOL, "9mm").toUiModel(),
+                    Weapon("AR-15", WeaponType.RIFLE, "5.56").toUiModel(),
                 ),
                 selectedWeaponName = "1",
                 distanceMeters = 25,

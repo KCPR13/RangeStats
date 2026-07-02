@@ -40,7 +40,7 @@ class WeaponListViewModel(
 
     private suspend fun loadWeapons() {
         _uiModel.update { it.copy(isLoading = true) }
-        val weapons = getWeapons().getOrElse { emptyList() }
+        val weapons = getWeapons().getOrElse { emptyList() }.map { it.toUiModel() }
         _uiModel.update { it.copy(isLoading = false, weapons = weapons) }
     }
 }

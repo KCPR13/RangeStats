@@ -1,8 +1,8 @@
 package pl.kacper.misterski.rangestats.feature.settings.ui.settings
 
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
-import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.core.ui.component.WeaponIconUiModel
 
 data class SettingsUiModel(
     val profile: UserProfile = UserProfile("", UnitSystem.METRIC, 25),
@@ -13,7 +13,7 @@ data class SettingsUiModel(
     data class WeaponUiModel(
         val name: String,
         val badgeText: String,
-        val type: WeaponType,
+        val icon: WeaponIconUiModel,
         val caliber: String,
     )
 }
