@@ -34,14 +34,7 @@ class ActiveSessionViewModel(
     private fun loadSession(sessionId: String) {
         viewModelScope.launch {
             getSession(sessionId).onSuccess { session ->
-                _uiModel.update {
-                    it.copy(
-                        sessionId = sessionId,
-                        locationName = session.locationName,
-                        distanceMeters = session.distanceMeters,
-                        caliber = session.weaponId,
-                    )
-                }
+                _uiModel.update { session.toUiModel() }
             }
         }
     }

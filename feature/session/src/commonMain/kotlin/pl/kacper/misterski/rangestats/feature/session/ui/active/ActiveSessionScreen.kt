@@ -170,7 +170,7 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
             )
         }
         Text(
-            text = formatElapsed(state.elapsedSeconds),
+            text = state.elapsedTimeFormatted,
             color = TacTextMuted,
             fontSize = FontSize.sp10,
         )
@@ -367,21 +367,6 @@ private fun FinishButton(onClick: () -> Unit) {
             fontSize = FontSize.sp11,
             letterSpacing = LetterSpacing.em10,
         )
-    }
-}
-
-private const val TIME_FORMAT_HMS = "%02d:%02d:%02d"
-private const val TIME_FORMAT_MS = "%02d:%02d"
-
-//TODO business logic
-private fun formatElapsed(seconds: Long): String {
-    val h = seconds / 3600
-    val m = (seconds % 3600) / 60
-    val s = seconds % 60
-    return if (h > 0) {
-        TIME_FORMAT_HMS.format(h, m, s)
-    } else {
-        TIME_FORMAT_MS.format(m, s)
     }
 }
 

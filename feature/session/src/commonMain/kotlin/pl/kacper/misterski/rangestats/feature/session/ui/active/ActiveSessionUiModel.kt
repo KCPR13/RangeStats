@@ -8,6 +8,7 @@ data class ActiveSessionUiModel(
     val caliber: String = "",
     val distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
     val elapsedSeconds: Long = 0L,
+    val elapsedTimeFormatted: String = "00:00",
     val targetCount: Int = 0,
     val avgScore: Float = 0f,
     val totalHits: Int = 0,

@@ -7,15 +7,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import pl.kacper.misterski.rangestats.core.data.datasource.permission.PermissionDataSource
 import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
 import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CheckPermissionStatusUseCase
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
 
 class OnboardingViewModel(
-    private val completeOnboarding: CompleteOnboardingUseCase,
-    private val permissionDataSource: PermissionDataSource, //TODO datasource in vm?
+    private val completeOnboardingUseCase: CompleteOnboardingUseCase,
+    private val checkPermissionStatusUseCase: CheckPermissionStatusUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(OnboardingUiModel())
@@ -96,7 +96,7 @@ class OnboardingViewModel(
             else -> return
         }
         viewModelScope.launch {
-            if (permissionDataSource.getStatus(permission) == PermissionStatus.GRANTED) {
+            if (checkPermissionStatusUseCase(permission) == PermissionStatus.GRANTED) {
                 advancePage()
             }
         }
@@ -105,7 +105,7 @@ class OnboardingViewModel(
     private fun complete() {
         val state = _uiModel.value
         viewModelScope.launch {
-            completeOnboarding(
+            completeOnboardingUseCase(
                 UserProfile(
                     displayName = state.displayName,
                     units = state.unitSystem,
