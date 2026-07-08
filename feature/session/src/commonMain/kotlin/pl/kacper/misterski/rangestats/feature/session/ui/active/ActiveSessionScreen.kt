@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,6 +36,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
+import pl.kacper.misterski.rangestats.core.ui.theme.TacScrim
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.session.generated.resources.Res
@@ -61,76 +63,88 @@ fun ActiveSessionScreen(
     state: ActiveSessionUiModel,
     onAction: (ActiveSessionAction) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        ActiveSessionHeader(state = state, onBack = { onAction(ActiveSessionAction.Back) })
-        SessionStatsBar(state = state)
-        Box(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimen.dp16, vertical = Dimen.dp14)
-                .height(Dimen.dp100)
-                .background(TacBgDeep, RoundedCornerShape(Dimen.dp8))
-                .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8)),
-            contentAlignment = Alignment.Center,
+                .fillMaxSize()
+                .background(TacBgDeep),
         ) {
-            CameraCorners()
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
+            ActiveSessionHeader(state = state, onBack = { onAction(ActiveSessionAction.Back) })
+            SessionStatsBar(state = state)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimen.dp16, vertical = Dimen.dp14)
+                    .height(Dimen.dp100)
+                    .background(TacBgDeep, RoundedCornerShape(Dimen.dp8))
+                    .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8)),
+                contentAlignment = Alignment.Center,
+            ) {
+                CameraCorners()
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
+                ) {
+                    Text(
+                        text = stringResource(Res.string.active_session_target_icon),
+                        color = TacTextMuted,
+                        fontSize = FontSize.sp32,
+                    )
+                    Text(
+                        text = stringResource(Res.string.active_session_camera_hint),
+                        color = TacTextMuted,
+                        fontSize = FontSize.sp10,
+                        letterSpacing = LetterSpacing.em6,
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimen.dp16),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(Res.string.active_session_target_icon),
+                    text = stringResource(Res.string.active_session_prev_targets),
                     color = TacTextMuted,
-                    fontSize = FontSize.sp32,
+                    fontSize = FontSize.sp9,
+                    letterSpacing = LetterSpacing.em12,
                 )
                 Text(
-                    text = stringResource(Res.string.active_session_camera_hint),
+                    text = stringResource(Res.string.active_session_targets_added_format, state.targetCount),
                     color = TacTextMuted,
                     fontSize = FontSize.sp10,
-                    letterSpacing = LetterSpacing.em6,
                 )
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimen.dp16),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(Res.string.active_session_prev_targets),
-                color = TacTextMuted,
-                fontSize = FontSize.sp9,
-                letterSpacing = LetterSpacing.em12,
-            )
-            Text(
-                text = stringResource(Res.string.active_session_targets_added_format, state.targetCount),
-                color = TacTextMuted,
-                fontSize = FontSize.sp10,
-            )
-        }
-        Spacer(Modifier.height(Dimen.dp8))
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = Dimen.dp16),
-            verticalArrangement = Arrangement.spacedBy(Dimen.dp5),
-        ) {
-            items(state.targets.reversed()) { target ->
-                TargetRow(target = target)
+            Spacer(Modifier.height(Dimen.dp8))
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = Dimen.dp16),
+                verticalArrangement = Arrangement.spacedBy(Dimen.dp5),
+            ) {
+                items(state.targets.reversed()) { target ->
+                    TargetRow(target = target)
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimen.dp16),
+            ) {
+                FinishButton(onClick = { onAction(ActiveSessionAction.FinishSession) })
             }
         }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimen.dp16),
-        ) {
-            FinishButton(onClick = { onAction(ActiveSessionAction.FinishSession) })
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(TacScrim),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = TacAccent)
+            }
         }
     }
 }
@@ -380,11 +394,33 @@ private fun ActiveSessionScreenPreview() {
                 locationName = "Strzelnica Łódź",
                 caliber = "9mm",
                 distanceMeters = 25,
-                elapsedSeconds = 1122,
+                elapsedTimeFormatted = "18:42",
                 targetCount = 3,
                 avgScore = 87f,
                 totalHits = 62,
                 totalMisses = 8,
+            ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ActiveSessionScreenLoadingPreview() {
+    RangeStatsTheme {
+        ActiveSessionScreen(
+            state = ActiveSessionUiModel(
+                sessionId = "1",
+                locationName = "Strzelnica Łódź",
+                caliber = "9mm",
+                distanceMeters = 25,
+                elapsedTimeFormatted = "18:42",
+                targetCount = 3,
+                avgScore = 87f,
+                totalHits = 62,
+                totalMisses = 8,
+                isLoading = true,
             ),
             onAction = {},
         )
