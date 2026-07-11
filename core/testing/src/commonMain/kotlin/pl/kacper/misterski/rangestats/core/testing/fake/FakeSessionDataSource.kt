@@ -31,10 +31,11 @@ class FakeSessionDataSource : SessionDataSource {
         shots.removeAll { it.sessionId == id }
     }
 
-    override suspend fun insertShot(entity: ShotEntity): Long {
-        val id = if (entity.id != 0L) entity.id else (shots.maxOfOrNull { it.id } ?: 0) + 1
-        shots.add(entity.copy(id = id))
-        return id
+    override suspend fun insertShots(entities: List<ShotEntity>) {
+        entities.forEach { entity ->
+            val id = if (entity.id != 0L) entity.id else (shots.maxOfOrNull { it.id } ?: 0) + 1
+            shots.add(entity.copy(id = id))
+        }
     }
 
     override suspend fun getShotsForSession(sessionId: Long): List<ShotEntity> =

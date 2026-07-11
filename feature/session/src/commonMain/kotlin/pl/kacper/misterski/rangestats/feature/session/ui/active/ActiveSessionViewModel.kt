@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
+import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AddShotUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 
 class ActiveSessionViewModel(
     private val analyzeTarget: AnalyzeTargetUseCase,
+    private val addShot: AddShotUseCase,
     private val finishSession: FinishSessionUseCase,
     private val getSession: GetSessionUseCase,
 ) : ViewModel() {
@@ -67,6 +69,7 @@ class ActiveSessionViewModel(
                                 .takeIf { it.isFinite() } ?: 0f,
                         )
                     }
+                    addShot(_uiModel.value.sessionId, result)
                 }
                 .onFailure {
                     _uiModel.update { state ->
@@ -81,11 +84,13 @@ class ActiveSessionViewModel(
     }
 
     private fun finish() {
-        val sessionId = _uiModel.value.sessionId
+        val state = _uiModel.value
+        val hasAnalyzedTarget = state.targets.any { it.analysisResult != null }
+        val score = state.avgScore.takeIf { hasAnalyzedTarget }
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
-            finishSession(sessionId)
-                .onSuccess { _uiModel.update { it.copy(isLoading = false, navigateToSummary = sessionId) } }
+            finishSession(state.sessionId, score)
+                .onSuccess { _uiModel.update { it.copy(isLoading = false, navigateToSummary = state.sessionId) } }
                 .onFailure { _uiModel.update { it.copy(isLoading = false) } }
         }
     }

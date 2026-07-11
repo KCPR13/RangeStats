@@ -27,8 +27,9 @@ class SessionDataSourceImpl(
         sessionDao.deleteSession(id)
     }
 
-    override suspend fun insertShot(entity: ShotEntity): Long =
-        sessionDao.insertShot(entity)
+    override suspend fun insertShots(entities: List<ShotEntity>) {
+        sessionDao.insertShots(entities)
+    }
 
     override suspend fun getShotsForSession(sessionId: Long): List<ShotEntity> =
         shotDao.getShotsForSession(sessionId)

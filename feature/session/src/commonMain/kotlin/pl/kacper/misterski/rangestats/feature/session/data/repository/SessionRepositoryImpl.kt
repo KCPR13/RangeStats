@@ -37,18 +37,18 @@ class SessionRepositoryImpl(
         return entity.copy(id = id).toDomain(emptyList())
     }
 
-    override suspend fun addShot(shot: Shot) {
-        sessionDataSource.insertShot(shot.toEntity())
+    override suspend fun addShots(shots: List<Shot>) {
+        sessionDataSource.insertShots(shots.map { it.toEntity() })
     }
 
     override suspend fun analyzeTarget(imageBytes: ByteArray): Result<AnalysisResult> =
         runCatching { visionDataSource.analyzeTarget(imageBytes) }
 
-    override suspend fun finishSession(sessionId: Long): Result<Session> = runCatching {
+    override suspend fun finishSession(sessionId: Long, score: Float?): Result<Session> = runCatching {
         val entity = sessionDataSource.getSessionById(sessionId)
             ?: throw SessionNotFoundException(sessionId)
         val shots = sessionDataSource.getShotsForSession(sessionId)
-        val updated = entity.copy(finishedAt = currentTimeMillis())
+        val updated = entity.copy(finishedAt = currentTimeMillis(), score = score)
         sessionDataSource.updateSession(updated)
         updated.toDomain(shots)
     }

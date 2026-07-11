@@ -13,11 +13,11 @@ interface SessionRepository {
         targetType: TargetType,
     ): Session
 
-    suspend fun addShot(shot: Shot)
+    suspend fun addShots(shots: List<Shot>)
 
     suspend fun analyzeTarget(imageBytes: ByteArray): Result<AnalysisResult>
 
-    suspend fun finishSession(sessionId: Long): Result<Session>
+    suspend fun finishSession(sessionId: Long, score: Float?): Result<Session>
 
     suspend fun getSession(sessionId: Long): Session?
 }

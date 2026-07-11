@@ -9,6 +9,6 @@ interface SessionDataSource {
     suspend fun getSessionById(id: Long): SessionEntity?
     suspend fun getAllSessions(): List<SessionEntity>
     suspend fun deleteSession(id: Long)
-    suspend fun insertShot(entity: ShotEntity): Long
+    suspend fun insertShots(entities: List<ShotEntity>)
     suspend fun getShotsForSession(sessionId: Long): List<ShotEntity>
 }

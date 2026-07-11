@@ -26,6 +26,6 @@ interface SessionDao {
     suspend fun deleteSession(id: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShot(entity: ShotEntity): Long
+    suspend fun insertShots(entities: List<ShotEntity>)
 
 }
