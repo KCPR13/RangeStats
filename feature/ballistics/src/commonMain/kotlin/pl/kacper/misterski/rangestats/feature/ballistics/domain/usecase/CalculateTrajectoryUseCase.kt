@@ -1,5 +1,6 @@
 package pl.kacper.misterski.rangestats.feature.ballistics.domain.usecase
 
+import pl.kacper.misterski.rangestats.feature.ballistics.domain.exceptions.InvalidBallisticsInputException
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsInput
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsResult
 import kotlin.math.cos
@@ -8,13 +9,12 @@ import kotlin.math.sqrt
 
 class CalculateTrajectoryUseCase {
 
-    // TODO
     operator fun invoke(input: BallisticsInput): Result<BallisticsResult> = runCatching {
-        require(input.muzzleVelocityMs > 0.0) { "Muzzle velocity must be positive" }
-        require(input.ballisticCoefficient > 0.0) { "BC must be positive" }
-        require(input.bulletMassGrains > 0.0) { "Bullet mass must be positive" }
-        require(input.zeroRangeMeters > 0) { "Zero range must be positive" }
-        require(input.targetDistanceMeters > 0) { "Target distance must be positive" }
+        if (input.muzzleVelocityMs <= 0.0) throw InvalidBallisticsInputException.InvalidMuzzleVelocity
+        if (input.ballisticCoefficient <= 0.0) throw InvalidBallisticsInputException.InvalidBallisticCoefficient
+        if (input.bulletMassGrains <= 0.0) throw InvalidBallisticsInputException.InvalidBulletMass
+        if (input.zeroRangeMeters <= 0) throw InvalidBallisticsInputException.InvalidZeroRange
+        if (input.targetDistanceMeters <= 0) throw InvalidBallisticsInputException.InvalidTargetDistance
 
         val bcMetric = input.ballisticCoefficient * BC_CONVERSION
         val massKg = input.bulletMassGrains * GRAIN_TO_KG
