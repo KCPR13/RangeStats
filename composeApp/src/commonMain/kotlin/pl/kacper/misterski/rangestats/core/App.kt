@@ -44,9 +44,6 @@ fun App() {
             )
 
             dashboard(
-                onNewSession = {
-                    navController.navigate(AppRoutes.NewSession.route)
-                },
                 onOpenHistory = {
                     navController.navigate(AppRoutes.History.route)
                 },

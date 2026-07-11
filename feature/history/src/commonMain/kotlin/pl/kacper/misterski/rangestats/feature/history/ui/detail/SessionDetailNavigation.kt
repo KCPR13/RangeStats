@@ -15,9 +15,9 @@ fun NavGraphBuilder.sessionDetail(
 ) {
     composable(
         route = AppRoutes.SessionDetail.ROUTE,
-        arguments = listOf(navArgument(AppRoutes.SessionDetail.ARG) { type = NavType.StringType }),
+        arguments = listOf(navArgument(AppRoutes.SessionDetail.ARG) { type = NavType.LongType }),
     ) { backStackEntry ->
-        val sessionId = backStackEntry.arguments?.getString(AppRoutes.SessionDetail.ARG).orEmpty()
+        val sessionId = backStackEntry.arguments?.getLong(AppRoutes.SessionDetail.ARG) ?: 0L
         val viewModel = koinViewModel<SessionDetailViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
 

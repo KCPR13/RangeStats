@@ -4,6 +4,6 @@ import pl.kacper.misterski.rangestats.core.domain.models.Session
 
 interface HistoryRepository {
     suspend fun getSessions(): List<Session>
-    suspend fun getSession(id: String): Session?
-    suspend fun deleteSession(id: String)
+    suspend fun getSession(id: Long): Session?
+    suspend fun deleteSession(id: Long)
 }

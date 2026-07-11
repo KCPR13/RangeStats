@@ -31,7 +31,7 @@ class ActiveSessionViewModel(
         }
     }
 
-    private fun loadSession(sessionId: String) {
+    private fun loadSession(sessionId: Long) {
         viewModelScope.launch {
             getSession(sessionId).onSuccess { session ->
                 _uiModel.update { session.toUiModel() }

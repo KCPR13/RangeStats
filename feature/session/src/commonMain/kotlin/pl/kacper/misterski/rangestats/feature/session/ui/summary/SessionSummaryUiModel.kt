@@ -3,7 +3,7 @@ package pl.kacper.misterski.rangestats.feature.session.ui.summary
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 
 data class SessionSummaryUiModel(
-    val sessionId: String = "",
+    val sessionId: Long = 0,
     val locationName: String = "",
     val caliber: String = "",
     val distanceMeters: Int = 0,

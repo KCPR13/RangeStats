@@ -28,7 +28,7 @@ class SessionDetailViewModel(
         }
     }
 
-    private fun load(sessionId: String) {
+    private fun load(sessionId: Long) {
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true, sessionId = sessionId) }
             getSessionDetail(sessionId)

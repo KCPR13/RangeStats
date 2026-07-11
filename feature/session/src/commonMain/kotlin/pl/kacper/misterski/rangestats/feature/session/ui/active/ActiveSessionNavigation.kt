@@ -11,14 +11,14 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 
 fun NavGraphBuilder.activeSession(
-    onSessionFinished: (String) -> Unit,
+    onSessionFinished: (Long) -> Unit,
     onBack: () -> Unit,
 ) {
     composable(
-        route = AppRoutes.ActiveSession("").route,
-        arguments = listOf(navArgument(AppRoutes.ActiveSession.ARG) { type = NavType.StringType }),
+        route = AppRoutes.ActiveSession.ROUTE,
+        arguments = listOf(navArgument(AppRoutes.ActiveSession.ARG) { type = NavType.LongType }),
     ) { backStackEntry ->
-        val sessionId = backStackEntry.arguments?.getString(AppRoutes.ActiveSession.ARG).orEmpty()
+        val sessionId = backStackEntry.arguments?.getLong(AppRoutes.ActiveSession.ARG) ?: 0L
         val viewModel = koinViewModel<ActiveSessionViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
 

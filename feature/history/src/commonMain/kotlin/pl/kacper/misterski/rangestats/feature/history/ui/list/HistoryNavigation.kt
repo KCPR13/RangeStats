@@ -10,7 +10,7 @@ import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
 fun NavGraphBuilder.history(
-    onOpenDetail: (String) -> Unit,
+    onOpenDetail: (Long) -> Unit,
     onNavigate: (BottomNavDestination) -> Unit,
 ) {
     composable(route = AppRoutes.History.route) {

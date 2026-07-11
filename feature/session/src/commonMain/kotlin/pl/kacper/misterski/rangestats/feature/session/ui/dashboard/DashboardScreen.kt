@@ -355,7 +355,7 @@ private fun DashboardScreenPreview() {
                 totalShots = 1200,
                 bestScore = 98f,
                 lastSession = Session(
-                    id = "preview",
+                    id = 1L,
                     weaponId = "w1",
                     locationName = "Strzelnica Łódź",
                     distanceMeters = 25,

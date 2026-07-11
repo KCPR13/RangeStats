@@ -9,7 +9,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 
 fun NavGraphBuilder.newSession(
-    onSessionStarted: (String) -> Unit,
+    onSessionStarted: (Long) -> Unit,
     onBack: () -> Unit,
 ) {
     composable(route = AppRoutes.NewSession.route) {

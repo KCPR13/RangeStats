@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = ShotEntity.TABLE_NAME)
 data class ShotEntity(
-    @PrimaryKey val id: String,
-    val sessionId: String,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val sessionId: Long,
     val zoneHit: String,
     val timestamp: Long,
 ) {

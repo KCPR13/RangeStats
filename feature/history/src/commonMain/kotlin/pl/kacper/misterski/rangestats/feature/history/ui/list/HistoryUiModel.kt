@@ -1,7 +1,7 @@
 package pl.kacper.misterski.rangestats.feature.history.ui.list
 
 data class SessionListItem(
-    val id: String,
+    val id: Long,
     val locationName: String,
     val distanceMeters: Int,
     val dateLabel: String,
@@ -12,5 +12,5 @@ data class SessionListItem(
 data class HistoryUiModel(
     val isLoading: Boolean = true,
     val sessions: List<SessionListItem> = emptyList(),
-    val navigateToDetail: String? = null,
+    val navigateToDetail: Long? = null,
 )

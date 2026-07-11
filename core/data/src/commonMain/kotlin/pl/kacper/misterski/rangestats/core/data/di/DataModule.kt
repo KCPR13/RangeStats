@@ -22,6 +22,7 @@ val dataModule = module {
     single<AppDatabase> {
         getDatabaseBuilder()
             .setDriver(BundledSQLiteDriver())
+            .fallbackToDestructiveMigration(dropAllTables = true) // TODO remove after first release
             .build()
     }
     single<SessionDataSource> { SessionDataSourceImpl(get<AppDatabase>().sessionDao(),

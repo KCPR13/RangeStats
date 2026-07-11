@@ -7,7 +7,6 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 class FakeUserPrefsDataSource : UserPrefsDataSource {
 
     var profile: UserProfile = UserProfile(
-        id = "test-user",
         displayName = "Test User",
         units = UnitSystem.METRIC,
         defaultDistanceMeters = 25,

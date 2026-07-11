@@ -17,13 +17,13 @@ class HistoryRepositoryImpl(
         }
     }
 
-    override suspend fun getSession(id: String): Session? {
+    override suspend fun getSession(id: Long): Session? {
         val entity = sessionDataSource.getSessionById(id) ?: return null
         val shots = sessionDataSource.getShotsForSession(id)
         return entity.toDomain(shots)
     }
 
-    override suspend fun deleteSession(id: String) {
+    override suspend fun deleteSession(id: Long) {
         sessionDataSource.deleteSession(id)
     }
 }

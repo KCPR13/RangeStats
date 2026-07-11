@@ -8,9 +8,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
-//TODO usage
 fun NavGraphBuilder.dashboard(
-    onNewSession: () -> Unit,
     onOpenHistory: () -> Unit,
     onNavigate: (BottomNavDestination) -> Unit,
 ) {
@@ -21,9 +19,7 @@ fun NavGraphBuilder.dashboard(
             state = state,
             onAction = { action ->
                 when (action) {
-                    DashboardAction.NewSession -> onNewSession()
                     DashboardAction.OpenHistory -> onOpenHistory()
-                    DashboardAction.OpenSettings -> onNavigate(BottomNavDestination.Settings)
                 }
             },
             onNavigate = onNavigate,

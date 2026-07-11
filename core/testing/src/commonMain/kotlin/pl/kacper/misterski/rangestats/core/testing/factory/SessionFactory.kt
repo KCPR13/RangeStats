@@ -7,7 +7,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Session
 import pl.kacper.misterski.rangestats.core.domain.models.Shot
 
 fun testSession(
-    id: String = "test-session-1",
+    id: Long = 1L,
     weaponId: String = "test-weapon-1",
     locationName: String = "Test Range",
     distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
@@ -29,8 +29,8 @@ fun testSession(
 )
 
 fun testShot(
-    id: String = "test-shot-1",
-    sessionId: String = "test-session-1",
+    id: Long = 1L,
+    sessionId: Long = 1L,
     zoneHit: TargetZone = TargetZone.TEN,
     timestamp: Long = 1_001_000L,
 ): Shot = Shot(

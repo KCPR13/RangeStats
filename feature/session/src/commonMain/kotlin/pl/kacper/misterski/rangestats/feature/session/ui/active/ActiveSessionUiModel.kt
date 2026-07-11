@@ -3,7 +3,7 @@ package pl.kacper.misterski.rangestats.feature.session.ui.active
 import pl.kacper.misterski.rangestats.core.domain.Constants
 
 data class ActiveSessionUiModel(
-    val sessionId: String = "",
+    val sessionId: Long = 0,
     val locationName: String = "",
     val caliber: String = "",
     val distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
@@ -14,5 +14,5 @@ data class ActiveSessionUiModel(
     val totalMisses: Int = 0,
     val targets: List<TargetEntry> = emptyList(),
     val isLoading: Boolean = false,
-    val navigateToSummary: String? = null,
+    val navigateToSummary: Long? = null,
 )

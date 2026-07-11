@@ -2,7 +2,7 @@ package pl.kacper.misterski.rangestats.feature.history.ui.detail
 
 data class SessionDetailUiModel(
     val isLoading: Boolean = true,
-    val sessionId: String = "",
+    val sessionId: Long = 0,
     val locationName: String = "",
     val distanceMeters: Int = 0,
     val dateLabel: String = "",

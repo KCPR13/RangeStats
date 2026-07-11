@@ -171,7 +171,7 @@ private fun HistoryScreenPreview() {
                 isLoading = false,
                 sessions = listOf(
                     SessionListItem(
-                        id = "1",
+                        id = 1L,
                         locationName = "Strzelnica Łódź",
                         distanceMeters = 25,
                         dateLabel = "24.05.2025",
@@ -179,7 +179,7 @@ private fun HistoryScreenPreview() {
                         score = 89f,
                     ),
                     SessionListItem(
-                        id = "2",
+                        id = 2L,
                         locationName = "Strzelnica Warszawa",
                         distanceMeters = 10,
                         dateLabel = "18.05.2025",

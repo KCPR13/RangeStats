@@ -11,21 +11,21 @@ import pl.kacper.misterski.rangestats.core.data.database.shot.ShotEntity
 interface SessionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSession(entity: SessionEntity)
+    suspend fun insertSession(entity: SessionEntity): Long
 
     @Update
     suspend fun updateSession(entity: SessionEntity)
 
     @Query("SELECT * FROM ${SessionEntity.TABLE_NAME} WHERE id = :id")
-    suspend fun getSessionById(id: String): SessionEntity?
+    suspend fun getSessionById(id: Long): SessionEntity?
 
     @Query("SELECT * FROM ${SessionEntity.TABLE_NAME} ORDER BY startedAt DESC")
     suspend fun getAllSessions(): List<SessionEntity>
 
     @Query("DELETE FROM ${SessionEntity.TABLE_NAME} WHERE id = :id")
-    suspend fun deleteSession(id: String)
+    suspend fun deleteSession(id: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShot(entity: ShotEntity)
+    suspend fun insertShot(entity: ShotEntity): Long
 
 }

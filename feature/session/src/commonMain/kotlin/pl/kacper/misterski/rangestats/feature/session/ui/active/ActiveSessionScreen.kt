@@ -390,7 +390,7 @@ private fun ActiveSessionScreenPreview() {
     RangeStatsTheme {
         ActiveSessionScreen(
             state = ActiveSessionUiModel(
-                sessionId = "1",
+                sessionId = 1L,
                 locationName = "Strzelnica Łódź",
                 caliber = "9mm",
                 distanceMeters = 25,
@@ -411,7 +411,7 @@ private fun ActiveSessionScreenLoadingPreview() {
     RangeStatsTheme {
         ActiveSessionScreen(
             state = ActiveSessionUiModel(
-                sessionId = "1",
+                sessionId = 1L,
                 locationName = "Strzelnica Łódź",
                 caliber = "9mm",
                 distanceMeters = 25,

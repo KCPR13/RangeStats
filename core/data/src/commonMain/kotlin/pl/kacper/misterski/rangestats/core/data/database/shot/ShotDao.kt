@@ -7,6 +7,6 @@ import androidx.room.Query
 interface ShotDao {
 
     @Query("SELECT * FROM ${ShotEntity.TABLE_NAME} WHERE sessionId = :sessionId ORDER BY timestamp ASC")
-    suspend fun getShotsForSession(sessionId: String): List<ShotEntity>
+    suspend fun getShotsForSession(sessionId: Long): List<ShotEntity>
 
 }
