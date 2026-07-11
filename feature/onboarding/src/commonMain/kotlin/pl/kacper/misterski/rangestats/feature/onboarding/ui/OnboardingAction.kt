@@ -13,6 +13,7 @@ sealed class OnboardingAction {
     data object DecrementDistance : OnboardingAction()
     data object AddNewWeapon : OnboardingAction()
     data object NavigationHandled : OnboardingAction()
+    data object NavigateToAddWeapon : OnboardingAction()
     data class CameraPermissionResult(val status: PermissionStatus) : OnboardingAction()
     data class LocationPermissionResult(val status: PermissionStatus) : OnboardingAction()
 }

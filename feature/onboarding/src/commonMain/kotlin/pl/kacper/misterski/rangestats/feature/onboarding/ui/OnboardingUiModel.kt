@@ -1,6 +1,8 @@
 package pl.kacper.misterski.rangestats.feature.onboarding.ui
 
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
+import pl.kacper.misterski.rangestats.core.ui.component.WeaponIconUiModel
+
 data class OnboardingUiModel(
     val currentPage: OnboardingPage = OnboardingPage.WELCOME,
     val displayName: String = "",
@@ -12,7 +14,15 @@ data class OnboardingUiModel(
     val maxDistance: Int = 1000,
     val showCameraRequired: Boolean = false,
     val showCameraPermanentlyDenied: Boolean = false,
+    val navigateToAddWeapon: Boolean = false,
+    val weapons: List<WeaponRowUiModel> = emptyList(),
 ) {
+    data class WeaponRowUiModel(
+        val name: String,
+        val caliber: String,
+        val icon: WeaponIconUiModel,
+    )
+
     companion object {
         val PAGE_COUNT = OnboardingPage.entries.size
     }

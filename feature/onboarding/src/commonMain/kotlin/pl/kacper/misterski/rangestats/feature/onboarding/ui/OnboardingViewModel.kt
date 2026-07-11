@@ -12,10 +12,12 @@ import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CheckPermissionStatusUseCase
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
+import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.GetWeaponsUseCase
 
 class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
     private val checkPermissionStatusUseCase: CheckPermissionStatusUseCase,
+    private val getWeapons: GetWeaponsUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(OnboardingUiModel())
@@ -30,8 +32,9 @@ class OnboardingViewModel(
             is OnboardingAction.SelectUnitSystem -> _uiModel.update { it.copy(unitSystem = action.system) }
             OnboardingAction.DecrementDistance -> decrementDistance()
             OnboardingAction.IncrementDistance -> incrementDistance()
-            OnboardingAction.AddNewWeapon -> {} // TODO
+            OnboardingAction.AddNewWeapon -> _uiModel.update { it.copy(navigateToAddWeapon = true) }
             OnboardingAction.NavigationHandled -> _uiModel.update { it.copy(isCompleted = false) }
+            OnboardingAction.NavigateToAddWeapon -> _uiModel.update { it.copy(navigateToAddWeapon = false) }
             is OnboardingAction.CameraPermissionResult -> handleCameraResult(action.status)
             is OnboardingAction.LocationPermissionResult -> handleLocationResult(action.status)
         }
@@ -78,6 +81,7 @@ class OnboardingViewModel(
             val newPage = entries[nextIndex]
             _uiModel.update { it.copy(currentPage = newPage) }
             checkIfPermissionAlreadyGranted(newPage)
+            if (newPage == OnboardingPage.ARSENAL) loadWeapons()
         } else {
             complete()
         }
@@ -86,6 +90,19 @@ class OnboardingViewModel(
     fun checkCameraPermission() {
         if (_uiModel.value.currentPage != OnboardingPage.CAMERA) return
         checkIfPermissionAlreadyGranted(OnboardingPage.CAMERA)
+    }
+
+    fun refreshArsenal() {
+        if (_uiModel.value.currentPage != OnboardingPage.ARSENAL) return
+        loadWeapons()
+    }
+
+    private fun loadWeapons() {
+        viewModelScope.launch {
+            getWeapons().onSuccess { weapons ->
+                _uiModel.update { it.copy(weapons = weapons.map { weapon -> weapon.toUiModel() }) }
+            }
+        }
     }
 
 

@@ -41,6 +41,9 @@ fun App() {
                         popUpTo(AppRoutes.Onboarding.route) { inclusive = true }
                     }
                 },
+                onAddWeapon = {
+                    navController.navigate(AppRoutes.AddWeapon.route)
+                },
             )
 
             dashboard(

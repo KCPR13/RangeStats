@@ -83,7 +83,7 @@ fun OnboardingScreen(
                     )
 
                     OnboardingPage.PROFILE -> ProfilePage(state = state, onAction = onAction)
-                    OnboardingPage.ARSENAL -> ArsenalPage(onAction = onAction)
+                    OnboardingPage.ARSENAL -> ArsenalPage(state = state, onAction = onAction)
                 }
             }
         }

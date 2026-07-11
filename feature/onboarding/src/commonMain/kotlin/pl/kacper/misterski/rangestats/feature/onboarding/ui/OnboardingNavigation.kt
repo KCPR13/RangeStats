@@ -15,7 +15,7 @@ import pl.kacper.misterski.rangestats.core.ui.util.rememberCameraPermissionReque
 import pl.kacper.misterski.rangestats.core.ui.util.rememberLocationPermissionRequester
 import pl.kacper.misterski.rangestats.core.ui.util.rememberOpenAppSettings
 
-fun NavGraphBuilder.onboarding(onComplete: () -> Unit) {
+fun NavGraphBuilder.onboarding(onComplete: () -> Unit, onAddWeapon: () -> Unit) {
     composable(route = AppRoutes.Onboarding.route) {
         val viewModel = koinViewModel<OnboardingViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
@@ -33,16 +33,25 @@ fun NavGraphBuilder.onboarding(onComplete: () -> Unit) {
             val observer = LifecycleEventObserver { _, event ->
                 if (event == Lifecycle.Event.ON_RESUME) {
                     viewModel.checkCameraPermission()
+                    viewModel.refreshArsenal()
                 }
             }
             lifecycleOwner.lifecycle.addObserver(observer)
             onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
         }
 
+        //TODO this navigation is tricky
         LaunchedEffect(state.isCompleted) {
             if (state.isCompleted) {
                 viewModel.onAction(OnboardingAction.NavigationHandled)
                 onComplete()
+            }
+        }
+
+        LaunchedEffect(state.navigateToAddWeapon) {
+            if (state.navigateToAddWeapon) {
+                viewModel.onAction(OnboardingAction.NavigateToAddWeapon)
+                onAddWeapon()
             }
         }
 
