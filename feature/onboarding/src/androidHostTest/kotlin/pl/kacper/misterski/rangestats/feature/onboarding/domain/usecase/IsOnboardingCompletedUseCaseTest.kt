@@ -19,7 +19,7 @@ class IsOnboardingCompletedUseCaseTest {
         val result = useCase()
 
         // Then
-        assertFalse(result)
+        assertFalse(result.getOrThrow())
     }
 
     @Test
@@ -31,18 +31,18 @@ class IsOnboardingCompletedUseCaseTest {
         val result = useCase()
 
         // Then
-        assertTrue(result)
+        assertTrue(result.getOrThrow())
     }
 
     @Test
     fun `reflects repository state change`() = runTest {
         // Given
-        assertFalse(useCase())
+        assertFalse(useCase().getOrThrow())
 
         // When
         repo.onboardingCompleted = true
 
         // Then
-        assertTrue(useCase())
+        assertTrue(useCase().getOrThrow())
     }
 }
