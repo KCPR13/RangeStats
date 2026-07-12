@@ -4,23 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator.ballistics
-import pl.kacper.misterski.rangestats.feature.history.ui.detail.sessionDetail
-import pl.kacper.misterski.rangestats.feature.history.ui.list.history
+import pl.kacper.misterski.rangestats.feature.history.ui.historyFlow
 import pl.kacper.misterski.rangestats.feature.onboarding.ui.onboarding
-import pl.kacper.misterski.rangestats.feature.session.ui.active.activeSession
 import pl.kacper.misterski.rangestats.feature.session.ui.dashboard.dashboard
-import pl.kacper.misterski.rangestats.feature.session.ui.new.newSession
-import pl.kacper.misterski.rangestats.feature.session.ui.summary.sessionSummary
-import pl.kacper.misterski.rangestats.feature.settings.ui.settings.settings
-import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.weaponList
-import pl.kacper.misterski.rangestats.feature.settings.ui.weapon.add.addWeapon
+import pl.kacper.misterski.rangestats.feature.session.ui.sessionFlow
+import pl.kacper.misterski.rangestats.feature.settings.ui.settingsFlow
 
 @Composable
 fun App() {
@@ -28,91 +25,46 @@ fun App() {
         val viewModel = koinViewModel<AppViewModel>()
         val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
         val navController = rememberNavController()
-        val route = (startDestination as? AppStartDestination.Ready)?.route ?: return@RangeStatsTheme
 
-        //TODO CLEANUP
-        NavHost(
-            navController = navController,
-            startDestination = route,
-        ) {
-            onboarding(
-                onComplete = {
-                    navController.navigate(AppRoutes.Dashboard.route) {
-                        popUpTo(AppRoutes.Onboarding.route) { inclusive = true }
-                    }
-                },
-                onAddWeapon = {
-                    navController.navigate(AppRoutes.AddWeapon.route)
-                },
-            )
-
-            dashboard(
-                onOpenHistory = {
-                    navController.navigate(AppRoutes.History.route)
-                },
-                onNavigate = { destination -> navController.navigateBottomNav(destination) },
-            )
-
-            newSession(
-                onSessionStarted = { sessionId ->
-                    navController.navigate(AppRoutes.ActiveSession(sessionId).createRoute()) {
-                        popUpTo(AppRoutes.NewSession.route) { inclusive = true }
-                    }
-                },
-                onBack = { navController.navigateUp() },
-            )
-
-            activeSession(
-                onSessionFinished = { sessionId ->
-                    navController.navigate(AppRoutes.SessionSummary(sessionId).createRoute()) {
-                        popUpTo(AppRoutes.ActiveSession.ROUTE) { inclusive = true }
-                    }
-                },
-                onBack = { navController.navigateUp() },
-            )
-
-            sessionSummary(
-                onSaved = {
-                    navController.navigate(AppRoutes.Dashboard.route) {
-                        popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-                        launchSingleTop = true
-                    }
-                },
-                onBack = { navController.navigateUp() },
-            )
-
-            history(
-                onOpenDetail = { sessionId ->
-                    navController.navigate(AppRoutes.SessionDetail(sessionId).createRoute())
-                },
-                onNavigate = { destination -> navController.navigateBottomNav(destination) },
-            )
-
-            sessionDetail(
-                onBack = { navController.navigateUp() },
-            )
-
-            ballistics(
-                onNavigate = { destination -> navController.navigateBottomNav(destination) },
-            )
-
-            settings(
-                onNavigateToWeaponList = {
-                    navController.navigate(AppRoutes.WeaponList.route)
-                },
-            )
-
-            weaponList(
-                onBack = { navController.navigateUp() },
-                showAddWeapon = {
-                    navController.navigate(AppRoutes.AddWeapon.route)
-                },
-            )
-
-            addWeapon(
-                onBack = { navController.navigateUp() },
-            )
+        when (val destination = startDestination) {
+            is AppStartDestination.Loading -> TacLoadingScreen()
+            is AppStartDestination.Ready -> AppNavHost(navController, destination.route)
         }
+    }
+}
+
+@Composable
+private fun AppNavHost(navController: NavHostController, startDestination: String) {
+    val onBack: () -> Unit = { navController.navigateUp() }
+    val onNavigate: (BottomNavDestination) -> Unit = { destination -> navController.navigateBottomNav(destination) }
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+    ) {
+        onboarding(
+            onComplete = {
+                navController.navigate(AppRoutes.Dashboard.route) {
+                    popUpTo(AppRoutes.Onboarding.route) { inclusive = true }
+                }
+            },
+            onAddWeapon = {
+                navController.navigate(AppRoutes.AddWeapon.route)
+            },
+        )
+
+        dashboard(
+            onOpenHistory = {
+                navController.navigate(AppRoutes.History.route)
+            },
+            onNavigate = onNavigate,
+        )
+
+        sessionFlow(navController, onBack)
+        historyFlow(navController, onBack, onNavigate)
+        settingsFlow(navController, onBack)
+
+        ballistics(onNavigate = onNavigate)
     }
 }
 

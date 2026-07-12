@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
+import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
@@ -59,6 +60,10 @@ fun SessionSummaryScreen(
     state: SessionSummaryUiModel,
     onAction: (SessionSummaryAction) -> Unit,
 ) {
+    if (state.isLoading) {
+        TacLoadingScreen()
+        return
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

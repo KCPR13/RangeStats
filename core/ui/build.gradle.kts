@@ -58,6 +58,7 @@ kotlin {
                 implementation(libs.bundles.lifecycle)
                 implementation(libs.material.icons.extended)
                 implementation(libs.navigation.compose)
+                implementation(libs.compottie)
             }
         }
 

@@ -30,6 +30,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
+import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.core_x
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
@@ -63,6 +64,11 @@ fun WeaponListScreen(
 ) {
     LaunchedEffect(Unit) {
         onAction(WeaponListAction.OnStart)
+    }
+
+    if (state.isLoading) {
+        TacLoadingScreen(modifier = modifier)
+        return
     }
 
     Column(

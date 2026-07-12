@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
@@ -73,6 +74,11 @@ fun SettingsScreen(
 
     LaunchedEffect(Unit) {
         onAction(SettingsAction.OnStart)
+    }
+
+    if (model.isLoading) {
+        TacLoadingScreen(modifier = modifier)
+        return
     }
 
     Column(

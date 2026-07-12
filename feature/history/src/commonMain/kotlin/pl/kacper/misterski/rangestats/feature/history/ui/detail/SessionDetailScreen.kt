@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
+import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
@@ -56,6 +57,10 @@ fun SessionDetailScreen(
     state: SessionDetailUiModel,
     onAction: (SessionDetailAction) -> Unit,
 ) {
+    if (state.isLoading) {
+        TacLoadingScreen()
+        return
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
