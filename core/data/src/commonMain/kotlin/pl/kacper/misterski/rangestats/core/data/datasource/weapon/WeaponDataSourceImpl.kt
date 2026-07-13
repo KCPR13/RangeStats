@@ -3,23 +3,23 @@ package pl.kacper.misterski.rangestats.core.data.datasource.weapon
 import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponDao
 import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponEntity
 
-class WeaponDataSourceImpl(private val dao: WeaponDao) : WeaponDataSource {
+class WeaponDataSourceImpl(private val weaponDao: WeaponDao) : WeaponDataSource {
 
     override suspend fun getAllWeapons(): List<WeaponEntity> =
-        dao.getAllWeapons()
+        weaponDao.getAllWeapons()
 
     override suspend fun getWeaponByName(name: String): WeaponEntity? =
-        dao.getWeaponByName(name)
+        weaponDao.getWeaponByName(name)
 
     override suspend fun insertWeapon(entity: WeaponEntity) {
-        dao.insertWeapon(entity)
+        weaponDao.insertWeapon(entity)
     }
 
     override suspend fun updateWeapon(entity: WeaponEntity) {
-        dao.updateWeapon(entity)
+        weaponDao.updateWeapon(entity)
     }
 
     override suspend fun deleteWeapon(name: String) {
-        dao.deleteWeapon(name)
+        weaponDao.deleteWeapon(name)
     }
 }

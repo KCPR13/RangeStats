@@ -11,7 +11,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 
 class SessionSummaryViewModel(
-    private val getSession: GetSessionUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(SessionSummaryUiModel())
@@ -30,7 +30,7 @@ class SessionSummaryViewModel(
     private fun load(sessionId: Long) {
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true, sessionId = sessionId) }
-            getSession(sessionId)
+            getSessionUseCase(sessionId)
                 .onSuccess { session ->
                     val zones = mutableMapOf<TargetZone, Int>()
                     session.shots.forEach { shot ->

@@ -5,14 +5,14 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.repository.OnboardingRepository
 
 class OnboardingRepositoryImpl(
-    private val userPrefs: UserPrefsDataSource,
+    private val userPrefsDataSource: UserPrefsDataSource,
 ) : OnboardingRepository {
 
     override suspend fun isOnboardingCompleted(): Boolean =
-        userPrefs.isOnboardingCompleted()
+        userPrefsDataSource.isOnboardingCompleted()
 
     override suspend fun completeOnboarding(profile: UserProfile) {
-        userPrefs.updateUserProfile(profile)
-        userPrefs.setOnboardingCompleted()
+        userPrefsDataSource.updateUserProfile(profile)
+        userPrefsDataSource.setOnboardingCompleted()
     }
 }

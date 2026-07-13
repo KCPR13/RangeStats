@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.AddWeaponUseCase
 
 class AddWeaponViewModel(
-    private val addWeapon: AddWeaponUseCase,
+    private val addWeaponUseCase: AddWeaponUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(AddWeaponUiModel())
@@ -39,7 +39,7 @@ class AddWeaponViewModel(
 
         viewModelScope.launch {
             _uiModel.update { it.copy(isSaving = true) }
-            addWeapon(name = state.name, type = state.selectedType, caliber = selectedCaliber.name)
+            addWeaponUseCase(name = state.name, type = state.selectedType, caliber = selectedCaliber.name)
                 .onSuccess { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
                 .onFailure { _uiModel.update { it.copy(isSaving = false) } }
         }

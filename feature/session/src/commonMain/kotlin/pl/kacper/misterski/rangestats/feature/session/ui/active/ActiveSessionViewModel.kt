@@ -14,10 +14,10 @@ import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessi
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 
 class ActiveSessionViewModel(
-    private val analyzeTarget: AnalyzeTargetUseCase,
-    private val addShot: AddShotUseCase,
-    private val finishSession: FinishSessionUseCase,
-    private val getSession: GetSessionUseCase,
+    private val analyzeTargetUseCase: AnalyzeTargetUseCase,
+    private val addShotUseCase: AddShotUseCase,
+    private val finishSessionUseCase: FinishSessionUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(ActiveSessionUiModel())
@@ -35,7 +35,7 @@ class ActiveSessionViewModel(
 
     private fun loadSession(sessionId: Long) {
         viewModelScope.launch {
-            getSession(sessionId).onSuccess { session ->
+            getSessionUseCase(sessionId).onSuccess { session ->
                 _uiModel.update { session.toUiModel() }
             }
         }
@@ -50,7 +50,7 @@ class ActiveSessionViewModel(
             )
         }
         viewModelScope.launch {
-            analyzeTarget(imageBytes)
+            analyzeTargetUseCase(imageBytes)
                 .onSuccess { result ->
                     val misses = result.zones[TargetZone.MISS] ?: 0
                     val hits = result.shotCount - misses
@@ -69,7 +69,7 @@ class ActiveSessionViewModel(
                                 .takeIf { it.isFinite() } ?: 0f,
                         )
                     }
-                    addShot(_uiModel.value.sessionId, result)
+                    addShotUseCase(_uiModel.value.sessionId, result)
                 }
                 .onFailure {
                     _uiModel.update { state ->
@@ -89,7 +89,7 @@ class ActiveSessionViewModel(
         val score = state.avgScore.takeIf { hasAnalyzedTarget }
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
-            finishSession(state.sessionId, score)
+            finishSessionUseCase(state.sessionId, score)
                 .onSuccess { _uiModel.update { it.copy(isLoading = false, navigateToSummary = state.sessionId) } }
                 .onFailure { _uiModel.update { it.copy(isLoading = false) } }
         }

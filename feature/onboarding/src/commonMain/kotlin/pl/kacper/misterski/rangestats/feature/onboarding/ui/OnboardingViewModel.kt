@@ -17,7 +17,7 @@ import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.GetWeapo
 class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
     private val checkPermissionStatusUseCase: CheckPermissionStatusUseCase,
-    private val getWeapons: GetWeaponsUseCase,
+    private val getWeaponsUseCase: GetWeaponsUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(OnboardingUiModel())
@@ -99,7 +99,7 @@ class OnboardingViewModel(
 
     private fun loadWeapons() {
         viewModelScope.launch {
-            getWeapons().onSuccess { weapons ->
+            getWeaponsUseCase().onSuccess { weapons ->
                 _uiModel.update { it.copy(weapons = weapons.map { weapon -> weapon.toUiModel() }) }
             }
         }

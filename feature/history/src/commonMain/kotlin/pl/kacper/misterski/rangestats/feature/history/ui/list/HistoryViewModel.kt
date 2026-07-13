@@ -11,7 +11,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Session
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.GetSessionsUseCase
 
 class HistoryViewModel(
-    private val getSessions: GetSessionsUseCase,
+    private val getSessionsUseCase: GetSessionsUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(HistoryUiModel())
@@ -30,7 +30,7 @@ class HistoryViewModel(
 
     private fun load() {
         viewModelScope.launch {
-            getSessions()
+            getSessionsUseCase()
                 .onSuccess { sessions ->
                     _uiModel.update {
                         it.copy(

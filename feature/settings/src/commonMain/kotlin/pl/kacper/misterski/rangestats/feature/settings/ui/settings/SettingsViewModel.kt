@@ -12,7 +12,7 @@ import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetWeapons
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.UpdateUserProfileUseCase
 
 class SettingsViewModel(
-    private val getWeapons: GetWeaponsUseCase,
+    private val getWeaponsUseCase: GetWeaponsUseCase,
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val updateUserProfileUseCase: UpdateUserProfileUseCase,
 ) : ViewModel() {
@@ -33,7 +33,7 @@ class SettingsViewModel(
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
             val profile = getUserProfileUseCase().getOrElse { return@launch }
-            val weapons = getWeapons().getOrElse { emptyList() }
+            val weapons = getWeaponsUseCase().getOrElse { emptyList() }
             val displayNameAbbreviation = profile.displayName.take(2).uppercase()
             _uiModel.update {
                 it.copy(

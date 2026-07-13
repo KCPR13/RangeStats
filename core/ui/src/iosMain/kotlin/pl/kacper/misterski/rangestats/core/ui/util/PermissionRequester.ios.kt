@@ -48,13 +48,13 @@ actual fun rememberLocationPermissionRequester(
         {
             scope.launch {
                 val status = suspendCancellableCoroutine { cont ->
-                    val manager = CLLocationManager()
+                    val locationManager = CLLocationManager()
                     val delegate = LocationPermissionDelegate(
                         onStatus = { cont.resume(it) },
-                        manager = manager,
+                        locationManager = locationManager,
                     )
-                    manager.delegate = delegate
-                    manager.requestWhenInUseAuthorization()
+                    locationManager.delegate = delegate
+                    locationManager.requestWhenInUseAuthorization()
                 }
                 onResult(status)
             }
@@ -64,7 +64,7 @@ actual fun rememberLocationPermissionRequester(
 
 private class LocationPermissionDelegate(
     private val onStatus: (PermissionStatus) -> Unit,
-    private val manager: CLLocationManager,
+    private val locationManager: CLLocationManager,
 ) : NSObject(), CLLocationManagerDelegateProtocol {
 
     override fun locationManagerDidChangeAuthorization(manager: CLLocationManager) {

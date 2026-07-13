@@ -11,7 +11,7 @@ import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.StartSessionUseCase
 
 class NewSessionViewModel(
-    private val startSession: StartSessionUseCase,
+    private val startSessionUseCase: StartSessionUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(NewSessionUiModel())
@@ -48,7 +48,7 @@ class NewSessionViewModel(
         val weaponId = state.selectedWeaponName ?: return
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
-            startSession(
+            startSessionUseCase(
                 weaponId = weaponId,
                 locationName = state.locationName,
                 distanceMeters = state.distanceMeters,

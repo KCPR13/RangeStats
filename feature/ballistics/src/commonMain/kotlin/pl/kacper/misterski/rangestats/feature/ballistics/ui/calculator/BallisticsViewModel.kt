@@ -11,8 +11,8 @@ import pl.kacper.misterski.rangestats.feature.ballistics.domain.usecase.Calculat
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.usecase.GetCaliberPresetsUseCase
 
 class BallisticsViewModel(
-    private val getCaliberPresets: GetCaliberPresetsUseCase,
-    private val calculateTrajectory: CalculateTrajectoryUseCase,
+    private val getCaliberPresetsUseCase: GetCaliberPresetsUseCase,
+    private val calculateTrajectoryUseCase: CalculateTrajectoryUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(BallisticsUiModel())
@@ -21,7 +21,7 @@ class BallisticsViewModel(
     private var domainPresets: List<CaliberPreset> = emptyList()
 
     init {
-        domainPresets = getCaliberPresets()
+        domainPresets = getCaliberPresetsUseCase()
         _uiModel.update { it.copy(presets = domainPresets.map { p -> CaliberPresetUiItem(p.name) }) }
     }
 
@@ -55,7 +55,7 @@ class BallisticsViewModel(
     private fun calculate() {
         val state = _uiModel.value
         val input = buildInput(state) ?: return
-        calculateTrajectory(input)
+        calculateTrajectoryUseCase(input)
             .onSuccess { result ->
                 val dropSign = if (result.dropMm >= 0) SIGN_UP else SIGN_DOWN
                 _uiModel.update {

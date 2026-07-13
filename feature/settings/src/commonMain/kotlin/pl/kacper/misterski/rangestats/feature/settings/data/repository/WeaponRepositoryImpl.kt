@@ -7,17 +7,17 @@ import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.feature.settings.domain.repository.WeaponRepository
 
 class WeaponRepositoryImpl(
-    private val dataSource: WeaponDataSource,
+    private val weaponDataSource: WeaponDataSource,
 ) : WeaponRepository {
 
     override suspend fun getAllWeapons(): List<Weapon> =
-        dataSource.getAllWeapons().map { it.toDomain() }
+        weaponDataSource.getAllWeapons().map { it.toDomain() }
 
     override suspend fun addWeapon(weapon: Weapon) {
-        dataSource.insertWeapon(weapon.toEntity())
+        weaponDataSource.insertWeapon(weapon.toEntity())
     }
 
     override suspend fun deleteWeapon(name: String) {
-        dataSource.deleteWeapon(name)
+        weaponDataSource.deleteWeapon(name)
     }
 }

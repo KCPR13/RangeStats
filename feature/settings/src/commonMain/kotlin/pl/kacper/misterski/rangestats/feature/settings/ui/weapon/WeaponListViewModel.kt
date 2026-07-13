@@ -11,8 +11,8 @@ import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.DeleteWeap
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetWeaponsUseCase
 
 class WeaponListViewModel(
-    private val getWeapons: GetWeaponsUseCase,
-    private val deleteWeapon: DeleteWeaponUseCase,
+    private val getWeaponsUseCase: GetWeaponsUseCase,
+    private val deleteWeaponUseCase: DeleteWeaponUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(WeaponListUiModel())
@@ -33,14 +33,14 @@ class WeaponListViewModel(
 
     private fun delete(id: String) {
         viewModelScope.launch {
-            deleteWeapon(id)
+            deleteWeaponUseCase(id)
             loadWeapons()
         }
     }
 
     private suspend fun loadWeapons() {
         _uiModel.update { it.copy(isLoading = true) }
-        val weapons = getWeapons().getOrElse { emptyList() }.map { it.toUiModel() }
+        val weapons = getWeaponsUseCase().getOrElse { emptyList() }.map { it.toUiModel() }
         _uiModel.update { it.copy(isLoading = false, weapons = weapons) }
     }
 }

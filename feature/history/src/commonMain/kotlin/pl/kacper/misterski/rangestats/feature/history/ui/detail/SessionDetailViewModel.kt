@@ -12,8 +12,8 @@ import pl.kacper.misterski.rangestats.feature.history.domain.usecase.DeleteSessi
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.GetSessionDetailUseCase
 
 class SessionDetailViewModel(
-    private val getSessionDetail: GetSessionDetailUseCase,
-    private val deleteSession: DeleteSessionUseCase,
+    private val getSessionDetailUseCase: GetSessionDetailUseCase,
+    private val deleteSessionUseCase: DeleteSessionUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(SessionDetailUiModel())
@@ -31,7 +31,7 @@ class SessionDetailViewModel(
     private fun load(sessionId: Long) {
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true, sessionId = sessionId) }
-            getSessionDetail(sessionId)
+            getSessionDetailUseCase(sessionId)
                 .onSuccess { session ->
                     val zoneCounts = mutableMapOf<TargetZone, Int>()
                     session.shots.forEach { shot ->
@@ -85,7 +85,7 @@ class SessionDetailViewModel(
     private fun delete() {
         viewModelScope.launch {
             val sessionId = _uiModel.value.sessionId
-            deleteSession(sessionId)
+            deleteSessionUseCase(sessionId)
                 .onSuccess { _uiModel.update { it.copy(navigateBack = true) } }
         }
     }

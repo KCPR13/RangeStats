@@ -18,7 +18,7 @@ sealed interface AppStartDestination {
 }
 
 class AppViewModel(
-    private val isOnboardingCompleted: IsOnboardingCompletedUseCase,
+    private val isOnboardingCompletedUseCase: IsOnboardingCompletedUseCase,
 ) : ViewModel() {
 
     private val _startDestination =
@@ -28,7 +28,7 @@ class AppViewModel(
     init {
         viewModelScope.launch {
             delay(MIN_LOADING_DELAY_MS.milliseconds)
-            val result = isOnboardingCompleted()
+            val result = isOnboardingCompletedUseCase()
             _startDestination.update {
                 result.fold(
                     onSuccess = { completed ->

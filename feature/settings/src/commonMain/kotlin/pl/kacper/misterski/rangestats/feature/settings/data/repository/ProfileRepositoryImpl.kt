@@ -5,12 +5,12 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.feature.settings.domain.repository.ProfileRepository
 
 class ProfileRepositoryImpl(
-    private val dataSource: UserPrefsDataSource,
+    private val userPrefsDataSource: UserPrefsDataSource,
 ) : ProfileRepository {
 
-    override suspend fun getUserProfile(): UserProfile = dataSource.getUserProfile()
+    override suspend fun getUserProfile(): UserProfile = userPrefsDataSource.getUserProfile()
 
     override suspend fun updateUserProfile(profile: UserProfile) {
-        dataSource.updateUserProfile(profile)
+        userPrefsDataSource.updateUserProfile(profile)
     }
 }
