@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
@@ -36,7 +36,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
-import pl.kacper.misterski.rangestats.core.ui.theme.TacScrim
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.session.generated.resources.Res
@@ -63,7 +62,7 @@ fun ActiveSessionScreen(
     state: ActiveSessionUiModel,
     onAction: (ActiveSessionAction) -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    AnimatedLoader(isLoading = state.isLoading, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -135,9 +134,6 @@ fun ActiveSessionScreen(
             ) {
                 FinishButton(onClick = { onAction(ActiveSessionAction.FinishSession) })
             }
-        }
-        if (state.isLoading) {
-            TacLoadingScreen(backgroundColor = TacScrim)
         }
     }
 }

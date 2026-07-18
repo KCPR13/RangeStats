@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
@@ -55,21 +55,24 @@ fun HistoryScreen(
         onNavigate = onNavigate,
         topBar = { HistoryTopBar() },
     ) { padding ->
-        when {
-            state.isLoading -> TacLoadingScreen(modifier = Modifier.padding(padding))
-            state.sessions.isEmpty() -> EmptyState(modifier = Modifier.padding(padding))
-            else -> LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                contentPadding = PaddingValues(Dimen.dp16),
-                verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
-            ) {
-                items(state.sessions) { session ->
-                    SessionCard(
-                        item = session,
-                        onClick = { onAction(HistoryAction.OpenDetail(session.id)) },
-                    )
+        AnimatedLoader(
+            isLoading = state.isLoading,
+            modifier = Modifier.padding(padding),
+        ) {
+            if (state.sessions.isEmpty()) {
+                EmptyState()
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(Dimen.dp16),
+                    verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
+                ) {
+                    items(state.sessions) { session ->
+                        SessionCard(
+                            item = session,
+                            onClick = { onAction(HistoryAction.OpenDetail(session.id)) },
+                        )
+                    }
                 }
             }
         }

@@ -30,7 +30,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.core_x
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
@@ -66,39 +66,36 @@ fun WeaponListScreen(
         onAction(WeaponListAction.OnStart)
     }
 
-    if (state.isLoading) {
-        TacLoadingScreen(modifier = modifier)
-        return
-    }
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        WeaponListHeader(
-            title = stringResource(Res.string.weapon_list_title),
-            subtitle = stringResource(Res.string.weapon_list_subtitle),
-            onBack = onBack,
-        )
+    AnimatedLoader(isLoading = state.isLoading, modifier = modifier) {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(Dimen.dp20),
-            verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
+                .fillMaxSize()
+                .background(TacBgDeep),
         ) {
-            state.weapons.forEach { weapon ->
-                WeaponListRow(
-                    weapon = weapon,
-                    onDelete = { onAction(WeaponListAction.DeleteWeapon(weapon.name)) },
+            WeaponListHeader(
+                title = stringResource(Res.string.weapon_list_title),
+                subtitle = stringResource(Res.string.weapon_list_subtitle),
+                onBack = onBack,
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(Dimen.dp20),
+                verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
+            ) {
+                state.weapons.forEach { weapon ->
+                    WeaponListRow(
+                        weapon = weapon,
+                        onDelete = { onAction(WeaponListAction.DeleteWeapon(weapon.name)) },
+                    )
+                }
+                TacButton(
+                    text = stringResource(Res.string.settings_add_weapon),
+                    onClick = showAddWeapon,
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
-            TacButton(
-                text = stringResource(Res.string.settings_add_weapon),
-                onClick = showAddWeapon,
-                modifier = Modifier.fillMaxWidth(),
-            )
         }
     }
 }

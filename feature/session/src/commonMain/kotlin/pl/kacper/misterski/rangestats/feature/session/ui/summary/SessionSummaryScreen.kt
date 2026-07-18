@@ -28,13 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
-import pl.kacper.misterski.rangestats.core.ui.theme.TacAccentDim
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
@@ -60,33 +59,31 @@ fun SessionSummaryScreen(
     state: SessionSummaryUiModel,
     onAction: (SessionSummaryAction) -> Unit,
 ) {
-    if (state.isLoading) {
-        TacLoadingScreen()
-        return
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        SummaryHeader(onBack = { onAction(SessionSummaryAction.Back) }, state = state)
-        SummaryHero(state = state)
+    AnimatedLoader(isLoading = state.isLoading) {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
-            verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
+                .fillMaxSize()
+                .background(TacBgDeep),
         ) {
-            StatsRow(state = state)
-            HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-            ZoneDistributionSection(zones = state.zoneDistribution)
-            TacButton(
-                text = stringResource(Res.string.summary_save),
-                onClick = { onAction(SessionSummaryAction.Save) },
-                modifier = Modifier.fillMaxWidth(),
-            )
-            ShareButton(onClick = { onAction(SessionSummaryAction.Share) })
+            SummaryHeader(onBack = { onAction(SessionSummaryAction.Back) }, state = state)
+            SummaryHero(state = state)
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
+            ) {
+                StatsRow(state = state)
+                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                ZoneDistributionSection(zones = state.zoneDistribution)
+                TacButton(
+                    text = stringResource(Res.string.summary_save),
+                    onClick = { onAction(SessionSummaryAction.Save) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                ShareButton(onClick = { onAction(SessionSummaryAction.Share) })
+            }
         }
     }
 }

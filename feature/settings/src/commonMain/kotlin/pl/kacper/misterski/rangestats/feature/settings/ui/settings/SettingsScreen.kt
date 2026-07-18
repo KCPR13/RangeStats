@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
@@ -76,34 +76,31 @@ fun SettingsScreen(
         onAction(SettingsAction.OnStart)
     }
 
-    if (model.isLoading) {
-        TacLoadingScreen(modifier = modifier)
-        return
-    }
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(TacBgDeep)
-            .verticalScroll(rememberScrollState()),
-    ) {
-        SettingsHeader()
+    AnimatedLoader(isLoading = model.isLoading, modifier = modifier) {
         Column(
-            modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
-            verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TacBgDeep)
+                .verticalScroll(rememberScrollState()),
         ) {
-            ProfileSection(model = model)
-            HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-            WeaponsSection(
-                weapons = model.weapons,
-                onAddWeapon = onNavigateToWeaponList,
-            )
-            HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-            DefaultSessionSection(
-                distanceMeters = model.profile.defaultDistanceMeters,
-                units = model.profile.units,
-                onAction = onAction,
-            )
+            SettingsHeader()
+            Column(
+                modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
+            ) {
+                ProfileSection(model = model)
+                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                WeaponsSection(
+                    weapons = model.weapons,
+                    onAddWeapon = onNavigateToWeaponList,
+                )
+                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                DefaultSessionSection(
+                    distanceMeters = model.profile.defaultDistanceMeters,
+                    units = model.profile.units,
+                    onAction = onAction,
+                )
+            }
         }
     }
 }

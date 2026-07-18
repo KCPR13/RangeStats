@@ -1,5 +1,6 @@
 package pl.kacper.misterski.rangestats.core.ui.component
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,7 +26,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacScrim
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun TacLoadingScreen(
+private fun TacLoadingScreen(
     modifier: Modifier = Modifier,
     backgroundColor: Color = TacBgDeep,
 ) {
@@ -55,6 +56,28 @@ fun TacLoadingScreen(
         )
     }
 }
+
+@Composable
+fun AnimatedLoader(
+    isLoading: Boolean,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = TacBgDeep,
+    content: @Composable () -> Unit,
+) {
+    Crossfade(
+        targetState = isLoading,
+        modifier = modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+    ) { loading ->
+        if (loading) {
+            TacLoadingScreen(backgroundColor = Color.Transparent)
+        } else {
+            content()
+        }
+    }
+}
+
 
 @Preview
 @Composable

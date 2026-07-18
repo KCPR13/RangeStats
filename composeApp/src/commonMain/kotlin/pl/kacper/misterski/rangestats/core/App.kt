@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator.ballistics
@@ -26,9 +26,9 @@ fun App() {
         val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
         val navController = rememberNavController()
 
-        when (val destination = startDestination) {
-            is AppStartDestination.Loading -> TacLoadingScreen()
-            is AppStartDestination.Ready -> AppNavHost(navController, destination.route)
+        AnimatedLoader(isLoading = startDestination is AppStartDestination.Loading) {
+            val ready = startDestination as AppStartDestination.Ready
+            AppNavHost(navController, ready.route)
         }
     }
 }

@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.ui.component.TacLoadingScreen
+import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
@@ -57,28 +57,26 @@ fun SessionDetailScreen(
     state: SessionDetailUiModel,
     onAction: (SessionDetailAction) -> Unit,
 ) {
-    if (state.isLoading) {
-        TacLoadingScreen()
-        return
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        DetailHeader(state = state, onBack = { onAction(SessionDetailAction.Back) })
-        DetailHero(state = state)
+    AnimatedLoader(isLoading = state.isLoading) {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
-            verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
+                .fillMaxSize()
+                .background(TacBgDeep),
         ) {
-            StatsRow(state = state)
-            HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-            ZoneDistributionSection(zoneRows = state.zoneRows)
-            DeleteButton(onClick = { onAction(SessionDetailAction.Delete) })
+            DetailHeader(state = state, onBack = { onAction(SessionDetailAction.Back) })
+            DetailHero(state = state)
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
+            ) {
+                StatsRow(state = state)
+                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                ZoneDistributionSection(zoneRows = state.zoneRows)
+                DeleteButton(onClick = { onAction(SessionDetailAction.Delete) })
+            }
         }
     }
 }
