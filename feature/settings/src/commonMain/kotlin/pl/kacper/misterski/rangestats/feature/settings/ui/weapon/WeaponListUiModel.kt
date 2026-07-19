@@ -9,7 +9,7 @@ data class WeaponListUiModel(
 ) {
     data class WeaponRowUiModel(
         val name: String,
-        val caliber: String,
+        val ammoLabel: String,
         val type: WeaponType,
         val icon: WeaponIconUiModel,
     )

@@ -1,6 +1,7 @@
 package pl.kacper.misterski.rangestats.feature.session.ui.active
 
 import pl.kacper.misterski.rangestats.core.domain.models.Session
+import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.feature.session.currentTimeMillis
 
 private const val TIME_FORMAT_HMS = "%02d:%02d:%02d"
@@ -9,7 +10,7 @@ private const val MILLIS_PER_SECOND = 1000
 private const val SECONDS_PER_HOUR = 3600
 private const val SECONDS_PER_MINUTE = 60
 
-fun Session.toUiModel(): ActiveSessionUiModel {
+fun Session.toUiModel(weapon: Weapon?): ActiveSessionUiModel {
     val elapsedSeconds = ((finishedAt ?: currentTimeMillis()) - startedAt) / MILLIS_PER_SECOND
     val h = elapsedSeconds / SECONDS_PER_HOUR
     val m = (elapsedSeconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE
@@ -23,7 +24,7 @@ fun Session.toUiModel(): ActiveSessionUiModel {
     return ActiveSessionUiModel(
         sessionId = id,
         locationName = locationName,
-        caliber = weaponId,
+        ammoLabel = weapon?.ammunition?.displayLabel.orEmpty(),
         distanceMeters = distanceMeters,
         elapsedTimeFormatted = elapsedTimeFormatted
     )

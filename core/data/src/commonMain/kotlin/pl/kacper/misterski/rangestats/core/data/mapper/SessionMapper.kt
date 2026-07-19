@@ -9,7 +9,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Shot
 
 fun SessionEntity.toDomain(shots: List<ShotEntity>): Session = Session(
     id = id,
-    weaponId = weaponId,
+    weaponName = weaponName,
     locationName = locationName,
     distanceMeters = distanceMeters,
     targetType = TargetType.entries.find { it.name == targetType } ?: TargetType.ISSF_ROUND,
@@ -21,7 +21,7 @@ fun SessionEntity.toDomain(shots: List<ShotEntity>): Session = Session(
 
 fun Session.toEntity(): SessionEntity = SessionEntity(
     id = id,
-    weaponId = weaponId,
+    weaponName = weaponName,
     locationName = locationName,
     distanceMeters = distanceMeters,
     targetType = targetType.name,

@@ -167,7 +167,7 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
                 letterSpacing = LetterSpacing.em12,
             )
             Text(
-                text = stringResource(Res.string.active_session_header_meta_format, state.locationName, state.caliber, state.distanceMeters),
+                text = stringResource(Res.string.active_session_header_meta_format, state.locationName, state.ammoLabel, state.distanceMeters),
                 color = TacTextMuted,
                 fontSize = FontSize.sp11,
             )
@@ -381,7 +381,7 @@ private fun ActiveSessionScreenPreview() {
             state = ActiveSessionUiModel(
                 sessionId = 1L,
                 locationName = "Strzelnica Łódź",
-                caliber = "9mm",
+                ammoLabel = "9mm",
                 distanceMeters = 25,
                 elapsedTimeFormatted = "18:42",
                 targetCount = 3,
@@ -402,7 +402,7 @@ private fun ActiveSessionScreenLoadingPreview() {
             state = ActiveSessionUiModel(
                 sessionId = 1L,
                 locationName = "Strzelnica Łódź",
-                caliber = "9mm",
+                ammoLabel = "9mm",
                 distanceMeters = 25,
                 elapsedTimeFormatted = "18:42",
                 targetCount = 3,

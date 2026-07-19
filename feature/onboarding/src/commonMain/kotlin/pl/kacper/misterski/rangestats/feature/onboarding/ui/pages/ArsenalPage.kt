@@ -150,7 +150,7 @@ private fun ArsenalWeaponRow(weapon: OnboardingUiModel.WeaponRowUiModel) {
                 fontSize = FontSize.sp13,
                 fontWeight = FontWeight.Medium,
             )
-            Text(text = weapon.caliber, color = TacTextMuted, fontSize = FontSize.sp10)
+            Text(text = weapon.ammoLabel, color = TacTextMuted, fontSize = FontSize.sp10)
         }
     }
 }
@@ -165,7 +165,7 @@ private fun ArsenalPagePreview() {
                     weapons = listOf(
                         OnboardingUiModel.WeaponRowUiModel(
                             name = "Glock 17",
-                            caliber = "9mm",
+                            ammoLabel = "9mm",
                             icon = WeaponType.PISTOL.toUiModel(),
                         ),
                     ),

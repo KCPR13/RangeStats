@@ -24,8 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
+import pl.kacper.misterski.rangestats.core.domain.Constants
+import pl.kacper.misterski.rangestats.core.domain.enums.Caliber
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
+import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
@@ -101,8 +104,8 @@ fun NewSessionScreen(
                     value = state.distanceMeters,
                     onDecrement = { onAction(NewSessionAction.DecrementDistance) },
                     onIncrement = { onAction(NewSessionAction.IncrementDistance) },
-                    min = 5, //  TODO K hardcoded
-                    max = 300,
+                    min = Constants.SESSION_DISTANCE_MIN,
+                    max = Constants.SESSION_DISTANCE_MAX,
                     label = stringResource(Res.string.new_session_distance_label_format, state.distanceMeters),
                 )
             }
@@ -251,7 +254,7 @@ private fun WeaponRow(
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = weapon.caliber,
+                text = weapon.ammoLabel,
                 color = TacTextMuted,
                 fontSize = FontSize.sp10,
             )
@@ -281,8 +284,8 @@ private fun NewSessionScreenPreview() {
             state = NewSessionUiModel(
                 locationName = "Strzelnica Łódź",
                 weapons = listOf(
-                    Weapon("Glock 17", WeaponType.PISTOL, "9mm").toUiModel(),
-                    Weapon("AR-15", WeaponType.RIFLE, "5.56").toUiModel(),
+                    Weapon("Glock 17", WeaponType.PISTOL, Ammunition.CaliberAmmo(Caliber.LUGER_9MM)).toUiModel(),
+                    Weapon("AR-15", WeaponType.RIFLE, Ammunition.CaliberAmmo(Caliber.REMINGTON_223)).toUiModel(),
                 ),
                 selectedWeaponName = "1",
                 distanceMeters = 25,

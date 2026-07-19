@@ -19,13 +19,13 @@ class SessionRepositoryImpl(
 ) : SessionRepository {
 
     override suspend fun startSession(
-        weaponId: String,
+        weaponName: String,
         locationName: String,
         distanceMeters: Int,
         targetType: TargetType,
     ): Session {
         val entity = SessionEntity(
-            weaponId = weaponId,
+            weaponName = weaponName,
             locationName = locationName,
             distanceMeters = distanceMeters,
             targetType = targetType.name,

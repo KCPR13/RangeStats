@@ -20,7 +20,7 @@ class NewSessionViewModel(
     fun onAction(action: NewSessionAction) {
         when (action) {
             is NewSessionAction.LocationChanged -> updateLocation(action.name)
-            is NewSessionAction.WeaponSelected -> selectWeapon(action.weaponId)
+            is NewSessionAction.WeaponSelected -> selectWeapon(action.weaponName)
             NewSessionAction.IncrementDistance -> changeDistance(Constants.SESSION_DISTANCE_STEP)
             NewSessionAction.DecrementDistance -> changeDistance(-Constants.SESSION_DISTANCE_STEP)
             is NewSessionAction.TargetTypeSelected -> _uiModel.update { it.copy(targetType = action.type) }
@@ -45,11 +45,11 @@ class NewSessionViewModel(
 
     private fun startNewSession() {
         val state = _uiModel.value
-        val weaponId = state.selectedWeaponName ?: return
+        val weaponName = state.selectedWeaponName ?: return
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
             startSessionUseCase(
-                weaponId = weaponId,
+                weaponName = weaponName,
                 locationName = state.locationName,
                 distanceMeters = state.distanceMeters,
                 targetType = state.targetType,

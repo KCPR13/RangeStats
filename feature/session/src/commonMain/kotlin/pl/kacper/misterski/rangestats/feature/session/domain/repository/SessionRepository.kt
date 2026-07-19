@@ -7,7 +7,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Shot
 
 interface SessionRepository {
     suspend fun startSession(
-        weaponId: String,
+        weaponName: String,
         locationName: String,
         distanceMeters: Int,
         targetType: TargetType,

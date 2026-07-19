@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
+import pl.kacper.misterski.rangestats.core.domain.enums.Caliber
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
+import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
@@ -164,7 +166,7 @@ private fun WeaponListRow(
                 fontSize = FontSize.sp13,
                 fontWeight = FontWeight.Medium
             )
-            Text(text = weapon.caliber, color = TacTextMuted, fontSize = FontSize.sp10)
+            Text(text = weapon.ammoLabel, color = TacTextMuted, fontSize = FontSize.sp10)
         }
         Box(
             modifier = Modifier
@@ -191,8 +193,8 @@ private fun WeaponListScreenPreview() {
         WeaponListScreen(
             state = WeaponListUiModel(
                 weapons = listOf(
-                    Weapon("Glock 17", WeaponType.PISTOL, "9mm").toUiModel(),
-                    Weapon("AR-15", WeaponType.RIFLE, "5.56mm").toUiModel(),
+                    Weapon("Glock 17", WeaponType.PISTOL, Ammunition.CaliberAmmo(Caliber.LUGER_9MM)).toUiModel(),
+                    Weapon("AR-15", WeaponType.RIFLE, Ammunition.CaliberAmmo(Caliber.REMINGTON_223)).toUiModel(),
                 ),
             ),
             onAction = {},

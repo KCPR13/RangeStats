@@ -220,7 +220,7 @@ private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel) {
                 fontSize = FontSize.sp13,
                 fontWeight = FontWeight.Medium
             )
-            Text(text = weapon.caliber, color = TacTextMuted, fontSize = FontSize.sp10)
+            Text(text = weapon.ammoLabel, color = TacTextMuted, fontSize = FontSize.sp10)
         }
         Box(
             modifier = Modifier

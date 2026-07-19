@@ -19,7 +19,7 @@ data class OnboardingUiModel(
 ) {
     data class WeaponRowUiModel(
         val name: String,
-        val caliber: String,
+        val ammoLabel: String,
         val icon: WeaponIconUiModel,
     )
 

@@ -5,7 +5,7 @@ import pl.kacper.misterski.rangestats.core.domain.Constants
 data class ActiveSessionUiModel(
     val sessionId: Long = 0,
     val locationName: String = "",
-    val caliber: String = "",
+    val ammoLabel: String = "",
     val distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
     val elapsedTimeFormatted: String = "00:00",
     val targetCount: Int = 0,

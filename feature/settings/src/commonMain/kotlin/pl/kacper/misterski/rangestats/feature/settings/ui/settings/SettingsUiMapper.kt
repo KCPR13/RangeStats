@@ -21,7 +21,7 @@ suspend fun Weapon.toUiModel(): SettingsUiModel.WeaponUiModel {
     return SettingsUiModel.WeaponUiModel(
         name = this.name,
         icon = this.type.toUiModel(),
-        caliber = this.caliber,
+        ammoLabel = this.ammunition.displayLabel,
         badgeText = badgeText
     )
 }

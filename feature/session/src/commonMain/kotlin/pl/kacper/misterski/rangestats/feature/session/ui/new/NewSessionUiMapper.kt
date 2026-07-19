@@ -5,7 +5,7 @@ import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 
 fun Weapon.toUiModel(): NewSessionUiModel.WeaponRowUiModel = NewSessionUiModel.WeaponRowUiModel(
     name = name,
-    caliber = caliber,
+    ammoLabel = ammunition.displayLabel,
     type = type,
     icon = type.toUiModel(),
 )

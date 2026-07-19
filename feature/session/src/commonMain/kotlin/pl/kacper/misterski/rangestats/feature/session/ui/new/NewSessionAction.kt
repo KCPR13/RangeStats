@@ -4,7 +4,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 
 sealed class NewSessionAction {
     data class LocationChanged(val name: String) : NewSessionAction()
-    data class WeaponSelected(val weaponId: String) : NewSessionAction()
+    data class WeaponSelected(val weaponName: String) : NewSessionAction()
     data object IncrementDistance : NewSessionAction()
     data object DecrementDistance : NewSessionAction()
     data class TargetTypeSelected(val type: TargetType) : NewSessionAction()

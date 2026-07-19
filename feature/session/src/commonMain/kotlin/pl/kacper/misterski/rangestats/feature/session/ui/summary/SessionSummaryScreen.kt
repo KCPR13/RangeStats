@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
@@ -76,7 +75,7 @@ fun SessionSummaryScreen(
             ) {
                 StatsRow(state = state)
                 HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-                ZoneDistributionSection(zones = state.zoneDistribution)
+                ZoneDistributionSection(zoneRows = state.zoneRows)
                 TacButton(
                     text = stringResource(Res.string.summary_save),
                     onClick = { onAction(SessionSummaryAction.Save) },
@@ -136,7 +135,7 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = if (state.score != null) "${state.score.toInt()}%" else "—", // TODO hardcoded
+            text = state.scoreLabel,
             color = TacAccent,
             fontSize = FontSize.sp48,
             fontWeight = FontWeight.Bold,
@@ -150,7 +149,7 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
-            text = stringResource(Res.string.summary_session_meta_format, state.caliber, state.distanceMeters, state.durationMinutes),
+            text = stringResource(Res.string.summary_session_meta_format, state.ammoLabel, state.distanceMeters, state.durationMinutes),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
         )
@@ -206,8 +205,7 @@ private fun StatMini(value: String, label: String, modifier: Modifier = Modifier
 }
 
 @Composable
-private fun ZoneDistributionSection(zones: Map<TargetZone, Int>) {
-    val maxCount = zones.values.maxOrNull()?.coerceAtLeast(1) ?: 1
+private fun ZoneDistributionSection(zoneRows: List<SessionSummaryUiModel.ZoneRowUiModel>) {
     Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp14)) {
         Text(
             text = stringResource(Res.string.summary_zone_distribution),
@@ -215,36 +213,23 @@ private fun ZoneDistributionSection(zones: Map<TargetZone, Int>) {
             fontSize = FontSize.sp10,
             letterSpacing = LetterSpacing.em12,
         )
-        Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp5)) { // TODO business logic
-            listOf(TargetZone.X, TargetZone.TEN, TargetZone.NINE, TargetZone.EIGHT, TargetZone.SEVEN, TargetZone.SIX, TargetZone.MISS).forEach { zone ->
-                val count = zones[zone] ?: 0
-                val fraction = count.toFloat() / maxCount
-                ZoneRow(zone = zone, count = count, fraction = fraction)
-            }
+        Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp5)) {
+            // not lazy — small fixed list nested inside the screen's outer verticalScroll Column
+            zoneRows.forEach { row -> ZoneRow(row) }
         }
     }
 }
 
 @Composable
-private fun ZoneRow(zone: TargetZone, count: Int, fraction: Float) {
-    val isMiss = zone == TargetZone.MISS
-    val barColor = if (isMiss) TacRed else TacAccent
-    val labelText = when (zone) { // TODO business logic
-        TargetZone.X -> "X"
-        TargetZone.TEN -> "10"
-        TargetZone.NINE -> "9"
-        TargetZone.EIGHT -> "8"
-        TargetZone.SEVEN -> "7"
-        TargetZone.SIX -> "6"
-        TargetZone.MISS -> "✕"
-    }
+private fun ZoneRow(row: SessionSummaryUiModel.ZoneRowUiModel) {
+    val barColor = if (row.isMiss) TacRed else TacAccent
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimen.dp8),
     ) {
         Text(
-            text = labelText,
-            color = if (isMiss) TacRed else TacTextMuted,
+            text = row.label,
+            color = if (row.isMiss) TacRed else TacTextMuted,
             fontSize = FontSize.sp10,
             modifier = Modifier.width(Dimen.dp18),
             textAlign = TextAlign.End,
@@ -257,14 +242,14 @@ private fun ZoneRow(zone: TargetZone, count: Int, fraction: Float) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(fraction.coerceIn(0f, 1f))
+                    .fillMaxWidth(row.fraction.coerceIn(0f, 1f))
                     .height(Dimen.dp5)
                     .background(barColor, RoundedCornerShape(Dimen.dp2)),
             )
         }
         Text(
-            text = count.toString(),
-            color = if (isMiss) TacRed else TacTextMuted,
+            text = row.count.toString(),
+            color = if (row.isMiss) TacRed else TacTextMuted,
             fontSize = FontSize.sp10,
             modifier = Modifier.width(Dimen.dp24),
             textAlign = TextAlign.End,
@@ -299,20 +284,21 @@ private fun SessionSummaryScreenPreview() {
         SessionSummaryScreen(
             state = SessionSummaryUiModel(
                 locationName = "Strzelnica Łódź",
-                caliber = "9mm",
+                ammoLabel = "9mm",
                 distanceMeters = 25,
                 durationMinutes = 22,
-                score = 89f,
+                scoreLabel = "89%",
                 targetCount = 3,
                 totalHits = 62,
                 totalMisses = 8,
-                zoneDistribution = mapOf(
-                    TargetZone.TEN to 18,
-                    TargetZone.NINE to 14,
-                    TargetZone.EIGHT to 10,
-                    TargetZone.SEVEN to 6,
-                    TargetZone.SIX to 4,
-                    TargetZone.MISS to 8,
+                zoneRows = listOf(
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "X", count = 0, fraction = 0f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "10", count = 18, fraction = 1f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "9", count = 14, fraction = 0.78f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "8", count = 10, fraction = 0.56f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "7", count = 6, fraction = 0.33f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "6", count = 4, fraction = 0.22f, isMiss = false),
+                    SessionSummaryUiModel.ZoneRowUiModel(label = "✕", count = 8, fraction = 0.44f, isMiss = true),
                 ),
             ),
             onAction = {},

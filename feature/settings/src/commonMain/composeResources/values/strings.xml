@@ -17,6 +17,7 @@
     <string name="add_weapon_name_placeholder">Wpisz nazwę...</string>
     <string name="add_weapon_type_label">Rodzaj broni</string>
     <string name="add_weapon_caliber_label">Kaliber</string>
+    <string name="add_weapon_gauge_label">Kaliber (gauge)</string>
     <string name="add_weapon_save">Zapisz broń</string>
     <string name="add_weapon_custom_caliber">+ własny</string>
     <string name="weapon_badge_pistol">Pistolet</string>

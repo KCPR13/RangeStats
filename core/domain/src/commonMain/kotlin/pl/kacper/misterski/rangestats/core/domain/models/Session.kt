@@ -4,7 +4,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 
 data class Session(
     val id: Long,
-    val weaponId: String,
+    val weaponName: String,
     val locationName: String,
     val distanceMeters: Int,
     val targetType: TargetType,

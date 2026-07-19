@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pl.kacper.misterski.rangestats.core.domain.enums.Caliber
+import pl.kacper.misterski.rangestats.core.domain.enums.ShotgunGauge
+import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
+import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.AddWeaponUseCase
 
 class AddWeaponViewModel(
@@ -19,27 +23,36 @@ class AddWeaponViewModel(
     fun onAction(action: AddWeaponAction) {
         when (action) {
             is AddWeaponAction.NameChanged -> _uiModel.update { it.copy(name = action.name) }
-            is AddWeaponAction.TypeSelected -> _uiModel.update { it.copy(selectedType = action.type) }
-            is AddWeaponAction.CaliberSelected -> onCaliberSelected(action.caliber)
+            is AddWeaponAction.TypeSelected -> onTypeSelected(action.type)
+            is AddWeaponAction.AmmoSelected -> onAmmoSelected(action.option)
             AddWeaponAction.Save -> save()
             AddWeaponAction.Reset -> _uiModel.update { AddWeaponUiModel() }
         }
     }
 
-    private fun onCaliberSelected(caliber: AddWeaponUiModel.CaliberUiModel ) {
-        val calibers =_uiModel.value.calibers.toMutableList()
-        val newCalibers = calibers.map { it.copy(selected = it.name == caliber.name) }
-        _uiModel.update { it.copy(calibers = newCalibers) }
+    private fun onTypeSelected(type: WeaponType) {
+        _uiModel.update { it.copy(selectedType = type, ammoOptions = type.toAmmoOptionUiModels(), ammoLabelRes = type.toAmmoLabelRes()) }
+    }
+
+    private fun onAmmoSelected(option: AddWeaponUiModel.AmmoOptionUiModel) {
+        _uiModel.update { state ->
+            state.copy(ammoOptions = state.ammoOptions.map { it.copy(selected = it.key == option.key) })
+        }
     }
 
     private fun save() {
         val state = _uiModel.value
         if (state.name.isBlank()) return
-        val selectedCaliber = _uiModel.value.calibers.find { it.selected } ?: return
+        val selectedKey = state.ammoOptions.find { it.selected }?.key ?: return
+        val ammunition = if (state.selectedType == WeaponType.SHOTGUN) {
+            Ammunition.GaugeAmmo(ShotgunGauge.valueOf(selectedKey))
+        } else {
+            Ammunition.CaliberAmmo(Caliber.valueOf(selectedKey))
+        }
 
         viewModelScope.launch {
             _uiModel.update { it.copy(isSaving = true) }
-            addWeaponUseCase(name = state.name, type = state.selectedType, caliber = selectedCaliber.name)
+            addWeaponUseCase(name = state.name, weaponType = state.selectedType, ammunition = ammunition)
                 .onSuccess { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
                 .onFailure { _uiModel.update { it.copy(isSaving = false) } }
         }

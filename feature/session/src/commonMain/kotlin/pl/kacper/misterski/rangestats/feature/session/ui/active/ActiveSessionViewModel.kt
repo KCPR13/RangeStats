@@ -12,12 +12,14 @@ import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AddShotUseC
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
+import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetWeaponByNameUseCase
 
 class ActiveSessionViewModel(
     private val analyzeTargetUseCase: AnalyzeTargetUseCase,
     private val addShotUseCase: AddShotUseCase,
     private val finishSessionUseCase: FinishSessionUseCase,
     private val getSessionUseCase: GetSessionUseCase,
+    private val getWeaponByNameUseCase: GetWeaponByNameUseCase,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(ActiveSessionUiModel())
@@ -36,7 +38,8 @@ class ActiveSessionViewModel(
     private fun loadSession(sessionId: Long) {
         viewModelScope.launch {
             getSessionUseCase(sessionId).onSuccess { session ->
-                _uiModel.update { session.toUiModel() }
+                val weapon = getWeaponByNameUseCase(session.weaponName).getOrNull()
+                _uiModel.update { session.toUiModel(weapon) }
             }
         }
     }

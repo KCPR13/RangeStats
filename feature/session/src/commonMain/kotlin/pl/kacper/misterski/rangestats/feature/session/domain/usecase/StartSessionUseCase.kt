@@ -6,11 +6,11 @@ import pl.kacper.misterski.rangestats.feature.session.domain.repository.SessionR
 
 class StartSessionUseCase(private val sessionRepository: SessionRepository) {
     suspend operator fun invoke(
-        weaponId: String,
+        weaponName: String,
         locationName: String,
         distanceMeters: Int,
         targetType: TargetType,
     ): Result<Session> = runCatching {
-        sessionRepository.startSession(weaponId, locationName, distanceMeters, targetType)
+        sessionRepository.startSession(weaponName, locationName, distanceMeters, targetType)
     }
 }

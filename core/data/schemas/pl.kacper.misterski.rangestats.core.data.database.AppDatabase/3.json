@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e56abadaaee387e8778968a52bafd0b0",
+    "identityHash": "e259268866dff286e3ba6c3100a9c52d",
     "entities": [
       {
         "tableName": "sessions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `weaponId` TEXT NOT NULL, `locationName` TEXT NOT NULL, `distanceMeters` INTEGER NOT NULL, `targetType` TEXT NOT NULL, `startedAt` INTEGER NOT NULL, `finishedAt` INTEGER, `score` REAL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `weaponName` TEXT NOT NULL, `locationName` TEXT NOT NULL, `distanceMeters` INTEGER NOT NULL, `targetType` TEXT NOT NULL, `startedAt` INTEGER NOT NULL, `finishedAt` INTEGER, `score` REAL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "weaponId",
-            "columnName": "weaponId",
+            "fieldPath": "weaponName",
+            "columnName": "weaponName",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -100,7 +100,7 @@
       },
       {
         "tableName": "weapons",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `type` TEXT NOT NULL, `caliber` TEXT NOT NULL, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `type` TEXT NOT NULL, `caliber` TEXT, `gauge` TEXT, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -117,8 +117,12 @@
           {
             "fieldPath": "caliber",
             "columnName": "caliber",
-            "affinity": "TEXT",
-            "notNull": true
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "gauge",
+            "columnName": "gauge",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -131,7 +135,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e56abadaaee387e8778968a52bafd0b0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e259268866dff286e3ba6c3100a9c52d')"
     ]
   }
 }

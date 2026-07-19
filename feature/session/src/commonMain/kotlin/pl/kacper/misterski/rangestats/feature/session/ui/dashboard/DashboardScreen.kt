@@ -356,7 +356,7 @@ private fun DashboardScreenPreview() {
                 bestScore = 98f,
                 lastSession = Session(
                     id = 1L,
-                    weaponId = "w1",
+                    weaponName = "w1",
                     locationName = "Strzelnica Łódź",
                     distanceMeters = 25,
                     targetType = TargetType.ISSF_ROUND,

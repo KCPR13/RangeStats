@@ -39,7 +39,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import rangestats.feature.settings.generated.resources.Res
-import rangestats.feature.settings.generated.resources.add_weapon_caliber_label
 import rangestats.feature.settings.generated.resources.add_weapon_name_label
 import rangestats.feature.settings.generated.resources.add_weapon_name_placeholder
 import rangestats.feature.settings.generated.resources.add_weapon_save
@@ -125,13 +124,13 @@ fun AddWeaponSheet(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
-                FieldLabel(text = stringResource(Res.string.add_weapon_caliber_label))
+                FieldLabel(text = stringResource(state.ammoLabelRes))
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
-                    items(state.calibers){ caliber ->
+                    items(state.ammoOptions) { option ->
                         TacChip(
-                            label = caliber.name,
-                            selected = caliber.selected,
-                            onClick = { onAction(AddWeaponAction.CaliberSelected(caliber)) },
+                            label = option.label,
+                            selected = option.selected,
+                            onClick = { onAction(AddWeaponAction.AmmoSelected(option)) },
                         )
                     }
                 }

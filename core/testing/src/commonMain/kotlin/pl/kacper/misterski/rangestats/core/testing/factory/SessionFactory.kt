@@ -8,7 +8,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Shot
 
 fun testSession(
     id: Long = 1L,
-    weaponId: String = "test-weapon-1",
+    weaponName: String = "test-weapon-1",
     locationName: String = "Test Range",
     distanceMeters: Int = Constants.DEFAULT_DISTANCE_METERS,
     targetType: TargetType = TargetType.BULLSEYE,
@@ -18,7 +18,7 @@ fun testSession(
     score: Float? = 9.0f,
 ): Session = Session(
     id = id,
-    weaponId = weaponId,
+    weaponName = weaponName,
     locationName = locationName,
     distanceMeters = distanceMeters,
     targetType = targetType,
