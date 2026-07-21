@@ -172,7 +172,7 @@ private fun AddWeaponSheetContentPreview() {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    "NOWA BROŃ",
+                    "NOWA BROŃ", // TODO hardcoded
                     color = TacAccent,
                     fontSize = FontSize.sp11,
                     fontWeight = FontWeight.Medium

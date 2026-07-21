@@ -1,6 +1,18 @@
 package pl.kacper.misterski.rangestats.core.domain.enums
 
 enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
+    // Rifle
+    REMINGTON_223(".223 Remington / 5.56x45mm NATO ", setOf(WeaponType.RIFLE)),
+    SOVIET_7_62X39("7.62x39mm", setOf(WeaponType.RIFLE)),
+    WIN_308(".308 Winchester / 7.62x51mm NATO", setOf(WeaponType.RIFLE)),
+    R_7_62X54("7.62x54mmR", setOf(WeaponType.RIFLE)),
+    BLACKOUT_300(".300 AAC Blackout", setOf(WeaponType.RIFLE)),
+    CREEDMOOR_6_5("6.5 Creedmoor", setOf(WeaponType.RIFLE)),
+    SPRINGFIELD_30_06(".30-06 Springfield", setOf(WeaponType.RIFLE)),
+    WIN_270(".270 Winchester", setOf(WeaponType.RIFLE)),
+    SPC_6_8("6.8 SPC", setOf(WeaponType.RIFLE)),
+    WIN_243(".243 Winchester", setOf(WeaponType.RIFLE)),
+
     // Pistol
     LUGER_9MM("9mm Luger", setOf(WeaponType.PISTOL, WeaponType.RIFLE)),
     ACP_380(".380 ACP", setOf(WeaponType.PISTOL)),
@@ -28,18 +40,6 @@ enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
     SW_MAGNUM_460(".460 S&W Magnum", setOf(WeaponType.REVOLVER)),
     SW_MAGNUM_500(".500 S&W Magnum", setOf(WeaponType.REVOLVER)),
     WMR_22(".22 WMR", setOf(WeaponType.REVOLVER)),
-
-    // Rifle
-    REMINGTON_223(".223 Remington / 5.56x45mm NATO ", setOf(WeaponType.RIFLE)),
-    SOVIET_7_62X39("7.62x39mm", setOf(WeaponType.RIFLE)),
-    WIN_308(".308 Winchester / 7.62x51mm NATO", setOf(WeaponType.RIFLE)),
-    R_7_62X54("7.62x54mmR", setOf(WeaponType.RIFLE)),
-    BLACKOUT_300(".300 AAC Blackout", setOf(WeaponType.RIFLE)),
-    CREEDMOOR_6_5("6.5 Creedmoor", setOf(WeaponType.RIFLE)),
-    SPRINGFIELD_30_06(".30-06 Springfield", setOf(WeaponType.RIFLE)),
-    WIN_270(".270 Winchester", setOf(WeaponType.RIFLE)),
-    SPC_6_8("6.8 SPC", setOf(WeaponType.RIFLE)),
-    WIN_243(".243 Winchester", setOf(WeaponType.RIFLE)),
 
     // Universal
     LR_22(".22 LR", setOf(WeaponType.PISTOL, WeaponType.REVOLVER, WeaponType.RIFLE)),
