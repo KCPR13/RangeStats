@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.testBalloon)
 }
 
 kotlin {
@@ -57,6 +58,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.testBalloon.framework.core)
             }
         }
 
@@ -69,6 +71,8 @@ kotlin {
         getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.bundles.android.test)
+                implementation(libs.testBalloon.framework.core)
+
             }
         }
 
