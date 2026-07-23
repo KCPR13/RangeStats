@@ -34,19 +34,19 @@ import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
+import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
+import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
+import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
-import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing.em12
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
-import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
-import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
@@ -69,6 +69,7 @@ fun SettingsScreen(
     model: SettingsUiModel,
     onAction: (SettingsAction) -> Unit,
     onNavigateToWeaponList: () -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -76,50 +77,37 @@ fun SettingsScreen(
         onAction(SettingsAction.OnStart)
     }
 
-    AnimatedLoader(isLoading = model.isLoading, modifier = modifier) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(TacBgDeep)
-                .verticalScroll(rememberScrollState()),
-        ) {
-            SettingsHeader()
+    TacScaffold(
+        selectedNav = BottomNavDestination.Settings,
+        onBottomNavigate = onBottomNavigate,
+        modifier = modifier,
+        topBar = { TacTopBar(title = stringResource(Res.string.settings_title)) },
+    ) { padding ->
+        AnimatedLoader(isLoading = model.isLoading, modifier = Modifier.padding(padding)) {
             Column(
-                modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
-                verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
             ) {
-                ProfileSection(model = model)
-                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-                WeaponsSection(
-                    weapons = model.weapons,
-                    onAddWeapon = onNavigateToWeaponList,
-                )
-                HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-                DefaultSessionSection(
-                    distanceMeters = model.profile.defaultDistanceMeters,
-                    units = model.profile.units,
-                    onAction = onAction,
-                )
+                Column(
+                    modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                    verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
+                ) {
+                    ProfileSection(model = model)
+                    HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                    WeaponsSection(
+                        weapons = model.weapons,
+                        onAddWeapon = onNavigateToWeaponList,
+                    )
+                    HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+                    DefaultSessionSection(
+                        distanceMeters = model.profile.defaultDistanceMeters,
+                        units = model.profile.units,
+                        onAction = onAction,
+                    )
+                }
             }
         }
-    }
-}
-
-@Composable
-private fun SettingsHeader() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TacBgPanel)
-            .padding(horizontal = Dimen.dp20, vertical = Dimen.dp14),
-    ) {
-        Text(
-            text = stringResource(Res.string.settings_title),
-            color = TacAccent,
-            fontSize = FontSize.sp11,
-            fontWeight = FontWeight.Medium,
-            letterSpacing = em12,
-        )
     }
 }
 
@@ -420,6 +408,8 @@ private fun SettingsScreenPreview() {
             ),
             onAction = {},
             onNavigateToWeaponList = {},
+            onBottomNavigate = {},
+            modifier = Modifier,
         )
     }
 }

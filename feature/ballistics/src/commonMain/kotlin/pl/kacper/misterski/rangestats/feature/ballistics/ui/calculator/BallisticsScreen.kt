@@ -3,7 +3,6 @@ package pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -25,14 +24,13 @@ import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
+import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
-import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacGreen
 import pl.kacper.misterski.rangestats.core.ui.theme.TacRed
@@ -61,12 +59,12 @@ import rangestats.feature.ballistics.generated.resources.ballistics_title
 fun BallisticsScreen(
     state: BallisticsUiModel,
     onAction: (BallisticsAction) -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     TacScaffold(
         selectedNav = BottomNavDestination.Ballistics,
-        onNavigate = onNavigate,
-        topBar = { BallisticsTopBar() },
+        onBottomNavigate = onBottomNavigate,
+        topBar = { TacTopBar(title = stringResource(Res.string.ballistics_title)) },
     ) { padding ->
         Column(
             modifier = Modifier
@@ -74,7 +72,7 @@ fun BallisticsScreen(
                 .background(TacBgDeep)
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                .padding(padding),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
         ) {
             PresetsSection(
@@ -112,24 +110,6 @@ fun BallisticsScreen(
 
             Spacer(modifier = Modifier.height(Dimen.dp16))
         }
-    }
-}
-
-@Composable
-private fun BallisticsTopBar() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TacBgPanel)
-            .border(width = Dimen.dp1, color = TacBorder)
-            .padding(horizontal = Dimen.dp20, vertical = Dimen.dp14),
-    ) {
-        Text(
-            text = stringResource(Res.string.ballistics_title),
-            color = TacAccent,
-            fontSize = FontSize.sp11,
-            fontWeight = FontWeight.Medium,
-        )
     }
 }
 
@@ -291,7 +271,7 @@ private fun BallisticsScreenEmptyPreview() {
                 ),
             ),
             onAction = {},
-            onNavigate = {},
+            onBottomNavigate = {},
         )
     }
 }
@@ -319,7 +299,7 @@ private fun BallisticsScreenWithResultPreview() {
                 ),
             ),
             onAction = {},
-            onNavigate = {},
+            onBottomNavigate = {},
         )
     }
 }

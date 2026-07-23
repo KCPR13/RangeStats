@@ -9,7 +9,7 @@ import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
 fun NavGraphBuilder.ballistics(
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     composable(route = AppRoutes.Ballistics.route) {
         val viewModel = koinViewModel<BallisticsViewModel>()
@@ -18,7 +18,7 @@ fun NavGraphBuilder.ballistics(
         BallisticsScreen(
             state = state,
             onAction = viewModel::onAction,
-            onNavigate = onNavigate,
+            onBottomNavigate = onBottomNavigate,
         )
     }
 }

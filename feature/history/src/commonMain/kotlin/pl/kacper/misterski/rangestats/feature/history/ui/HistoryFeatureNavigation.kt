@@ -10,13 +10,13 @@ import pl.kacper.misterski.rangestats.feature.history.ui.list.history
 fun NavGraphBuilder.historyFlow(
     navController: NavHostController,
     onBack: () -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     history(
         onOpenDetail = { sessionId ->
             navController.navigate(AppRoutes.SessionDetail(sessionId).createRoute())
         },
-        onNavigate = onNavigate,
+        onBottomNavigate = onBottomNavigate,
     )
 
     sessionDetail(onBack = onBack)

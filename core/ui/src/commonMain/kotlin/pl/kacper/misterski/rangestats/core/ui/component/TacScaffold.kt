@@ -16,7 +16,7 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 fun TacScaffold(
     modifier: Modifier = Modifier,
     selectedNav: BottomNavDestination? = null,
-    onNavigate: ((BottomNavDestination) -> Unit)? = null,
+    onBottomNavigate: ((BottomNavDestination) -> Unit)? = null,
     topBar: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -26,10 +26,10 @@ fun TacScaffold(
         containerColor = TacBgDeep,
         topBar = topBar,
         bottomBar = {
-            if (selectedNav != null && onNavigate != null) {
+            if (selectedNav != null && onBottomNavigate != null) {
                 BottomNavBar(
                     selected = selectedNav,
-                    onNavigate = onNavigate,
+                    onNavigate = onBottomNavigate,
                 )
             }
         }
@@ -44,7 +44,7 @@ private fun TacScaffoldWithNavPreview() {
     RangeStatsTheme {
         TacScaffold(
             selectedNav = BottomNavDestination.Home,
-            onNavigate = {},
+            onBottomNavigate = {},
         ) {
             Text("Zawartość ekranu")
         }

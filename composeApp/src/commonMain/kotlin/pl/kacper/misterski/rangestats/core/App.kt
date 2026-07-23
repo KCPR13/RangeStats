@@ -36,7 +36,8 @@ fun App() {
 @Composable
 private fun AppNavHost(navController: NavHostController, startDestination: String) {
     val onBack: () -> Unit = { navController.navigateUp() }
-    val onNavigate: (BottomNavDestination) -> Unit = { destination -> navController.navigateBottomNav(destination) }
+    val onBottomNavigate: (BottomNavDestination) -> Unit =
+        { destination -> navController.navigateBottomNav(destination) }
 
     NavHost(
         navController = navController,
@@ -57,14 +58,18 @@ private fun AppNavHost(navController: NavHostController, startDestination: Strin
             onOpenHistory = {
                 navController.navigate(AppRoutes.History.route)
             },
-            onNavigate = onNavigate,
+            onBottomNavigate = onBottomNavigate,
         )
 
-        sessionFlow(navController, onBack)
-        historyFlow(navController, onBack, onNavigate)
-        settingsFlow(navController, onBack)
+        sessionFlow(navController = navController, onBack = onBack)
+        historyFlow(navController = navController,
+            onBack = onBack,
+            onBottomNavigate = onBottomNavigate)
+        settingsFlow(navController = navController,
+            onBack = onBack,
+            onBottomNavigate = onBottomNavigate)
 
-        ballistics(onNavigate = onNavigate)
+        ballistics(onBottomNavigate = onBottomNavigate)
     }
 }
 

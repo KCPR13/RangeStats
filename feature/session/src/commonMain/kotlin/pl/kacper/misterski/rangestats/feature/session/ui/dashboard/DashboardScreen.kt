@@ -64,11 +64,11 @@ import rangestats.feature.session.generated.resources.dashboard_total_suffix
 fun DashboardScreen(
     state: DashboardUiModel,
     onAction: (DashboardAction) -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     TacScaffold(
         selectedNav = BottomNavDestination.Home,
-        onNavigate = onNavigate,
+        onBottomNavigate = onBottomNavigate,
         topBar = { DashboardHeader() },
     ) { padding ->
         Column(
@@ -76,7 +76,7 @@ fun DashboardScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                .padding(horizontal = Dimen.dp16, vertical = Dimen.dp16),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
         ) {
             StatsGrid(state = state)
@@ -367,7 +367,7 @@ private fun DashboardScreenPreview() {
                 ),
             ),
             onAction = {},
-            onNavigate = {},
+            onBottomNavigate = {},
         )
     }
 }

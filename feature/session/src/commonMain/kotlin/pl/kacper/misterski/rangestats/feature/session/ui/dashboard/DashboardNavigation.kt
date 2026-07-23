@@ -10,7 +10,7 @@ import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
 fun NavGraphBuilder.dashboard(
     onOpenHistory: () -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     composable(route = AppRoutes.Dashboard.route) {
         val viewModel = koinViewModel<DashboardViewModel>()
@@ -22,7 +22,7 @@ fun NavGraphBuilder.dashboard(
                     DashboardAction.OpenHistory -> onOpenHistory()
                 }
             },
-            onNavigate = onNavigate,
+            onBottomNavigate = onBottomNavigate,
         )
     }
 }

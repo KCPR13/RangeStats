@@ -11,7 +11,7 @@ import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
 fun NavGraphBuilder.history(
     onOpenDetail: (Long) -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     composable(route = AppRoutes.History.route) {
         val viewModel = koinViewModel<HistoryViewModel>()
@@ -28,7 +28,7 @@ fun NavGraphBuilder.history(
         HistoryScreen(
             state = state,
             onAction = viewModel::onAction,
-            onNavigate = onNavigate,
+            onBottomNavigate = onBottomNavigate,
         )
     }
 }

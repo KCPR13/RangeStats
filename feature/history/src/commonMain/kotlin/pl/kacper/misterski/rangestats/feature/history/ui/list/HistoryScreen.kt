@@ -23,15 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
+import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
-import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
-import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
@@ -48,12 +47,12 @@ import rangestats.feature.history.generated.resources.history_title
 fun HistoryScreen(
     state: HistoryUiModel,
     onAction: (HistoryAction) -> Unit,
-    onNavigate: (BottomNavDestination) -> Unit,
+    onBottomNavigate: (BottomNavDestination) -> Unit,
 ) {
     TacScaffold(
         selectedNav = BottomNavDestination.History,
-        onNavigate = onNavigate,
-        topBar = { HistoryTopBar() },
+        onBottomNavigate = onBottomNavigate,
+        topBar = { TacTopBar(title = stringResource(Res.string.history_title)) },
     ) { padding ->
         AnimatedLoader(
             isLoading = state.isLoading,
@@ -63,7 +62,7 @@ fun HistoryScreen(
                 EmptyState()
             } else {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().padding(padding),
                     contentPadding = PaddingValues(Dimen.dp16),
                     verticalArrangement = Arrangement.spacedBy(Dimen.dp8),
                 ) {
@@ -76,25 +75,6 @@ fun HistoryScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun HistoryTopBar() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TacBgPanel)
-            .border(width = Dimen.dp1, color = TacBorder)
-            .padding(horizontal = Dimen.dp20, vertical = Dimen.dp14),
-    ) {
-        Text(
-            text = stringResource(Res.string.history_title),
-            color = TacAccent,
-            fontSize = FontSize.sp11,
-            fontWeight = FontWeight.Medium,
-            letterSpacing = LetterSpacing.em12,
-        )
     }
 }
 
@@ -193,7 +173,7 @@ private fun HistoryScreenPreview() {
                 ),
             ),
             onAction = {},
-            onNavigate = {},
+            onBottomNavigate = {},
         )
     }
 }
