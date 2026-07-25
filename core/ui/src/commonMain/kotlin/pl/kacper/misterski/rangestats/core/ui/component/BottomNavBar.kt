@@ -28,14 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.ui.Res
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
-import pl.kacper.misterski.rangestats.core.ui.nav_ballistics
-import pl.kacper.misterski.rangestats.core.ui.nav_history
-import pl.kacper.misterski.rangestats.core.ui.nav_home
-import pl.kacper.misterski.rangestats.core.ui.nav_new_session
-import pl.kacper.misterski.rangestats.core.ui.nav_settings
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize.sp12
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -60,15 +53,13 @@ fun BottomNavBar(
             destination = BottomNavDestination.Home,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Home,
-            label = stringResource(Res.string.nav_home),
+            icon = Icons.Default.Home
         )
         NavItem(
             destination = BottomNavDestination.History,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.History,
-            label = stringResource(Res.string.nav_history),
+            icon = Icons.Default.History
         )
         NavigationBarItem(
             selected = false,
@@ -87,7 +78,7 @@ fun BottomNavBar(
                     ) {
                         Icon(
                             Icons.Default.Add,
-                            contentDescription = stringResource(Res.string.nav_new_session)
+                            contentDescription = null
                         )
                     }
                 }
@@ -99,15 +90,13 @@ fun BottomNavBar(
             destination = BottomNavDestination.Ballistics,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Calculate,
-            label = stringResource(Res.string.nav_ballistics),
+            icon = Icons.Default.Calculate
         )
         NavItem(
             destination = BottomNavDestination.Settings,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Settings,
-            label = stringResource(Res.string.nav_settings),
+            icon = Icons.Default.Settings
         )
     }
 }
@@ -117,15 +106,13 @@ private fun RowScope.NavItem(
     destination: BottomNavDestination,
     selected: BottomNavDestination,
     onNavigate: (BottomNavDestination) -> Unit,
-    icon: ImageVector,
-    label: String,
+    icon: ImageVector
 ) {
     NavigationBarItem(
         selected = selected == destination,
         onClick = { onNavigate(destination) },
         alwaysShowLabel = false,
-        icon = { Icon(icon, contentDescription = label) },
-        label = { NavBarLabel(text = label) },
+        icon = { Icon(icon, contentDescription = null) },
         colors = navItemColors(),
     )
 }
