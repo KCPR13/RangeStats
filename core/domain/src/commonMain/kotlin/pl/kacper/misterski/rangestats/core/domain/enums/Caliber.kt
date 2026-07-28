@@ -15,6 +15,7 @@ enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
 
     // Pistol
     LUGER_9MM("9mm Luger", setOf(WeaponType.PISTOL, WeaponType.RIFLE)),
+    MAKAROV_9X18("9x18 Makarov", setOf(WeaponType.PISTOL)),
     ACP_380(".380 ACP", setOf(WeaponType.PISTOL)),
     SW_40(".40 S&W", setOf(WeaponType.PISTOL, WeaponType.RIFLE)),
     AUTO_10MM("10mm Auto", setOf(WeaponType.PISTOL, WeaponType.RIFLE)),
