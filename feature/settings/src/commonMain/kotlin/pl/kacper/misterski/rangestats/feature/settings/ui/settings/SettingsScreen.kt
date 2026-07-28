@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,12 +34,14 @@ import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
+import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
+import pl.kacper.misterski.rangestats.core.ui.core_x
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
@@ -49,26 +51,25 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
+import pl.kacper.misterski.rangestats.core.ui.theme.TacRed
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
-import pl.kacper.misterski.rangestats.core.ui.theme.TacTextPrimary
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.settings.generated.resources.Res
 import rangestats.feature.settings.generated.resources.settings_add_weapon
 import rangestats.feature.settings.generated.resources.settings_distance_label
-import rangestats.feature.settings.generated.resources.settings_edit
 import rangestats.feature.settings.generated.resources.settings_imperial
 import rangestats.feature.settings.generated.resources.settings_metric
 import rangestats.feature.settings.generated.resources.settings_section_defaults
-import rangestats.feature.settings.generated.resources.settings_section_profile
 import rangestats.feature.settings.generated.resources.settings_section_weapons
 import rangestats.feature.settings.generated.resources.settings_title
 import rangestats.feature.settings.generated.resources.settings_units_label
 
+//TODO K units should work in whole app not only in settings
 @Composable
 fun SettingsScreen(
     model: SettingsUiModel,
     onAction: (SettingsAction) -> Unit,
-    onNavigateToWeaponList: () -> Unit,
+    onAddWeapon: () -> Unit,
     onBottomNavigate: (BottomNavDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -90,73 +91,17 @@ fun SettingsScreen(
                     .verticalScroll(rememberScrollState()),
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                    modifier = Modifier.padding(vertical = Dimen.dp16),
                     verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
                 ) {
-                    ProfileSection(model = model)
-                    HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
                     WeaponsSection(
                         weapons = model.weapons,
-                        onAddWeapon = onNavigateToWeaponList,
+                        onAddWeapon = onAddWeapon,
+                        onDeleteWeapon = { name -> onAction(SettingsAction.DeleteWeapon(name)) },
                     )
                     HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-                    DefaultSessionSection(
-                        distanceMeters = model.profile.defaultDistanceMeters,
-                        units = model.profile.units,
-                        onAction = onAction,
-                    )
+                    DefaultSessionSection(model = model, onAction = onAction)
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProfileSection(model: SettingsUiModel) {
-    Column {
-        SectionLabel(text = stringResource(Res.string.settings_section_profile))
-        Spacer(Modifier.height(Dimen.dp8))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(TacBgCard, RoundedCornerShape(Dimen.dp8))
-                .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8))
-                .padding(Dimen.dp14),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(Dimen.dp48)
-                    .background(TacBgElevated, RoundedCornerShape(Dimen.dp8))
-                    .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = model.displayNameAbbreviation,
-                    color = TacAccent,
-                    fontSize = FontSize.sp18,
-                    fontWeight = FontWeight.SemiBold,
-                )
-            }
-            Spacer(Modifier.width(Dimen.dp14))
-            Text(
-                text = model.profile.displayName,
-                color = TacTextPrimary,
-                fontSize = FontSize.sp14,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.weight(1f),
-            )
-            Box(
-                modifier = Modifier
-                    .background(TacBgElevated, RoundedCornerShape(Dimen.dp4))
-                    .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp4))
-                    .padding(horizontal = Dimen.dp8, vertical = Dimen.dp7),
-            ) {
-                Text(
-                    text = stringResource(Res.string.settings_edit),
-                    color = TacAccent,
-                    fontSize = FontSize.sp9,
-                )
             }
         }
     }
@@ -166,24 +111,26 @@ private fun ProfileSection(model: SettingsUiModel) {
 private fun WeaponsSection(
     weapons: List<SettingsUiModel.WeaponUiModel>,
     onAddWeapon: () -> Unit,
+    onDeleteWeapon: (String) -> Unit,
 ) {
     Column {
         SectionLabel(text = stringResource(Res.string.settings_section_weapons))
         Spacer(Modifier.height(Dimen.dp8))
         Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
             weapons.forEach { weapon ->
-                WeaponRow(weapon = weapon)
+                WeaponRow(weapon = weapon, onDelete = { onDeleteWeapon(weapon.name) })
             }
-            AddWeaponButton(
-                label = stringResource(Res.string.settings_add_weapon),
+            TacButton(
+                text = stringResource(Res.string.settings_add_weapon),
                 onClick = onAddWeapon,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
 }
 
 @Composable
-private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel) {
+private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel, onDelete: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -217,115 +164,100 @@ private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel) {
         ) {
             Text(text = weapon.badgeText, color = TacTextMuted, fontSize = FontSize.sp9)
         }
-    }
-}
-
-@Composable
-private fun AddWeaponButton(label: String, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(Dimen.dp7))
-            .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp7))
-            .background(TacBgCard)
-            .clickable(onClick = onClick)
-            .padding(Dimen.dp12),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = label,
-            color = TacTextMuted,
-            fontSize = FontSize.sp10,
-            textAlign = TextAlign.Center
-        )
+        Spacer(Modifier.width(Dimen.dp8))
+        IconButton(onClick = onDelete) {
+            Text(
+                text = stringResource(pl.kacper.misterski.rangestats.core.ui.Res.string.core_x),
+                color = TacRed,
+                fontSize = FontSize.sp14
+            )
+        }
     }
 }
 
 @Composable
 private fun DefaultSessionSection(
-    distanceMeters: Int,
-    units: UnitSystem,
+    model: SettingsUiModel,
     onAction: (SettingsAction) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
         SectionLabel(text = stringResource(Res.string.settings_section_defaults))
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(Dimen.dp8),
-            modifier = Modifier.height(IntrinsicSize.Max)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(TacBgCard, RoundedCornerShape(Dimen.dp8))
+                .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8))
+                .padding(Dimen.dp14),
+            verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
         ) {
-            DistanceTile(
-                distanceMeters = distanceMeters,
-                onDecrement = { onAction(SettingsAction.DecrementDistance) },
-                onIncrement = { onAction(SettingsAction.IncrementDistance) },
-                modifier = Modifier.weight(1f),
-            )
-            UnitsTile(
-                units = units,
-                onAction = onAction,
-                modifier = Modifier.weight(1f).fillMaxHeight(),
-            )
+            DistanceRow(model = model, onAction = onAction)
+            HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
+            UnitsRow(units = model.profile.units, onAction = onAction)
         }
-
     }
 }
 
 @Composable
-private fun DistanceTile(
-    distanceMeters: Int,
-    onDecrement: () -> Unit,
-    onIncrement: () -> Unit,
-    modifier: Modifier = Modifier,
+private fun DistanceRow(
+    model: SettingsUiModel,
+    onAction: (SettingsAction) -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .background(TacBgCard, RoundedCornerShape(Dimen.dp8))
-            .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8))
-            .padding(vertical = Dimen.dp14),
-
-        verticalArrangement = Arrangement.spacedBy(Dimen.dp8)
+    val distanceDisplay = model.distanceDisplay
+    val unitSuffix = stringResource(distanceDisplay.unitSuffix)
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth(),
             text = stringResource(Res.string.settings_distance_label),
             color = TacTextMuted,
             fontSize = FontSize.sp12,
-            textAlign = TextAlign.Center
         )
         TacStepper(
-            modifier = Modifier.fillMaxSize(),
-            value = distanceMeters,
-            onDecrement = onDecrement,
-            onIncrement = onIncrement,
-            min = 5,
-            max = 300,
+            value = distanceDisplay.value,
+            onDecrement = { onAction(SettingsAction.DecrementDistance) },
+            onIncrement = { onAction(SettingsAction.IncrementDistance) },
+            min = distanceDisplay.min,
+            max = distanceDisplay.max,
             label = stringResource(
                 pl.kacper.misterski.rangestats.core.ui.Res.string.core_placeholder_distance,
-                distanceMeters
-            )
+                distanceDisplay.value,
+                unitSuffix,
+            ),
+            buttonSize = Dimen.dp32,
+            valueWidth = Dimen.dp48,
+            valueFontSize = FontSize.sp12,
+            iconFontSize = FontSize.sp16,
+            onLabelClick = { onAction(SettingsAction.ShowDistanceEditDialog) },
+        )
+    }
+    if (model.distanceEdit.isVisible) {
+        DistanceEditDialog(
+            inputText = model.distanceEdit.inputText,
+            isValid = model.distanceEdit.isInputValid,
+            unitSuffix = unitSuffix,
+            min = distanceDisplay.min,
+            max = distanceDisplay.max,
+            onInputChanged = { onAction(SettingsAction.DistanceInputChanged(it)) },
+            onDismiss = { onAction(SettingsAction.HideDistanceEditDialog) },
+            onConfirm = { onAction(SettingsAction.ConfirmDistanceInput) },
         )
     }
 }
 
 @Composable
-private fun UnitsTile(
+private fun UnitsRow(
     units: UnitSystem,
     onAction: (SettingsAction) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .background(TacBgCard, RoundedCornerShape(Dimen.dp8))
-            .border(Dimen.dp1, TacBorder, RoundedCornerShape(Dimen.dp8))
-            .padding(vertical = Dimen.dp14),
-        verticalArrangement = Arrangement.spacedBy(Dimen.dp8)
-    ) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(Res.string.settings_units_label),
             color = TacTextMuted,
             fontSize = FontSize.sp12,
             textAlign = TextAlign.Center
-
         )
         UnitToggle(units = units, onAction = onAction)
     }
@@ -337,7 +269,7 @@ private fun UnitToggle(
     onAction: (SettingsAction) -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
             .padding(horizontal = Dimen.dp4)
             .background(TacBgElevated, RoundedCornerShape(Dimen.dp4)),
         horizontalArrangement = Arrangement.SpaceAround,
@@ -346,31 +278,39 @@ private fun UnitToggle(
             label = stringResource(Res.string.settings_metric),
             selected = units == UnitSystem.METRIC,
             onClick = { onAction(SettingsAction.UnitSystemChanged(UnitSystem.METRIC)) },
+            modifier = Modifier.weight(1f),
         )
         UnitOption(
             label = stringResource(Res.string.settings_imperial),
             selected = units == UnitSystem.IMPERIAL,
             onClick = { onAction(SettingsAction.UnitSystemChanged(UnitSystem.IMPERIAL)) },
+            modifier = Modifier.weight(1f),
         )
     }
 }
 
 @Composable
-private fun UnitOption(label: String, selected: Boolean, onClick: () -> Unit) {
+private fun UnitOption(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
             .clip(RoundedCornerShape(Dimen.dp3))
             .background(if (selected) TacAccent else TacBgElevated)
             .clickable(onClick = onClick)
             .padding(Dimen.dp12, vertical = Dimen.dp5),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
-            modifier = Modifier.align(Alignment.Center),
             text = label,
             color = if (selected) TacOnAccent else TacTextMuted,
             fontSize = FontSize.sp10,
             fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -407,7 +347,7 @@ private fun SettingsScreenPreview() {
                 ),
             ),
             onAction = {},
-            onNavigateToWeaponList = {},
+            onAddWeapon = {},
             onBottomNavigate = {},
             modifier = Modifier,
         )

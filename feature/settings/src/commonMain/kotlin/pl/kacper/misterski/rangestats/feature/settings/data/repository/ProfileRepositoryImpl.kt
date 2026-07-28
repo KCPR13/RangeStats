@@ -8,6 +8,7 @@ class ProfileRepositoryImpl(
     private val userPrefsDataSource: UserPrefsDataSource,
 ) : ProfileRepository {
 
+    @Throws(Exception::class)
     override suspend fun getUserProfile(): UserProfile = userPrefsDataSource.getUserProfile()
 
     override suspend fun updateUserProfile(profile: UserProfile) {

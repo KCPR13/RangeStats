@@ -59,12 +59,20 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.test)
                 implementation(libs.testBalloon.framework.core)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(projects.core.testing)
             }
         }
 
         androidMain {
             dependencies {
                 implementation(libs.bundles.koin.android)
+            }
+        }
+
+        getByName("androidHostTest") {
+            dependencies {
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 

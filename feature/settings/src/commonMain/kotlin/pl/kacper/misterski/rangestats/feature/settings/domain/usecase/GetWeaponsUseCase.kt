@@ -1,8 +1,17 @@
 package pl.kacper.misterski.rangestats.feature.settings.domain.usecase
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.feature.settings.domain.repository.WeaponRepository
 
-class GetWeaponsUseCase(private val weaponRepository: WeaponRepository) {
-    suspend operator fun invoke(): Result<List<Weapon>> = runCatching { weaponRepository.getAllWeapons() }
+class GetWeaponsUseCase(
+    private val weaponRepository: WeaponRepository,
+    private val ioDispatcher: CoroutineDispatcher,
+) {
+    operator fun invoke(): Flow<List<Weapon>> = flow {
+        emit(weaponRepository.getAllWeapons())
+    }.flowOn(ioDispatcher)
 }

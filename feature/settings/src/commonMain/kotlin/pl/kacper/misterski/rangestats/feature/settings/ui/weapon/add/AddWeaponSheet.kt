@@ -5,8 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +19,12 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
 import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
@@ -44,12 +42,8 @@ import rangestats.feature.settings.generated.resources.add_weapon_name_placehold
 import rangestats.feature.settings.generated.resources.add_weapon_save
 import rangestats.feature.settings.generated.resources.add_weapon_title
 import rangestats.feature.settings.generated.resources.add_weapon_type_label
-import rangestats.feature.settings.generated.resources.weapon_badge_pistol
-import rangestats.feature.settings.generated.resources.weapon_badge_revolver
-import rangestats.feature.settings.generated.resources.weapon_badge_rifle
-import rangestats.feature.settings.generated.resources.weapon_badge_shotgun
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddWeaponSheet(
     state: AddWeaponUiModel,
@@ -57,7 +51,11 @@ fun AddWeaponSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    LaunchedEffect(Unit) {
+        onAction(AddWeaponAction.OnStart)
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -106,18 +104,12 @@ fun AddWeaponSheet(
 
             Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
                 FieldLabel(text = stringResource(Res.string.add_weapon_type_label))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
-                    WeaponType.entries.forEach { type ->
-                        val label = when (type) {
-                            WeaponType.PISTOL -> stringResource(Res.string.weapon_badge_pistol)
-                            WeaponType.REVOLVER -> stringResource(Res.string.weapon_badge_revolver)
-                            WeaponType.SHOTGUN -> stringResource(Res.string.weapon_badge_shotgun)
-                            WeaponType.RIFLE -> stringResource(Res.string.weapon_badge_rifle)
-                        }
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(Dimen.dp7)) {
+                    items(state.weaponTypeOptions) { option ->
                         TacChip(
-                            label = label,
-                            selected = state.selectedType == type,
-                            onClick = { onAction(AddWeaponAction.TypeSelected(type)) },
+                            label = option.label,
+                            selected = option.selected,
+                            onClick = { onAction(AddWeaponAction.TypeSelected(option.type)) },
                         )
                     }
                 }
@@ -172,7 +164,7 @@ private fun AddWeaponSheetContentPreview() {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    "NOWA BROŃ", // TODO hardcoded
+                    "NOWA BROŃ",
                     color = TacAccent,
                     fontSize = FontSize.sp11,
                     fontWeight = FontWeight.Medium

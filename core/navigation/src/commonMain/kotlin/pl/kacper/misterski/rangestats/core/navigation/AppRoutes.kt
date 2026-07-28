@@ -7,7 +7,6 @@ sealed class AppRoutes(val route: String) {
     data object History : AppRoutes("history")
     data object Ballistics : AppRoutes("ballistics")
     data object Settings : AppRoutes("settings")
-    data object WeaponList : AppRoutes("weapon_list")
     data object AddWeapon : AppRoutes("add_weapon")
     data class ActiveSession(val sessionId: Long) : AppRoutes("active_session/{sessionId}") {
         fun createRoute() = "active_session/$sessionId"

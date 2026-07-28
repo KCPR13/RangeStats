@@ -10,7 +10,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.bottom_sheet.bottomSheet
 
-fun NavGraphBuilder.addWeapon(onBack: () -> Unit) {
+fun NavGraphBuilder.addWeapon(onWeaponAdded: () -> Unit, onDismiss: () -> Unit) {
 
     bottomSheet(route = AppRoutes.AddWeapon.route) {
         val viewModel = koinViewModel<AddWeaponViewModel>()
@@ -19,14 +19,14 @@ fun NavGraphBuilder.addWeapon(onBack: () -> Unit) {
         LaunchedEffect(state.isSaved) {
             if (state.isSaved) {
                 viewModel.onAction(AddWeaponAction.Reset)
-                onBack()
+                onWeaponAdded()
             }
         }
 
         AddWeaponSheet(
             state = state,
             onAction = viewModel::onAction,
-            onDismiss = onBack,
+            onDismiss = onDismiss,
             modifier = Modifier.wrapContentSize()
         )
     }

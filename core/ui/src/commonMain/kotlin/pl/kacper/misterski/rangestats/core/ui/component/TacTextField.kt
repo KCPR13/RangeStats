@@ -1,6 +1,7 @@
 package pl.kacper.misterski.rangestats.core.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -24,6 +25,7 @@ fun TacTextField(
     placeholder: String? = null,
     enabled: Boolean = true,
     singleLine: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     OutlinedTextField(
         value = value,
@@ -31,6 +33,7 @@ fun TacTextField(
         modifier = modifier.fillMaxWidth(),
         enabled = enabled,
         singleLine = singleLine,
+        keyboardOptions = keyboardOptions,
         label = label?.let { { Text(it) } },
         placeholder = placeholder?.let { { Text(it) } },
         shape = PrecisionTrackShapes.small,

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.Caliber
@@ -22,16 +23,31 @@ class AddWeaponViewModel(
 
     fun onAction(action: AddWeaponAction) {
         when (action) {
+            AddWeaponAction.OnStart -> loadWeaponTypeOptions(_uiModel.value.selectedType)
             is AddWeaponAction.NameChanged -> _uiModel.update { it.copy(name = action.name) }
             is AddWeaponAction.TypeSelected -> onTypeSelected(action.type)
             is AddWeaponAction.AmmoSelected -> onAmmoSelected(action.option)
             AddWeaponAction.Save -> save()
-            AddWeaponAction.Reset -> _uiModel.update { AddWeaponUiModel() }
+            AddWeaponAction.Reset -> _uiModel.update { AddWeaponUiModel(weaponTypeOptions = it.weaponTypeOptions) }
+        }
+    }
+
+    private fun loadWeaponTypeOptions(selected: WeaponType) {
+        viewModelScope.launch {
+            val options = weaponTypeOptionsUiModel(selected)
+            _uiModel.update { it.copy(weaponTypeOptions = options) }
         }
     }
 
     private fun onTypeSelected(type: WeaponType) {
-        _uiModel.update { it.copy(selectedType = type, ammoOptions = type.toAmmoOptionUiModels(), ammoLabelRes = type.toAmmoLabelRes()) }
+        _uiModel.update {
+            it.copy(
+                selectedType = type,
+                weaponTypeOptions = it.weaponTypeOptions.map { option -> option.copy(selected = option.type == type) },
+                ammoOptions = type.toAmmoOptionUiModels(),
+                ammoLabelRes = type.toAmmoLabelRes(),
+            )
+        }
     }
 
     private fun onAmmoSelected(option: AddWeaponUiModel.AmmoOptionUiModel) {
@@ -52,9 +68,13 @@ class AddWeaponViewModel(
 
         viewModelScope.launch {
             _uiModel.update { it.copy(isSaving = true) }
-            addWeaponUseCase(name = state.name, weaponType = state.selectedType, ammunition = ammunition)
-                .onSuccess { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
-                .onFailure { _uiModel.update { it.copy(isSaving = false) } }
+            addWeaponUseCase(
+                name = state.name,
+                weaponType = state.selectedType,
+                ammunition = ammunition
+            )
+                .catch { _uiModel.update { it.copy(isSaving = false) } }
+                .collect { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
         }
     }
 }
