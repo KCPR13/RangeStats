@@ -14,16 +14,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.flow.filter
 import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
@@ -63,6 +74,19 @@ fun AddWeaponSheet(
         containerColor = TacBgPanel,
         modifier = modifier,
     ) {
+        val focusRequester = remember { FocusRequester() }
+        val keyboardController = LocalSoftwareKeyboardController.current
+        val focusManager = LocalFocusManager.current
+
+        LaunchedEffect(sheetState) {
+            snapshotFlow { sheetState.targetValue }
+                .filter { it == SheetValue.Expanded }
+                .collect {
+                    focusRequester.requestFocus()
+                    keyboardController?.show()
+                }
+        }
+
         Column(
             modifier = Modifier.padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp16),
@@ -98,7 +122,15 @@ fun AddWeaponSheet(
                 TacTextField(
                     value = state.name,
                     onValueChange = { onAction(AddWeaponAction.NameChanged(it)) },
+                    modifier = Modifier.focusRequester(focusRequester),
                     placeholder = stringResource(Res.string.add_weapon_name_placeholder),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                            keyboardController?.hide()
+                        },
+                    ),
                 )
             }
 
