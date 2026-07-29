@@ -76,7 +76,7 @@ fun DashboardScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp16, vertical = Dimen.dp16),
+                .padding(top = Dimen.dp16),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
         ) {
             StatsGrid(state = state)
