@@ -64,7 +64,6 @@ import rangestats.feature.settings.generated.resources.settings_section_weapons
 import rangestats.feature.settings.generated.resources.settings_title
 import rangestats.feature.settings.generated.resources.settings_units_label
 
-//TODO K units should work in whole app not only in settings
 @Composable
 fun SettingsScreen(
     model: SettingsUiModel,
@@ -156,13 +155,6 @@ private fun WeaponRow(weapon: SettingsUiModel.WeaponUiModel, onDelete: () -> Uni
                 fontWeight = FontWeight.Medium
             )
             Text(text = weapon.ammoLabel, color = TacTextMuted, fontSize = FontSize.sp10)
-        }
-        Box(
-            modifier = Modifier
-                .background(TacBgElevated, RoundedCornerShape(Dimen.dp3))
-                .padding(horizontal = Dimen.dp7, vertical = Dimen.dp2),
-        ) {
-            Text(text = weapon.badgeText, color = TacTextMuted, fontSize = FontSize.sp9)
         }
         Spacer(Modifier.width(Dimen.dp8))
         IconButton(onClick = onDelete) {
@@ -334,13 +326,11 @@ private fun SettingsScreenPreview() {
                 weapons = listOf(
                     SettingsUiModel.WeaponUiModel(
                         "Glock 17",
-                        "pistol",
                         WeaponType.PISTOL.toUiModel(),
                         "9mm"
                     ),
                     SettingsUiModel.WeaponUiModel(
                         "AR-15",
-                        "carbine",
                         WeaponType.RIFLE.toUiModel(),
                         "5.56mm"
                     ),

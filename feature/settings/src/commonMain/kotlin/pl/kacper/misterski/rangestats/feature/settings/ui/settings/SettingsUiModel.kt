@@ -19,7 +19,6 @@ data class SettingsUiModel(
 ) {
     data class WeaponUiModel(
         val name: String,
-        val badgeText: String,
         val icon: WeaponIconUiModel,
         val ammoLabel: String,
     )
