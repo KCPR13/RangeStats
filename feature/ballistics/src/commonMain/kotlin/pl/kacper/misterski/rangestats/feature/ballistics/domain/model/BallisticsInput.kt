@@ -9,4 +9,5 @@ data class BallisticsInput(
     val zeroRangeMeters: Int,
     val targetDistanceMeters: Int,
     val scopeHeightMm: Double = Constants.DEFAULT_SCOPE_HEIGHT_MM,
+    val bcModel: BcModel = BcModel.G1,
 )

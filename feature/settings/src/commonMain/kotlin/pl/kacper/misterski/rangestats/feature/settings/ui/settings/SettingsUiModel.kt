@@ -8,6 +8,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.ui.Res
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIconUiModel
+import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggleOptionUiModel
 import pl.kacper.misterski.rangestats.core.ui.core_unit_suffix_meters
 
 data class SettingsUiModel(
@@ -16,6 +17,7 @@ data class SettingsUiModel(
     val isLoading: Boolean = false,
     val distanceEdit: DistanceEditUiModel = DistanceEditUiModel(),
     val distanceDisplay: DistanceDisplayUiModel = DistanceDisplayUiModel(),
+    val unitOptions: List<TacSegmentedToggleOptionUiModel> = emptyList(),
 ) {
     data class WeaponUiModel(
         val name: String,

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ballistics_title">KALKULATOR BALISTYCZNY</string>
-    <string name="ballistics_section_presets">PRESET KALIBER</string>
+    <string name="ballistics_section_bullet_data">DANE POCISKU</string>
+    <string name="ballistics_section_shot_data">DANE STRZAŁU</string>
     <string name="ballistics_field_muzzle_velocity">Prędkość wylotowa (m/s)</string>
+    <string name="ballistics_placeholder_muzzle_velocity">np. 800</string>
     <string name="ballistics_field_bullet_mass">Masa pocisku (gr)</string>
-    <string name="ballistics_field_bc">Współczynnik BC (G1)</string>
+    <string name="ballistics_placeholder_bullet_mass">np. 175</string>
+    <string name="ballistics_field_bc">Współczynnik BC</string>
+    <string name="ballistics_placeholder_bc">np. 0.475</string>
+    <string name="ballistics_bc_model_g1">G1</string>
+    <string name="ballistics_bc_model_g7">G7</string>
     <string name="ballistics_field_zero_range">Zerowanie (m)</string>
     <string name="ballistics_field_distance">Dystans docelowy (m)</string>
+    <string name="ballistics_placeholder_distance">np. 300</string>
     <string name="ballistics_field_scope_height">Celownik nad lufą (mm)</string>
     <string name="ballistics_btn_calculate">OBLICZ</string>
     <string name="ballistics_section_result">WYNIKI</string>
@@ -15,4 +22,17 @@
     <string name="ballistics_result_energy">ENERGIA</string>
     <string name="ballistics_result_tof">CZAS LOTU</string>
     <string name="ballistics_error_empty_fields">Wypełnij wszystkie pola</string>
+    <string name="ballistics_sign_up">↑</string>
+    <string name="ballistics_sign_down">↓</string>
+    <string name="ballistics_result_drop_mm_format">%1$s %2$s mm</string>
+    <string name="ballistics_result_drop_m_format">%1$s %2$s m</string>
+    <string name="ballistics_result_velocity_format">%1$d m/s</string>
+    <string name="ballistics_result_energy_format">%1$d J</string>
+    <string name="ballistics_result_tof_format">%1$s s</string>
+    <string name="ballistics_error_invalid_muzzle_velocity">Prędkość wylotowa musi być większa od zera</string>
+    <string name="ballistics_error_invalid_bc">Współczynnik BC musi być większy od zera</string>
+    <string name="ballistics_error_invalid_bullet_mass">Masa pocisku musi być większa od zera</string>
+    <string name="ballistics_error_invalid_zero_range">Zerowanie musi być większe od zera</string>
+    <string name="ballistics_error_invalid_distance">Dystans docelowy musi być większy od zera</string>
+    <string name="ballistics_error_generic">Nie udało się obliczyć trajektorii</string>
 </resources>

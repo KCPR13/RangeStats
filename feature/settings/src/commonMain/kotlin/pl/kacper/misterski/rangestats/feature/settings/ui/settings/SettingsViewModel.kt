@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.core.domain.converter.UnitConverter
+import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.DeleteWeaponUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetUserProfileUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetWeaponsUseCase
@@ -42,7 +43,7 @@ class SettingsViewModel(
             SettingsAction.HideDistanceEditDialog -> hideDistanceEditDialog()
             is SettingsAction.DistanceInputChanged -> updateDistanceInput(action.text)
             SettingsAction.ConfirmDistanceInput -> confirmDistanceInput()
-            is SettingsAction.UnitSystemChanged -> updateUnits(action)
+            is SettingsAction.UnitSystemChanged -> updateUnits(action.index)
             SettingsAction.OnStart -> fetchData()
             is SettingsAction.DeleteWeapon -> deleteWeapon(action.name)
         }
@@ -58,12 +59,14 @@ class SettingsViewModel(
             }
             val weapons = getWeaponsUseCase().catch { emit(emptyList()) }.first()
             val distanceDisplay = profile.toDistanceDisplayUiModel(unitConverter)
+            val unitOptions = unitOptionsUiModel(profile.units)
             _uiModel.update {
                 it.copy(
                     isLoading = false,
                     profile = profile,
                     weapons = weapons.map { weapon -> weapon.toUiModel() },
                     distanceDisplay = distanceDisplay,
+                    unitOptions = unitOptions,
                 )
             }
         }
@@ -125,11 +128,17 @@ class SettingsViewModel(
         }
     }
 
-    private fun updateUnits(action: SettingsAction.UnitSystemChanged) {
-        val updatedProfile = _uiModel.value.profile.copy(units = action.units)
+    private fun updateUnits(index: Int) {
+        val units = UnitSystem.entries.getOrNull(index) ?: return
+        val updatedProfile = _uiModel.value.profile.copy(units = units)
         val updatedDisplay = updatedProfile.toDistanceDisplayUiModel(unitConverter)
-        _uiModel.update { it.copy(profile = updatedProfile, distanceDisplay = updatedDisplay) }
-        viewModelScope.launch { updateUserProfileUseCase(updatedProfile).catch { }.collect() }
+        viewModelScope.launch {
+            val unitOptions = unitOptionsUiModel(units)
+            _uiModel.update {
+                it.copy(profile = updatedProfile, distanceDisplay = updatedDisplay, unitOptions = unitOptions)
+            }
+            updateUserProfileUseCase(updatedProfile).catch { }.collect()
+        }
     }
 
     private fun deleteWeapon(name: String) {

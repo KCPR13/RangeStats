@@ -2,7 +2,8 @@ package pl.kacper.misterski.rangestats.core.domain.enums
 
 enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
     // Rifle
-    REMINGTON_223(".223 Remington / 5.56x45mm NATO ", setOf(WeaponType.RIFLE)),
+    REMINGTON_223(".223 Remington", setOf(WeaponType.RIFLE)),
+    NATO_5_56("5.56x45mm NATO", setOf(WeaponType.RIFLE)),
     SOVIET_7_62X39("7.62x39mm", setOf(WeaponType.RIFLE)),
     WIN_308(".308 Winchester / 7.62x51mm NATO", setOf(WeaponType.RIFLE)),
     R_7_62X54("7.62x54mmR", setOf(WeaponType.RIFLE)),
@@ -12,6 +13,8 @@ enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
     WIN_270(".270 Winchester", setOf(WeaponType.RIFLE)),
     SPC_6_8("6.8 SPC", setOf(WeaponType.RIFLE)),
     WIN_243(".243 Winchester", setOf(WeaponType.RIFLE)),
+    WIN_300_MAGNUM(".300 Winchester Magnum", setOf(WeaponType.RIFLE)),
+    LAPUA_338(".338 Lapua Magnum", setOf(WeaponType.RIFLE)),
 
     // Pistol
     LUGER_9MM("9mm Luger", setOf(WeaponType.PISTOL, WeaponType.RIFLE)),

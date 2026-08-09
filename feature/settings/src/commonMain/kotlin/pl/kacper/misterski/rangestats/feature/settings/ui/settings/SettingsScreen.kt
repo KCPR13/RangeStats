@@ -2,13 +2,11 @@ package pl.kacper.misterski.rangestats.feature.settings.ui.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +33,8 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
+import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggle
+import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggleOptionUiModel
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
@@ -46,19 +45,15 @@ import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
-import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
-import pl.kacper.misterski.rangestats.core.ui.theme.TacOnAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacRed
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextMuted
 import pl.kacper.misterski.rangestats.core.ui.theme.TacTextSecondary
 import rangestats.feature.settings.generated.resources.Res
 import rangestats.feature.settings.generated.resources.settings_add_weapon
 import rangestats.feature.settings.generated.resources.settings_distance_label
-import rangestats.feature.settings.generated.resources.settings_imperial
-import rangestats.feature.settings.generated.resources.settings_metric
 import rangestats.feature.settings.generated.resources.settings_section_defaults
 import rangestats.feature.settings.generated.resources.settings_section_weapons
 import rangestats.feature.settings.generated.resources.settings_title
@@ -184,7 +179,10 @@ private fun DefaultSessionSection(
         ) {
             DistanceRow(model = model, onAction = onAction)
             HorizontalDivider(color = TacBorder, thickness = Dimen.dp1)
-            UnitsRow(units = model.profile.units, onAction = onAction)
+            UnitsRow(
+                unitOptions = model.unitOptions,
+                onUnitSelected = { index -> onAction(SettingsAction.UnitSystemChanged(index)) },
+            )
         }
     }
 }
@@ -240,8 +238,8 @@ private fun DistanceRow(
 
 @Composable
 private fun UnitsRow(
-    units: UnitSystem,
-    onAction: (SettingsAction) -> Unit,
+    unitOptions: List<TacSegmentedToggleOptionUiModel>,
+    onUnitSelected: (Int) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(Dimen.dp8)) {
         Text(
@@ -251,58 +249,11 @@ private fun UnitsRow(
             fontSize = FontSize.sp12,
             textAlign = TextAlign.Center
         )
-        UnitToggle(units = units, onAction = onAction)
-    }
-}
-
-@Composable
-private fun UnitToggle(
-    units: UnitSystem,
-    onAction: (SettingsAction) -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = Dimen.dp4)
-            .background(TacBgElevated, RoundedCornerShape(Dimen.dp4)),
-        horizontalArrangement = Arrangement.SpaceAround,
-    ) {
-        UnitOption(
-            label = stringResource(Res.string.settings_metric),
-            selected = units == UnitSystem.METRIC,
-            onClick = { onAction(SettingsAction.UnitSystemChanged(UnitSystem.METRIC)) },
-            modifier = Modifier.weight(1f),
-        )
-        UnitOption(
-            label = stringResource(Res.string.settings_imperial),
-            selected = units == UnitSystem.IMPERIAL,
-            onClick = { onAction(SettingsAction.UnitSystemChanged(UnitSystem.IMPERIAL)) },
-            modifier = Modifier.weight(1f),
-        )
-    }
-}
-
-@Composable
-private fun UnitOption(
-    label: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(Dimen.dp3))
-            .background(if (selected) TacAccent else TacBgElevated)
-            .clickable(onClick = onClick)
-            .padding(Dimen.dp12, vertical = Dimen.dp5),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = label,
-            color = if (selected) TacOnAccent else TacTextMuted,
-            fontSize = FontSize.sp10,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center,
+        TacSegmentedToggle(
+            options = unitOptions,
+            onSelect = onUnitSelected,
+            modifier = Modifier.padding(horizontal = Dimen.dp4),
+            fullWidth = true,
         )
     }
 }

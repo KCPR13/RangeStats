@@ -1,7 +1,9 @@
 package pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator
 
 sealed class BallisticsAction {
-    data class SelectPreset(val index: Int) : BallisticsAction()
+    data object OnStart : BallisticsAction()
+    data class SelectPreset(val name: String) : BallisticsAction()
+    data class SelectBcModel(val index: Int) : BallisticsAction()
     data class UpdateMuzzleVelocity(val value: String) : BallisticsAction()
     data class UpdateBulletMass(val value: String) : BallisticsAction()
     data class UpdateBallisticCoefficient(val value: String) : BallisticsAction()

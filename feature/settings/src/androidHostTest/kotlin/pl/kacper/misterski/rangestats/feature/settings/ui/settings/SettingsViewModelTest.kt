@@ -6,6 +6,8 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import pl.kacper.misterski.rangestats.core.domain.converter.UnitConverter
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
@@ -24,6 +26,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class)
 class SettingsViewModelTest {
 
     @BeforeTest
@@ -75,8 +78,8 @@ class SettingsViewModelTest {
         val vm = viewModel(UserProfile("U", UnitSystem.METRIC, 137))
         vm.onAction(SettingsAction.OnStart)
 
-        vm.onAction(SettingsAction.UnitSystemChanged(UnitSystem.IMPERIAL))
-        vm.onAction(SettingsAction.UnitSystemChanged(UnitSystem.METRIC))
+        vm.onAction(SettingsAction.UnitSystemChanged(UnitSystem.IMPERIAL.ordinal))
+        vm.onAction(SettingsAction.UnitSystemChanged(UnitSystem.METRIC.ordinal))
 
         assertEquals(137, vm.uiModel.value.profile.defaultDistanceMeters)
     }

@@ -29,6 +29,7 @@ kotlinx-serialization = "1.11.0"
 datastore = "1.2.1"
 compottie = "2.2.4"
 testBalloon = "1.0.1-K2.4.0"
+robolectric = "4.16"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -77,6 +78,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 testBalloon-framework-core = { module = "de.infix.testBalloon:testBalloon-framework-core", version.ref = "testBalloon" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 [bundles]
 compose = [
