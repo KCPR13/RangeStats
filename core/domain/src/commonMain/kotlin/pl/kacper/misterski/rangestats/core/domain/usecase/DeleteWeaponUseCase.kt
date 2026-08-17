@@ -1,10 +1,10 @@
-package pl.kacper.misterski.rangestats.feature.settings.domain.usecase
+package pl.kacper.misterski.rangestats.core.domain.usecase
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import pl.kacper.misterski.rangestats.feature.settings.domain.repository.WeaponRepository
+import pl.kacper.misterski.rangestats.core.domain.repository.WeaponRepository
 
 class DeleteWeaponUseCase(
     private val weaponRepository: WeaponRepository,

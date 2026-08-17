@@ -5,14 +5,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
+import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponByNameUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AddShotUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
-import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetWeaponByNameUseCase
 
 class ActiveSessionViewModel(
     private val analyzeTargetUseCase: AnalyzeTargetUseCase,
@@ -38,7 +39,7 @@ class ActiveSessionViewModel(
     private fun loadSession(sessionId: Long) {
         viewModelScope.launch {
             getSessionUseCase(sessionId).onSuccess { session ->
-                val weapon = getWeaponByNameUseCase(session.weaponName).getOrNull()
+                val weapon = getWeaponByNameUseCase(session.weaponName).firstOrNull()
                 _uiModel.update { session.toUiModel(weapon) }
             }
         }

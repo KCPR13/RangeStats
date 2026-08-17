@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats.feature.settings.domain.usecase
+package pl.kacper.misterski.rangestats.core.domain.usecase
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -8,7 +8,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.exceptions.InvalidAmmunitionException
 import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
-import pl.kacper.misterski.rangestats.feature.settings.domain.repository.WeaponRepository
+import pl.kacper.misterski.rangestats.core.domain.repository.WeaponRepository
 
 class AddWeaponUseCase(
     private val weaponRepository: WeaponRepository,

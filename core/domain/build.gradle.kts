@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kmpLibrary)
     alias(libs.plugins.android.lint)
+    alias(libs.plugins.testBalloon)
 }
 
 kotlin {
@@ -56,13 +57,17 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                // Add KMP dependencies here
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.koin.core)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.testBalloon.framework.core)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(projects.core.testing)
             }
         }
 

@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats.core.data.di
+package pl.kacper.misterski.rangestats.core.domain.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,6 +33,7 @@ import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 import pl.kacper.misterski.rangestats.core.ui.component.TacButton
 import pl.kacper.misterski.rangestats.core.ui.component.TacChip
+import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
 import pl.kacper.misterski.rangestats.core.ui.component.TacStepper
 import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
 import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
@@ -41,7 +43,6 @@ import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgCard
-import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgElevated
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBorder
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
@@ -69,17 +70,14 @@ fun NewSessionScreen(
     state: NewSessionUiModel,
     onAction: (NewSessionAction) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TacBgDeep),
-    ) {
-        NewSessionHeader(onBack = { onAction(NewSessionAction.Back) })
+    TacScaffold(
+        topBar = { NewSessionHeader(onBack = { onAction(NewSessionAction.Back) }) },
+    ) { padding ->
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimen.dp20, vertical = Dimen.dp16),
+                .fillMaxSize()
+                .padding(padding)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Dimen.dp14),
         ) {
             SectionItem(label = stringResource(Res.string.new_session_location_label)) {
@@ -142,11 +140,11 @@ private fun NewSessionHeader(onBack: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .background(TacBgPanel)
-            .padding(horizontal = Dimen.dp20, vertical = Dimen.dp12),
+            .safeContentPadding(),
         horizontalArrangement = Arrangement.spacedBy(Dimen.dp12),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        androidx.compose.foundation.layout.Box(
+        Box(
             modifier = Modifier
                 .size(Dimen.dp32)
                 .background(TacBgCard, RoundedCornerShape(Dimen.dp4))

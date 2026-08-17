@@ -12,7 +12,7 @@ import pl.kacper.misterski.rangestats.core.domain.enums.Caliber
 import pl.kacper.misterski.rangestats.core.domain.enums.ShotgunGauge
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.AddWeaponUseCase
+import pl.kacper.misterski.rangestats.core.domain.usecase.AddWeaponUseCase
 
 class AddWeaponViewModel(
     private val addWeaponUseCase: AddWeaponUseCase,

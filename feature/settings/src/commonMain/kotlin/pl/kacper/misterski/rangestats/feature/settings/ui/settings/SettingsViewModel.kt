@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.core.domain.converter.UnitConverter
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.DeleteWeaponUseCase
+import pl.kacper.misterski.rangestats.core.domain.usecase.DeleteWeaponUseCase
+import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponsUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetUserProfileUseCase
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetWeaponsUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.UpdateUserProfileUseCase
 import kotlin.time.Duration.Companion.milliseconds
 

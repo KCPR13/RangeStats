@@ -5,14 +5,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
 import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponsUseCase
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CheckPermissionStatusUseCase
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
-import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.GetWeaponsUseCase
 
 class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
@@ -99,9 +101,8 @@ class OnboardingViewModel(
 
     private fun loadWeapons() {
         viewModelScope.launch {
-            getWeaponsUseCase().onSuccess { weapons ->
-                _uiModel.update { it.copy(weapons = weapons.map { weapon -> weapon.toUiModel() }) }
-            }
+            val weapons = getWeaponsUseCase().catch { emit(emptyList()) }.first()
+            _uiModel.update { it.copy(weapons = weapons.map { weapon -> weapon.toUiModel() }) }
         }
     }
 

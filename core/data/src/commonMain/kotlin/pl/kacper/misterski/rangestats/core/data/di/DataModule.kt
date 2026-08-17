@@ -17,6 +17,8 @@ import pl.kacper.misterski.rangestats.core.data.database.AppDatabase
 import pl.kacper.misterski.rangestats.core.data.remote.AnthropicVisionApiService
 import pl.kacper.misterski.rangestats.core.data.database.getDatabaseBuilder
 import pl.kacper.misterski.rangestats.core.data.ktor.HttpClientFactory
+import pl.kacper.misterski.rangestats.core.data.repository.WeaponRepositoryImpl
+import pl.kacper.misterski.rangestats.core.domain.repository.WeaponRepository
 
 val dataModule = module {
     single<AppDatabase> {
@@ -28,6 +30,7 @@ val dataModule = module {
     single<SessionDataSource> { SessionDataSourceImpl(get<AppDatabase>().sessionDao(),
         get<AppDatabase>().shotDao()) }
     single<WeaponDataSource> { WeaponDataSourceImpl(get<AppDatabase>().weaponDao()) }
+    single<WeaponRepository> { WeaponRepositoryImpl(get()) }
     single<VisionDataSource> { VisionDataSourceImpl(get()) }
     single<UserPrefsDataSource> { UserPrefsDataSourceImpl(createDataStore()) }
     single<PermissionDataSource> { createPermissionDataSource() }

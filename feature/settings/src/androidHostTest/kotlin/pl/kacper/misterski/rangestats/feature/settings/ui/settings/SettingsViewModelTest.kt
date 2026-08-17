@@ -11,12 +11,12 @@ import org.robolectric.RobolectricTestRunner
 import pl.kacper.misterski.rangestats.core.domain.converter.UnitConverter
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
+import pl.kacper.misterski.rangestats.core.testing.fake.FakeWeaponRepository
 import pl.kacper.misterski.rangestats.core.testing.testDispatcher
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.DeleteWeaponUseCase
+import pl.kacper.misterski.rangestats.core.domain.usecase.DeleteWeaponUseCase
+import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponsUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.FakeProfileRepository
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.FakeWeaponRepository
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetUserProfileUseCase
-import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetWeaponsUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.UpdateUserProfileUseCase
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
