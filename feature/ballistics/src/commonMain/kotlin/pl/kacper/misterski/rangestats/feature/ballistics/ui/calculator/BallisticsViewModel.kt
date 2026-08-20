@@ -3,10 +3,12 @@ package pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.exceptions.InvalidBallisticsInputException
@@ -22,10 +24,13 @@ import rangestats.feature.ballistics.generated.resources.ballistics_error_generi
 class BallisticsViewModel(
     private val getCaliberPresetsUseCase: GetCaliberPresetsUseCase,
     private val calculateTrajectoryUseCase: CalculateTrajectoryUseCase,
+    private val ballisticsInputValidator: BallisticsInputValidator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(BallisticsUiModel())
-    val uiModel: StateFlow<BallisticsUiModel> = _uiModel.asStateFlow()
+    val uiModel: StateFlow<BallisticsUiModel> = _uiModel
+        .map { model -> validateCalculateEnabled(model) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, BallisticsUiModel())
 
     private var domainPresets: List<CaliberPreset> = emptyList()
     private var selectedPresetName: String? = null
@@ -146,7 +151,7 @@ class BallisticsViewModel(
     }
 
     private fun buildInput(state: BallisticsUiModel): BallisticsInput? {
-        val input = BallisticsInputValidator.validate(
+        val input = ballisticsInputValidator.validate(
             muzzleVelocity = state.muzzleVelocity,
             bulletMass = state.bulletMass,
             ballisticCoefficient = state.ballisticCoefficient,
@@ -161,4 +166,15 @@ class BallisticsViewModel(
         return input
     }
 
+    private fun validateCalculateEnabled(state: BallisticsUiModel): BallisticsUiModel = state.copy(
+        isCalculateEnabled = ballisticsInputValidator.validate(
+            muzzleVelocity = state.muzzleVelocity,
+            bulletMass = state.bulletMass,
+            ballisticCoefficient = state.ballisticCoefficient,
+            zeroRange = state.zeroRange,
+            targetDistance = state.targetDistance,
+            scopeHeight = state.scopeHeight,
+            bcModel = state.bcModel,
+        ) != null,
+    )
 }

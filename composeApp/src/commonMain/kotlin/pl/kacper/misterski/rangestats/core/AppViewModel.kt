@@ -11,12 +11,6 @@ import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.IsOnboardingCompletedUseCase
 import kotlin.time.Duration.Companion.milliseconds
 
-//TODO K separate file
-sealed interface AppStartDestination {
-    data object Loading : AppStartDestination
-    data class Ready(val route: String) : AppStartDestination
-}
-
 class AppViewModel(
     private val isOnboardingCompletedUseCase: IsOnboardingCompletedUseCase,
 ) : ViewModel() {

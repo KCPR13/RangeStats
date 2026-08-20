@@ -33,7 +33,7 @@ class SettingsViewModel(
     private val _uiModel = MutableStateFlow(SettingsUiModel())
     val uiModel: StateFlow<SettingsUiModel> = _uiModel.asStateFlow()
 
-    private var persistDistanceJob: Job? = null // TODO review this
+    private var persistDistanceJob: Job? = null
 
     fun onAction(action: SettingsAction) {
         when (action) {

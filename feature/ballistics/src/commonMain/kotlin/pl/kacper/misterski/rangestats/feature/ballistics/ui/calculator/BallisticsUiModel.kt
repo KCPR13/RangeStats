@@ -4,7 +4,6 @@ import org.jetbrains.compose.resources.StringResource
 import pl.kacper.misterski.rangestats.core.domain.Constants
 import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggleOptionUiModel
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BcModel
-import pl.kacper.misterski.rangestats.feature.ballistics.domain.validator.BallisticsInputValidator
 
 data class BallisticsUiModel(
     val presets: List<CaliberPresetUiItem> = emptyList(),
@@ -20,18 +19,8 @@ data class BallisticsUiModel(
     val result: BallisticsResultUiModel? = null,
     val showEmptyFieldsError: Boolean = false,
     val calculationErrorRes: StringResource? = null,
+    val isCalculateEnabled: Boolean = false,
 ) {
-    val isCalculateEnabled: Boolean
-        get() = BallisticsInputValidator.validate(
-            muzzleVelocity = muzzleVelocity,
-            bulletMass = bulletMass,
-            ballisticCoefficient = ballisticCoefficient,
-            zeroRange = zeroRange,
-            targetDistance = targetDistance,
-            scopeHeight = scopeHeight,
-            bcModel = bcModel,
-        ) != null
-
     data class CaliberPresetUiItem(val name: String, val selected: Boolean = false)
 
     data class BallisticsResultUiModel(

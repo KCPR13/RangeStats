@@ -3,8 +3,7 @@ package pl.kacper.misterski.rangestats.feature.ballistics.domain.validator
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsInput
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BcModel
 
-//TODO DI
-object BallisticsInputValidator {
+class BallisticsInputValidator {
 
     @Suppress("LongParameterList")
     fun validate(

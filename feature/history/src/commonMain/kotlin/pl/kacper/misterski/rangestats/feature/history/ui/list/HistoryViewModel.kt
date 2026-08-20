@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
+import kotlinx.datetime.toLocalDateTime
 import pl.kacper.misterski.rangestats.core.domain.models.Session
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.GetSessionsUseCase
 
@@ -54,27 +58,9 @@ class HistoryViewModel(
         score = score,
     )
 
-    //TODO
     private fun formatTimestamp(millis: Long): String {
-        val days = (millis / 86400000L).toInt()
-        var remaining = days
-        var year = 1970
-        while (true) {
-            val daysInYear = if (isLeapYear(year)) 366 else 365
-            if (remaining < daysInYear) break
-            remaining -= daysInYear
-            year++
-        }
-        val monthDays = intArrayOf(31, if (isLeapYear(year)) 29 else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-        var month = 0
-        while (month < 11 && remaining >= monthDays[month]) {
-            remaining -= monthDays[month]
-            month++
-        }
-        val day = remaining + 1
-        return "%02d.%02d.%d".format(day, month + 1, year)
+        val date = Instant.fromEpochMilliseconds(millis)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+        return "%02d.%02d.%d".format(date.day, date.month.number, date.year)
     }
-
-    private fun isLeapYear(year: Int): Boolean =
-        (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
 }

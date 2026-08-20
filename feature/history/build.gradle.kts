@@ -50,6 +50,7 @@ kotlin {
                 implementation(libs.bundles.lifecycle)
                 implementation(libs.bundles.koin.compose)
                 implementation(libs.navigation.compose)
+                implementation(libs.kotlinx.datetime)
             }
         }
 

@@ -4,16 +4,12 @@ import pl.kacper.misterski.rangestats.core.domain.models.Session
 
 data class DashboardUiModel(
     val totalSessions: Int = 0,
-    val avgScore: Float = 0f,
-    val totalShots: Int = 0,
-    val bestScore: Float = 0f,
+    val avgScoreLabel: String = "—",
+    val shotsLabel: String = "0",
+    val bestScoreLabel: String = "—",
     val lastSession: Session? = null,
     val recentScores: List<Float> = emptyList(),
     val isLoading: Boolean = false,
 ) {
-    val shotsLabel: String get() = if (totalShots >= 1000) {
-        "${totalShots / 1000}.${(totalShots % 1000) / 100}k"
-    } else {
-        totalShots.toString()
-    }
+    data class StatDeltaUiModel(val text: String, val isPositive: Boolean)
 }

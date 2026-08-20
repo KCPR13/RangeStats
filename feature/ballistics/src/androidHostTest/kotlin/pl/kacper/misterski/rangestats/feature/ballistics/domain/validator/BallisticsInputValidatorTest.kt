@@ -7,6 +7,8 @@ import kotlin.test.assertNull
 
 class BallisticsInputValidatorTest {
 
+    private val validator = BallisticsInputValidator()
+
     private fun validate(
         muzzleVelocity: String = "800",
         bulletMass: String = "175",
@@ -15,7 +17,7 @@ class BallisticsInputValidatorTest {
         targetDistance: String = "300",
         scopeHeight: String = "38",
         bcModel: BcModel = BcModel.G1,
-    ) = BallisticsInputValidator.validate(
+    ) = validator.validate(
         muzzleVelocity = muzzleVelocity,
         bulletMass = bulletMass,
         ballisticCoefficient = ballisticCoefficient,

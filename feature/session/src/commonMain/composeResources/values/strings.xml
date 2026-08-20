@@ -8,6 +8,7 @@
     <string name="dashboard_progress_label">Postępy — ostatnie 7 sesji</string>
     <string name="dashboard_last_session">Ostatnia sesja</string>
     <string name="dashboard_history_link">Historia →</string>
+    <string name="dashboard_no_sessions">Brak sesji</string>
     <string name="new_session_title">Nowa sesja</string>
     <string name="new_session_subtitle">Skonfiguruj trening</string>
     <string name="new_session_location_label">Miejsce</string>

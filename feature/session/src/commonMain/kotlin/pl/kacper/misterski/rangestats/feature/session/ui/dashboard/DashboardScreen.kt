@@ -50,6 +50,7 @@ import rangestats.feature.session.generated.resources.dashboard_distance_m_forma
 import rangestats.feature.session.generated.resources.dashboard_empty_dash
 import rangestats.feature.session.generated.resources.dashboard_history_link
 import rangestats.feature.session.generated.resources.dashboard_last_session
+import rangestats.feature.session.generated.resources.dashboard_no_sessions
 import rangestats.feature.session.generated.resources.dashboard_progress_label
 import rangestats.feature.session.generated.resources.dashboard_score_label
 import rangestats.feature.session.generated.resources.dashboard_stat_avg_score
@@ -131,11 +132,7 @@ private fun DashboardHeader() {
 }
 
 @Composable
-private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
-    val avgScoreStr = if (state.avgScore > 0f) "${state.avgScore.toInt()}%" else "—"
-    val bestScoreStr = if (state.bestScore > 0f) "${state.bestScore.toInt()}%" else "—"
-    val shotsStr = state.shotsLabel
-
+private fun StatsGrid(state: DashboardUiModel) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(Dimen.dp8),
@@ -152,7 +149,7 @@ private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
             )
             StatCard(
                 label = stringResource(Res.string.dashboard_stat_shots),
-                value = shotsStr,
+                value = state.shotsLabel,
                 valueSuffix = null,
                 delta = null,
             )
@@ -163,13 +160,13 @@ private fun StatsGrid(state: DashboardUiModel) { // TODO business logic
         ) {
             StatCard(
                 label = stringResource(Res.string.dashboard_stat_avg_score),
-                value = avgScoreStr,
+                value = state.avgScoreLabel,
                 valueSuffix = null,
                 delta = null,
             )
             StatCard(
                 label = stringResource(Res.string.dashboard_stat_best),
-                value = bestScoreStr,
+                value = state.bestScoreLabel,
                 valueSuffix = null,
                 delta = null,
             )
@@ -182,7 +179,7 @@ private fun StatCard(
     label: String,
     value: String,
     valueSuffix: String?,
-    delta: String?,
+    delta: DashboardUiModel.StatDeltaUiModel?,
 ) {
     Column(
         modifier = Modifier
@@ -216,10 +213,9 @@ private fun StatCard(
             }
         }
         if (delta != null) {
-            val isPositive = delta.startsWith("▲")  // TODO business logic
             Text(
-                text = delta,
-                color = if (isPositive) TacGreen else TacRed,
+                text = delta.text,
+                color = if (delta.isPositive) TacGreen else TacRed,
                 fontSize = FontSize.sp11,
             )
         }
@@ -291,7 +287,7 @@ private fun LastSessionSection(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Brak sesji", //TODO
+                    text = stringResource(Res.string.dashboard_no_sessions),
                     color = TacTextMuted,
                     fontSize = FontSize.sp12,
                 )
@@ -351,9 +347,9 @@ private fun DashboardScreenPreview() {
         DashboardScreen(
             state = DashboardUiModel(
                 totalSessions = 24,
-                avgScore = 87f,
-                totalShots = 1200,
-                bestScore = 98f,
+                avgScoreLabel = "87%",
+                shotsLabel = "1.2k",
+                bestScoreLabel = "98%",
                 lastSession = Session(
                     id = 1L,
                     weaponName = "w1",
