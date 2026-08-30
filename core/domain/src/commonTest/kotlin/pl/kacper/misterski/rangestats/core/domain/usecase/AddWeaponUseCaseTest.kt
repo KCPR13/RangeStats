@@ -12,7 +12,6 @@ import pl.kacper.misterski.rangestats.core.testing.testDispatcher
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-
 val AddWeaponUseCaseTest by testSuite {
 
     test("caliber applicable to weapon type is saved successfully") {
@@ -65,7 +64,7 @@ val AddWeaponUseCaseTest by testSuite {
         useCase(
             name = "Remington 870",
             weaponType = WeaponType.SHOTGUN,
-            ammunition = ammunition
+            ammunition = ammunition,
         ).first()
 
         // Then

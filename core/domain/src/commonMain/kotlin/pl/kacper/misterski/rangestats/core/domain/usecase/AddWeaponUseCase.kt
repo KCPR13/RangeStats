@@ -14,7 +14,11 @@ class AddWeaponUseCase(
     private val weaponRepository: WeaponRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(name: String, weaponType: WeaponType, ammunition: Ammunition): Flow<Unit> =
+    operator fun invoke(
+        name: String,
+        weaponType: WeaponType,
+        ammunition: Ammunition,
+    ): Flow<Unit> =
         flow {
             validate(weaponType, ammunition)
             emit(
@@ -22,13 +26,16 @@ class AddWeaponUseCase(
                     Weapon(
                         name = name,
                         type = weaponType,
-                        ammunition = ammunition
-                    )
-                )
+                        ammunition = ammunition,
+                    ),
+                ),
             )
         }.flowOn(ioDispatcher)
 
-    private fun validate(weaponType: WeaponType, ammunition: Ammunition) {
+    private fun validate(
+        weaponType: WeaponType,
+        ammunition: Ammunition,
+    ) {
         if (!ammunition.isApplicableTo(weaponType)) throw InvalidAmmunitionException(weaponType)
     }
 }

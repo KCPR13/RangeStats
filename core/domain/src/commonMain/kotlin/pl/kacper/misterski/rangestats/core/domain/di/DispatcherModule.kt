@@ -7,6 +7,7 @@ import org.koin.dsl.module
 
 val ioDispatcherQualifier = named("ioDispatcher")
 
-val dispatcherModule = module {
-    single<CoroutineDispatcher>(ioDispatcherQualifier) { Dispatchers.IO }
-}
+val dispatcherModule =
+    module {
+        single<CoroutineDispatcher>(ioDispatcherQualifier) { Dispatchers.IO }
+    }

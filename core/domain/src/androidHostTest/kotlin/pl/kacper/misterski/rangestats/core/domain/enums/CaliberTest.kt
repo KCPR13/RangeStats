@@ -5,9 +5,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CaliberTest {
-
-    private fun calibersFor(type: WeaponType): List<Caliber> =
-        Caliber.entries.filter { type in it.applicableTo }
+    private fun calibersFor(type: WeaponType): List<Caliber> = Caliber.entries.filter { type in it.applicableTo }
 
     @Test
     fun `LR_22 is applicable to pistol, revolver and rifle`() {

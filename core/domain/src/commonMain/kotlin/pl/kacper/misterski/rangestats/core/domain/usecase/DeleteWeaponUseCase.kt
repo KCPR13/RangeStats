@@ -10,7 +10,8 @@ class DeleteWeaponUseCase(
     private val weaponRepository: WeaponRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(name: String): Flow<Unit> = flow {
-        emit(weaponRepository.deleteWeapon(name))
-    }.flowOn(ioDispatcher)
+    operator fun invoke(name: String): Flow<Unit> =
+        flow {
+            emit(weaponRepository.deleteWeapon(name))
+        }.flowOn(ioDispatcher)
 }

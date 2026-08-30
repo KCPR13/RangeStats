@@ -11,7 +11,8 @@ class GetWeaponsUseCase(
     private val weaponRepository: WeaponRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(): Flow<List<Weapon>> = flow {
-        emit(weaponRepository.getAllWeapons())
-    }.flowOn(ioDispatcher)
+    operator fun invoke(): Flow<List<Weapon>> =
+        flow {
+            emit(weaponRepository.getAllWeapons())
+        }.flowOn(ioDispatcher)
 }

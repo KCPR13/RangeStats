@@ -1,6 +1,9 @@
 package pl.kacper.misterski.rangestats.core.domain.enums
 
-enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
+enum class Caliber(
+    val label: String,
+    val applicableTo: Set<WeaponType>,
+) {
     // Rifle
     REMINGTON_223(".223 Remington", setOf(WeaponType.RIFLE)),
     NATO_5_56("5.56x45mm NATO", setOf(WeaponType.RIFLE)),
@@ -47,5 +50,4 @@ enum class Caliber(val label: String, val applicableTo: Set<WeaponType>) {
 
     // Universal
     LR_22(".22 LR", setOf(WeaponType.PISTOL, WeaponType.REVOLVER, WeaponType.RIFLE)),
-    ;
 }
