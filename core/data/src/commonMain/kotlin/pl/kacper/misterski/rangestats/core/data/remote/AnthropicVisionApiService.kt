@@ -14,53 +14,62 @@ import pl.kacper.misterski.rangestats.core.domain.models.AnalysisResult
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-//TODO CLEANUP
+// TODO CLEANUP
 class AnthropicVisionApiService(
     private val client: HttpClient,
     private val apiKey: String = "",
 ) {
-
     private val json = Json { ignoreUnknownKeys = true }
 
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun analyzeTarget(imageBytes: ByteArray): AnalysisResult {
         val base64Image = Base64.encode(imageBytes)
 
-        val request = VisionApiRequest(
-            model = MODEL,
-            maxTokens = MAX_TOKENS,
-            messages = listOf(
-                MessageRequest(
-                    role = "user",
-                    content = listOf(
-                        ContentRequest(
-                            type = "image",
-                            source = ImageSourceRequest(
-                                mediaType = "image/jpeg",
-                                data = base64Image,
-                            ),
-                        ),
-                        ContentRequest(
-                            type = "text",
-                            text = ANALYSIS_PROMPT,
+        val request =
+            VisionApiRequest(
+                model = MODEL,
+                maxTokens = MAX_TOKENS,
+                messages =
+                    listOf(
+                        MessageRequest(
+                            role = "user",
+                            content =
+                                listOf(
+                                    ContentRequest(
+                                        type = "image",
+                                        source =
+                                            ImageSourceRequest(
+                                                mediaType = "image/jpeg",
+                                                data = base64Image,
+                                            ),
+                                    ),
+                                    ContentRequest(
+                                        type = "text",
+                                        text = ANALYSIS_PROMPT,
+                                    ),
+                                ),
                         ),
                     ),
-                ),
-            ),
-        )
+            )
 
-        val response: VisionApiResponse = client.post(BASE_URL) {
-            contentType(ContentType.Application.Json)
-            header("x-api-key", apiKey)
-            header("anthropic-version", VERSION)
-            setBody(request)
-        }.body()
+        val response: VisionApiResponse =
+            client
+                .post(BASE_URL) {
+                    contentType(ContentType.Application.Json)
+                    header("x-api-key", apiKey)
+                    header("anthropic-version", VERSION)
+                    setBody(request)
+                }.body()
 
         return parseAnalysisResult(response)
     }
 
     private fun parseAnalysisResult(response: VisionApiResponse): AnalysisResult {
-        val text = response.content.firstOrNull { it.type == "text" }?.text.orEmpty()
+        val text =
+            response.content
+                .firstOrNull { it.type == "text" }
+                ?.text
+                .orEmpty()
         val jsonStart = text.indexOf('{')
         val jsonEnd = text.lastIndexOf('}')
         if (jsonStart == -1 || jsonEnd == -1) return defaultAnalysisResult()
@@ -70,9 +79,11 @@ class AnthropicVisionApiService(
             val dto = json.decodeFromString<AnalysisDto>(jsonStr)
             AnalysisResult(
                 shotCount = dto.shotCount,
-                zones = dto.zones.mapNotNull { (key, value) ->
-                    runCatching { TargetZone.valueOf(key) to value }.getOrNull()
-                }.toMap(),
+                zones =
+                    dto.zones
+                        .mapNotNull { (key, value) ->
+                            runCatching { TargetZone.valueOf(key) to value }.getOrNull()
+                        }.toMap(),
                 score = dto.score,
             )
         } catch (_: Exception) {
@@ -80,11 +91,12 @@ class AnthropicVisionApiService(
         }
     }
 
-    private fun defaultAnalysisResult() = AnalysisResult(
-        shotCount = 0,
-        zones = emptyMap(),
-        score = 0f,
-    )
+    private fun defaultAnalysisResult() =
+        AnalysisResult(
+            shotCount = 0,
+            zones = emptyMap(),
+            score = 0f,
+        )
 
     @Serializable
     private data class AnalysisDto(
@@ -98,6 +110,8 @@ class AnthropicVisionApiService(
         private const val VERSION = "2023-06-01"
         private const val MODEL = "claude-opus-4-5"
         private const val MAX_TOKENS = 1024
+
+        @Suppress("MaxLineLength")
         private const val ANALYSIS_PROMPT = """Analyze this shooting target image. Count bullet holes in each scoring zone.
 Return ONLY a JSON object with no extra text:
 {"shotCount": <total>, "zones": {"X": <n>, "TEN": <n>, "NINE": <n>, "EIGHT": <n>, "SEVEN": <n>, "SIX": <n>, "MISS": <n>}, "score": <float 0-100>}"""

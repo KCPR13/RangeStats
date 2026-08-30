@@ -8,7 +8,6 @@ import androidx.room.Update
 
 @Dao
 interface WeaponDao {
-
     @Query("SELECT * FROM ${WeaponEntity.TABLE_NAME} ORDER BY name ASC")
     suspend fun getAllWeapons(): List<WeaponEntity>
 

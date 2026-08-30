@@ -34,7 +34,10 @@ fun App() {
 }
 
 @Composable
-private fun AppNavHost(navController: NavHostController, startDestination: String) {
+private fun AppNavHost(
+    navController: NavHostController,
+    startDestination: String,
+) {
     val onBack: () -> Unit = { navController.navigateUp() }
     val onBottomNavigate: (BottomNavDestination) -> Unit =
         { destination -> navController.navigateBottomNav(destination) }
@@ -62,25 +65,30 @@ private fun AppNavHost(navController: NavHostController, startDestination: Strin
         )
 
         sessionFlow(navController = navController, onBack = onBack)
-        historyFlow(navController = navController,
+        historyFlow(
+            navController = navController,
             onBack = onBack,
-            onBottomNavigate = onBottomNavigate)
-        settingsFlow(navController = navController,
+            onBottomNavigate = onBottomNavigate,
+        )
+        settingsFlow(
+            navController = navController,
             onBack = onBack,
-            onBottomNavigate = onBottomNavigate)
+            onBottomNavigate = onBottomNavigate,
+        )
 
         ballistics(onBottomNavigate = onBottomNavigate)
     }
 }
 
 private fun NavController.navigateBottomNav(destination: BottomNavDestination) {
-    val route = when (destination) {
-        BottomNavDestination.Home -> AppRoutes.Dashboard.route
-        BottomNavDestination.History -> AppRoutes.History.route
-        BottomNavDestination.NewSession -> AppRoutes.NewSession.route
-        BottomNavDestination.Ballistics -> AppRoutes.Ballistics.route
-        BottomNavDestination.Settings -> AppRoutes.Settings.route
-    }
+    val route =
+        when (destination) {
+            BottomNavDestination.Home -> AppRoutes.Dashboard.route
+            BottomNavDestination.History -> AppRoutes.History.route
+            BottomNavDestination.NewSession -> AppRoutes.NewSession.route
+            BottomNavDestination.Ballistics -> AppRoutes.Ballistics.route
+            BottomNavDestination.Settings -> AppRoutes.Settings.route
+        }
     navigate(route) {
         if (destination != BottomNavDestination.NewSession) {
             popUpTo(AppRoutes.Dashboard.route) { inclusive = false }

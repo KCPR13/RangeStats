@@ -5,7 +5,10 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 interface UserPrefsDataSource {
     @Throws(Exception::class)
     suspend fun getUserProfile(): UserProfile
+
     suspend fun updateUserProfile(profile: UserProfile)
+
     suspend fun isOnboardingCompleted(): Boolean
+
     suspend fun setOnboardingCompleted()
 }

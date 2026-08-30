@@ -5,7 +5,7 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import pl.kacper.misterski.rangestats.core.data.database.migration_spec.DeleteWeaponNotes
+import pl.kacper.misterski.rangestats.core.data.database.migrationspec.DeleteWeaponNotes
 import pl.kacper.misterski.rangestats.core.data.database.session.SessionDao
 import pl.kacper.misterski.rangestats.core.data.database.session.SessionEntity
 import pl.kacper.misterski.rangestats.core.data.database.shot.ShotDao
@@ -24,7 +24,9 @@ import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponEntity
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
+
     abstract fun weaponDao(): WeaponDao
+
     abstract fun shotDao(): ShotDao
 }
 

@@ -8,11 +8,12 @@ import pl.kacper.misterski.rangestats.core.domain.exceptions.CorruptedWeaponAmmu
 import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.models.Weapon
 
-fun WeaponEntity.toDomain(): Weapon = Weapon(
-    name = name,
-    type = WeaponType.entries.find { it.name == type } ?: WeaponType.PISTOL,
-    ammunition = toAmmunition(),
-)
+fun WeaponEntity.toDomain(): Weapon =
+    Weapon(
+        name = name,
+        type = WeaponType.entries.find { it.name == type } ?: WeaponType.PISTOL,
+        ammunition = toAmmunition(),
+    )
 
 private fun WeaponEntity.toAmmunition(): Ammunition {
     caliber?.let { name -> Caliber.entries.find { it.name == name }?.let { return Ammunition.CaliberAmmo(it) } }
@@ -22,10 +23,11 @@ private fun WeaponEntity.toAmmunition(): Ammunition {
 
 fun Weapon.toEntity(): WeaponEntity {
     val ammo = ammunition
-    val (caliberName, gaugeName) = when (ammo) {
-        is Ammunition.CaliberAmmo -> ammo.caliber.name to null
-        is Ammunition.GaugeAmmo -> null to ammo.gauge.name
-    }
+    val (caliberName, gaugeName) =
+        when (ammo) {
+            is Ammunition.CaliberAmmo -> ammo.caliber.name to null
+            is Ammunition.GaugeAmmo -> null to ammo.gauge.name
+        }
     return WeaponEntity(
         name = name,
         type = type.name,

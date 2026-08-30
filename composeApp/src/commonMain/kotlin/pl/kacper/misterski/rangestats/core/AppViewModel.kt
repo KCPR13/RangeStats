@@ -14,7 +14,6 @@ import kotlin.time.Duration.Companion.milliseconds
 class AppViewModel(
     private val isOnboardingCompletedUseCase: IsOnboardingCompletedUseCase,
 ) : ViewModel() {
-
     private val _startDestination =
         MutableStateFlow<AppStartDestination>(AppStartDestination.Loading)
     val startDestination = _startDestination.asStateFlow()

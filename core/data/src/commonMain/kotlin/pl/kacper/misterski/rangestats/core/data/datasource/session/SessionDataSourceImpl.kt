@@ -7,21 +7,17 @@ import pl.kacper.misterski.rangestats.core.data.database.shot.ShotEntity
 
 class SessionDataSourceImpl(
     private val sessionDao: SessionDao,
-    private val shotDao: ShotDao
+    private val shotDao: ShotDao,
 ) : SessionDataSource {
-
-    override suspend fun insertSession(entity: SessionEntity): Long =
-        sessionDao.insertSession(entity)
+    override suspend fun insertSession(entity: SessionEntity): Long = sessionDao.insertSession(entity)
 
     override suspend fun updateSession(entity: SessionEntity) {
         sessionDao.updateSession(entity)
     }
 
-    override suspend fun getSessionById(id: Long): SessionEntity? =
-        sessionDao.getSessionById(id)
+    override suspend fun getSessionById(id: Long): SessionEntity? = sessionDao.getSessionById(id)
 
-    override suspend fun getAllSessions(): List<SessionEntity> =
-        sessionDao.getAllSessions()
+    override suspend fun getAllSessions(): List<SessionEntity> = sessionDao.getAllSessions()
 
     override suspend fun deleteSession(id: Long) {
         sessionDao.deleteSession(id)
@@ -31,6 +27,5 @@ class SessionDataSourceImpl(
         sessionDao.insertShots(entities)
     }
 
-    override suspend fun getShotsForSession(sessionId: Long): List<ShotEntity> =
-        shotDao.getShotsForSession(sessionId)
+    override suspend fun getShotsForSession(sessionId: Long): List<ShotEntity> = shotDao.getShotsForSession(sessionId)
 }

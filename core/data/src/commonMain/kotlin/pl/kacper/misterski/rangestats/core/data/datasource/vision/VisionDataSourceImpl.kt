@@ -6,7 +6,5 @@ import pl.kacper.misterski.rangestats.core.domain.models.AnalysisResult
 class VisionDataSourceImpl(
     private val apiService: AnthropicVisionApiService,
 ) : VisionDataSource {
-
-    override suspend fun analyzeTarget(imageBytes: ByteArray): AnalysisResult =
-        apiService.analyzeTarget(imageBytes)
+    override suspend fun analyzeTarget(imageBytes: ByteArray): AnalysisResult = apiService.analyzeTarget(imageBytes)
 }

@@ -10,9 +10,17 @@ kotlin {
     android {
         namespace = "pl.kacper.misterski.rangestats.feature.onboarding"
         compileSdk {
-            version = release(libs.versions.android.compileSdk.get().toInt())
+            version =
+                release(
+                    libs.versions.android.compileSdk
+                        .get()
+                        .toInt(),
+                )
         }
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 
         withHostTestBuilder {
@@ -88,4 +96,3 @@ kotlin {
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }
-

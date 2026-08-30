@@ -2,8 +2,8 @@ package pl.kacper.misterski.rangestats.core.data.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
@@ -14,15 +14,15 @@ import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 class UserPrefsDataSourceImpl(
     private val dataStore: DataStore<Preferences>,
 ) : UserPrefsDataSource {
-
     @Throws(Exception::class)
     override suspend fun getUserProfile(): UserProfile =
         dataStore.data.first().let { prefs ->
             UserProfile(
                 displayName = prefs[KEY_DISPLAY_NAME].orEmpty(),
-                units = prefs[KEY_UNIT_SYSTEM]
-                    ?.let { runCatching { UnitSystem.valueOf(it) }.getOrNull() }
-                    ?: UnitSystem.METRIC,
+                units =
+                    prefs[KEY_UNIT_SYSTEM]
+                        ?.let { runCatching { UnitSystem.valueOf(it) }.getOrNull() }
+                        ?: UnitSystem.METRIC,
                 defaultDistanceMeters = prefs[KEY_DEFAULT_DISTANCE] ?: DEFAULT_DISTANCE_METERS,
             )
         }
@@ -35,8 +35,7 @@ class UserPrefsDataSourceImpl(
         }
     }
 
-    override suspend fun isOnboardingCompleted(): Boolean =
-        dataStore.data.first()[KEY_ONBOARDING_COMPLETED] ?: false
+    override suspend fun isOnboardingCompleted(): Boolean = dataStore.data.first()[KEY_ONBOARDING_COMPLETED] ?: false
 
     override suspend fun setOnboardingCompleted() {
         dataStore.edit { prefs -> prefs[KEY_ONBOARDING_COMPLETED] = true }

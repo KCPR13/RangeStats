@@ -9,7 +9,6 @@ import pl.kacper.misterski.rangestats.core.data.database.shot.ShotEntity
 
 @Dao
 interface SessionDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSession(entity: SessionEntity): Long
 
@@ -27,5 +26,4 @@ interface SessionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShots(entities: List<ShotEntity>)
-
 }

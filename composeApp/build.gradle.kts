@@ -10,15 +10,23 @@ kotlin {
     android {
         namespace = "pl.kacper.misterski.rangestats.composeapp"
         compileSdk {
-            version = release(libs.versions.android.compileSdk.get().toInt())
+            version =
+                release(
+                    libs.versions.android.compileSdk
+                        .get()
+                        .toInt(),
+                )
         }
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
     }
 
     listOf(
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"

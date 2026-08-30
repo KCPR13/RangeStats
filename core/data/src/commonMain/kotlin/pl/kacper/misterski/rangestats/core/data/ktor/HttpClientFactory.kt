@@ -8,15 +8,18 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
-    fun create(): HttpClient = HttpClient(createHttpEngine()) {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-            })
+    fun create(): HttpClient =
+        HttpClient(createHttpEngine()) {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                    },
+                )
+            }
+            install(Logging) {
+                level = LogLevel.NONE
+            }
         }
-        install(Logging) {
-            level = LogLevel.NONE
-        }
-    }
 }
