@@ -44,6 +44,22 @@ subprojects {
                         .filterNot { it.path.contains("${File.separator}build${File.separator}") },
                 )
             }
+
+            //TODO
+            // KtlintExtension's filter{} block above does not exclude generated Compose
+            // resource sources from the per-source-set check/format tasks (they crash the
+            // configuration cache if filtered via source.matching{}), so rebuild each task's
+            // source from the same clean srcDirs Detekt uses above, instead of filtering it.
+            tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask>().configureEach {
+                val sourceSetName = name.substringAfter("Over").substringBefore("SourceSet")
+                    .replaceFirstChar { it.lowercaseChar() }
+                kotlinMultiplatform.sourceSets.findByName(sourceSetName)?.let { sourceSet ->
+                    setSource(
+                        sourceSet.kotlin.srcDirs
+                            .filterNot { it.path.contains("${File.separator}build${File.separator}") },
+                    )
+                }
+            }
         }
     }
 }

@@ -31,16 +31,18 @@ fun TacChip(
         label = { Text(label) },
         modifier = modifier.height(Dimen.dp32),
         shape = PrecisionTrackShapes.extraSmall,
-        colors = FilterChipDefaults.filterChipColors(
-            containerColor = TacBgCard,
-            labelColor = TacTextSecondary,
-            selectedContainerColor = TacAccentDim,
-            selectedLabelColor = TacOnAccent,
-        ),
-        border = BorderStroke(
-            width = Dimen.dp1,
-            color = if (selected) TacAccent else TacBorder,
-        ),
+        colors =
+            FilterChipDefaults.filterChipColors(
+                containerColor = TacBgCard,
+                labelColor = TacTextSecondary,
+                selectedContainerColor = TacAccentDim,
+                selectedLabelColor = TacOnAccent,
+            ),
+        border =
+            BorderStroke(
+                width = Dimen.dp1,
+                color = if (selected) TacAccent else TacBorder,
+            ),
     )
 }
 

@@ -3,4 +3,16 @@ build:
 
 naming:
   FunctionNaming:
-    ignoreAnnotated: ['Test']
+    ignoreAnnotated: ['Test', 'Composable']
+
+style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
+  UnusedPrivateMember:
+    ignoreAnnotated: ['Preview']
+
+complexity:
+  LongParameterList:
+    ignoreAnnotated: ['Composable']
+  LongMethod:
+    ignoreAnnotated: ['Composable']

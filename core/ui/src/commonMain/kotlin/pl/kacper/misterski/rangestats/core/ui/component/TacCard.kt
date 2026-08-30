@@ -26,10 +26,11 @@ fun TacCard(
             onClick = onClick,
             modifier = modifier,
             shape = PrecisionTrackShapes.medium,
-            colors = CardDefaults.cardColors(
-                containerColor = TacBgCard,
-                contentColor = TacTextPrimary,
-            ),
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = TacBgCard,
+                    contentColor = TacTextPrimary,
+                ),
             border = BorderStroke(Dimen.dp1, TacBorder),
             content = content,
         )
@@ -37,10 +38,11 @@ fun TacCard(
         Card(
             modifier = modifier,
             shape = PrecisionTrackShapes.medium,
-            colors = CardDefaults.cardColors(
-                containerColor = TacBgCard,
-                contentColor = TacTextPrimary,
-            ),
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = TacBgCard,
+                    contentColor = TacTextPrimary,
+                ),
             border = BorderStroke(Dimen.dp1, TacBorder),
             content = content,
         )

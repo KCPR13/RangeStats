@@ -41,16 +41,18 @@ private fun TacLoadingScreen(
     )
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundColor),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         Image(
-            painter = rememberLottiePainter(
-                composition = composition,
-                progress = { progress },
-            ),
+            painter =
+                rememberLottiePainter(
+                    composition = composition,
+                    progress = { progress },
+                ),
             contentDescription = null,
             modifier = Modifier.size(Dimen.dp100),
         )
@@ -66,9 +68,10 @@ fun AnimatedLoader(
 ) {
     Crossfade(
         targetState = isLoading,
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundColor)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundColor),
     ) { loading ->
         if (loading) {
             TacLoadingScreen(backgroundColor = Color.Transparent)
@@ -77,7 +80,6 @@ fun AnimatedLoader(
         }
     }
 }
-
 
 @Preview
 @Composable

@@ -3,8 +3,6 @@ package pl.kacper.misterski.rangestats.core.ui.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Calculate
@@ -14,8 +12,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
@@ -30,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
-import pl.kacper.misterski.rangestats.core.ui.theme.FontSize.sp12
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
@@ -53,13 +48,13 @@ fun BottomNavBar(
             destination = BottomNavDestination.Home,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Home
+            icon = Icons.Default.Home,
         )
         NavItem(
             destination = BottomNavDestination.History,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.History
+            icon = Icons.Default.History,
         )
         NavigationBarItem(
             selected = false,
@@ -78,7 +73,7 @@ fun BottomNavBar(
                     ) {
                         Icon(
                             Icons.Default.Add,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 }
@@ -90,13 +85,13 @@ fun BottomNavBar(
             destination = BottomNavDestination.Ballistics,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Calculate
+            icon = Icons.Default.Calculate,
         )
         NavItem(
             destination = BottomNavDestination.Settings,
             selected = selected,
             onNavigate = onNavigate,
-            icon = Icons.Default.Settings
+            icon = Icons.Default.Settings,
         )
     }
 }
@@ -106,7 +101,7 @@ private fun RowScope.NavItem(
     destination: BottomNavDestination,
     selected: BottomNavDestination,
     onNavigate: (BottomNavDestination) -> Unit,
-    icon: ImageVector
+    icon: ImageVector,
 ) {
     NavigationBarItem(
         selected = selected == destination,
@@ -118,31 +113,14 @@ private fun RowScope.NavItem(
 }
 
 @Composable
-private fun NavBarLabel(
-    text: String
-) {
-    BasicText(
-        text = text,
-        maxLines = 1,
-        softWrap = false,
-        autoSize = TextAutoSize.StepBased(
-            minFontSize = sp12,
-            maxFontSize = sp12
-        ),
-        style = MaterialTheme.typography.labelMedium.copy(
-            color = LocalContentColor.current,
-        )
+private fun navItemColors() =
+    NavigationBarItemDefaults.colors(
+        selectedIconColor = TacAccent,
+        selectedTextColor = TacAccent,
+        indicatorColor = Color.Transparent,
+        unselectedIconColor = TacTextMuted,
+        unselectedTextColor = TacTextMuted,
     )
-}
-
-@Composable
-private fun navItemColors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = TacAccent,
-    selectedTextColor = TacAccent,
-    indicatorColor = Color.Transparent,
-    unselectedIconColor = TacTextMuted,
-    unselectedTextColor = TacTextMuted,
-)
 
 @Preview
 @Composable

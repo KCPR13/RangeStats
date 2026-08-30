@@ -8,7 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
-import pl.kacper.misterski.rangestats.core.ui.bottom_sheet.bottomSheet
+import pl.kacper.misterski.rangestats.core.ui.bottomsheet.bottomSheet
 
 fun NavGraphBuilder.addWeapon(onWeaponAdded: () -> Unit, onDismiss: () -> Unit) {
 

@@ -2,7 +2,6 @@ package pl.kacper.misterski.rangestats.core.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-
 object Dimen {
     val dp1 = 1.dp
     val dp2 = 2.dp
@@ -28,4 +27,3 @@ object Dimen {
     val dp76 = 76.dp
     val dp100 = 100.dp
 }
-

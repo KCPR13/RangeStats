@@ -16,12 +16,16 @@ import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgPanel
 
 @Composable
-fun TacTopBar(title: String, modifier: Modifier = Modifier) {
+fun TacTopBar(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(TacBgPanel)
-            .safeContentPadding(),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(TacBgPanel)
+                .safeContentPadding(),
     ) {
         Text(
             text = title,

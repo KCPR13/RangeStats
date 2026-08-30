@@ -12,9 +12,10 @@ actual fun rememberOpenAppSettings(): () -> Unit {
     val context = LocalContext.current
     return remember {
         {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.fromParts("package", context.packageName, null)
-            }
+            val intent =
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", context.packageName, null)
+                }
             context.startActivity(intent)
         }
     }

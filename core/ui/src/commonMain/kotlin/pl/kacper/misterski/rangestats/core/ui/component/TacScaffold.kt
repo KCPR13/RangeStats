@@ -33,7 +33,7 @@ fun TacScaffold(
                     onNavigate = onBottomNavigate,
                 )
             }
-        }
+        },
     ) { paddingValues ->
         content(paddingValues)
     }

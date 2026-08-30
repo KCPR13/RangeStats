@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -32,12 +31,13 @@ fun TacButton(
         modifier = modifier.height(Dimen.dp56),
         enabled = enabled,
         shape = RoundedCornerShape(Dimen.dp8),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = TacAccent,
-            contentColor = TacOnAccent,
-            disabledContainerColor = TacBgCard,
-            disabledContentColor = TacBorderBright,
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = TacAccent,
+                contentColor = TacOnAccent,
+                disabledContainerColor = TacBgCard,
+                disabledContentColor = TacBorderBright,
+            ),
         contentPadding = PaddingValues(horizontal = Dimen.dp24, vertical = Dimen.dp12),
     ) {
         Text(text = text, fontSize = FontSize.sp18)
@@ -55,10 +55,11 @@ fun TacSecondaryButton(
         onClick = onClick,
         modifier = modifier.height(Dimen.dp48),
         enabled = enabled,
-        colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = TacTextPrimary,
-            disabledContentColor = TacBorderBright,
-        ),
+        colors =
+            ButtonDefaults.outlinedButtonColors(
+                contentColor = TacTextPrimary,
+                disabledContentColor = TacBorderBright,
+            ),
         border = null,
         contentPadding = PaddingValues(horizontal = Dimen.dp24, vertical = Dimen.dp12),
     ) {

@@ -4,13 +4,11 @@ import pl.kacper.misterski.rangestats.core.data.database.weapon.WeaponEntity
 import pl.kacper.misterski.rangestats.core.data.datasource.weapon.WeaponDataSource
 
 class FakeWeaponDataSource : WeaponDataSource {
-
     val weapons: MutableList<WeaponEntity> = mutableListOf()
 
     override suspend fun getAllWeapons(): List<WeaponEntity> = weapons.toList()
 
-    override suspend fun getWeaponByName(name: String): WeaponEntity? =
-        weapons.firstOrNull { it.name == name }
+    override suspend fun getWeaponByName(name: String): WeaponEntity? = weapons.firstOrNull { it.name == name }
 
     override suspend fun insertWeapon(entity: WeaponEntity) {
         weapons.removeAll { it.name == entity.name }

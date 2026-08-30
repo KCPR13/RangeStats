@@ -82,12 +82,13 @@ fun TacStepper(
             enabled = value > min,
             interactionSource = decrementInteractionSource,
             modifier = Modifier.size(buttonSize),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = TacAccent,
-                contentColor = TacOnAccent,
-                disabledContainerColor = TacBgCard,
-                disabledContentColor = TacBorder,
-            ),
+            colors =
+                IconButtonDefaults.filledIconButtonColors(
+                    containerColor = TacAccent,
+                    contentColor = TacOnAccent,
+                    disabledContainerColor = TacBgCard,
+                    disabledContentColor = TacBorder,
+                ),
         ) {
             Text(
                 text = stringResource(Res.string.core_minus),
@@ -97,9 +98,10 @@ fun TacStepper(
         }
         Text(
             text = label,
-            modifier = Modifier
-                .width(valueWidth)
-                .then(onLabelClick?.let { Modifier.clickable(onClick = it) } ?: Modifier),
+            modifier =
+                Modifier
+                    .width(valueWidth)
+                    .then(onLabelClick?.let { Modifier.clickable(onClick = it) } ?: Modifier),
             color = TacTextPrimary,
             textAlign = TextAlign.Center,
             fontSize = valueFontSize,
@@ -110,12 +112,13 @@ fun TacStepper(
             enabled = value < max,
             interactionSource = incrementInteractionSource,
             modifier = Modifier.size(buttonSize),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = TacAccent,
-                contentColor = TacOnAccent,
-                disabledContainerColor = TacBgCard,
-                disabledContentColor = TacBorder,
-            ),
+            colors =
+                IconButtonDefaults.filledIconButtonColors(
+                    containerColor = TacAccent,
+                    contentColor = TacOnAccent,
+                    disabledContainerColor = TacBgCard,
+                    disabledContentColor = TacBorder,
+                ),
         ) {
             Text(
                 text = stringResource(Res.string.core_plus),
@@ -125,7 +128,6 @@ fun TacStepper(
         }
     }
 }
-
 
 @Composable
 private fun RepeatOnHoldEffect(
@@ -151,15 +153,19 @@ private fun RepeatOnHoldEffect(
     }
 }
 
-private suspend fun repeatUntilDisabled(enabled: () -> Boolean, onTick: () -> Unit) {
+private suspend fun repeatUntilDisabled(
+    enabled: () -> Boolean,
+    onTick: () -> Unit,
+) {
     var elapsed = 0L
     while (enabled()) {
         onTick()
-        val interval = when {
-            elapsed < TIER_1_MS -> TIER_1_INTERVAL_MS
-            elapsed < TIER_2_MS -> TIER_2_INTERVAL_MS
-            else -> TIER_3_INTERVAL_MS
-        }
+        val interval =
+            when {
+                elapsed < TIER_1_MS -> TIER_1_INTERVAL_MS
+                elapsed < TIER_2_MS -> TIER_2_INTERVAL_MS
+                else -> TIER_3_INTERVAL_MS
+            }
         delay(interval.milliseconds)
         elapsed += interval
     }
@@ -177,7 +183,9 @@ private const val TIER_3_INTERVAL_MS = 50L
 private fun TacStepperPreview() {
     RangeStatsTheme {
         TacStepper(
-            value = 25, onDecrement = {}, onIncrement = {},
+            value = 25,
+            onDecrement = {},
+            onIncrement = {},
             min = 0,
             max = 100,
         )
@@ -189,7 +197,10 @@ private fun TacStepperPreview() {
 private fun TacStepperAtMinPreview() {
     RangeStatsTheme {
         TacStepper(
-            value = 0, onDecrement = {}, onIncrement = {}, min = 0,
+            value = 0,
+            onDecrement = {},
+            onIncrement = {},
+            min = 0,
             max = 100,
         )
     }

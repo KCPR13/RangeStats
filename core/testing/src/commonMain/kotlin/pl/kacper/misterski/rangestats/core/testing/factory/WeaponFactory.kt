@@ -9,8 +9,9 @@ fun testWeapon(
     name: String = "Test Pistol",
     type: WeaponType = WeaponType.PISTOL,
     ammunition: Ammunition = Ammunition.CaliberAmmo(Caliber.LUGER_9MM),
-): Weapon = Weapon(
-    name = name,
-    type = type,
-    ammunition = ammunition,
-)
+): Weapon =
+    Weapon(
+        name = name,
+        type = type,
+        ammunition = ammunition,
+    )

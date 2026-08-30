@@ -75,22 +75,23 @@ fun TacTextField(
 }
 
 @Composable
-private fun tacTextFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedContainerColor = TacBgCard,
-    unfocusedContainerColor = TacBgCard,
-    disabledContainerColor = TacBgCard,
-    focusedBorderColor = TacAccent,
-    unfocusedBorderColor = TacBorder,
-    disabledBorderColor = TacBorder,
-    focusedTextColor = TacTextPrimary,
-    unfocusedTextColor = TacTextPrimary,
-    disabledTextColor = TacTextMuted,
-    focusedLabelColor = TacAccent,
-    unfocusedLabelColor = TacTextMuted,
-    focusedPlaceholderColor = TacTextMuted,
-    unfocusedPlaceholderColor = TacTextMuted,
-    cursorColor = TacAccent,
-)
+private fun tacTextFieldColors() =
+    OutlinedTextFieldDefaults.colors(
+        focusedContainerColor = TacBgCard,
+        unfocusedContainerColor = TacBgCard,
+        disabledContainerColor = TacBgCard,
+        focusedBorderColor = TacAccent,
+        unfocusedBorderColor = TacBorder,
+        disabledBorderColor = TacBorder,
+        focusedTextColor = TacTextPrimary,
+        unfocusedTextColor = TacTextPrimary,
+        disabledTextColor = TacTextMuted,
+        focusedLabelColor = TacAccent,
+        unfocusedLabelColor = TacTextMuted,
+        focusedPlaceholderColor = TacTextMuted,
+        unfocusedPlaceholderColor = TacTextMuted,
+        cursorColor = TacAccent,
+    )
 
 @Preview
 @Composable

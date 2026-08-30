@@ -7,13 +7,14 @@ import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 class FakePermissionDataSource(
     private val defaultStatus: PermissionStatus = PermissionStatus.NOT_DETERMINED,
 ) : PermissionDataSource {
-
     private val overrides = mutableMapOf<AppPermission, PermissionStatus>()
 
-    fun setStatus(permission: AppPermission, status: PermissionStatus) {
+    fun setStatus(
+        permission: AppPermission,
+        status: PermissionStatus,
+    ) {
         overrides[permission] = status
     }
 
-    override suspend fun getStatus(permission: AppPermission): PermissionStatus =
-        overrides[permission] ?: defaultStatus
+    override suspend fun getStatus(permission: AppPermission): PermissionStatus = overrides[permission] ?: defaultStatus
 }

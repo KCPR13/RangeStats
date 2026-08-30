@@ -5,7 +5,6 @@ import pl.kacper.misterski.rangestats.core.data.database.shot.ShotEntity
 import pl.kacper.misterski.rangestats.core.data.datasource.session.SessionDataSource
 
 class FakeSessionDataSource : SessionDataSource {
-
     val sessions: MutableList<SessionEntity> = mutableListOf()
     val shots: MutableList<ShotEntity> = mutableListOf()
 
@@ -21,8 +20,7 @@ class FakeSessionDataSource : SessionDataSource {
         if (index >= 0) sessions[index] = entity
     }
 
-    override suspend fun getSessionById(id: Long): SessionEntity? =
-        sessions.firstOrNull { it.id == id }
+    override suspend fun getSessionById(id: Long): SessionEntity? = sessions.firstOrNull { it.id == id }
 
     override suspend fun getAllSessions(): List<SessionEntity> = sessions.toList()
 

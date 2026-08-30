@@ -30,9 +30,10 @@ fun TacSegmentedToggle(
     fullWidth: Boolean = false,
 ) {
     Row(
-        modifier = modifier
-            .then(if (fullWidth) Modifier.fillMaxWidth() else Modifier)
-            .background(TacBgElevated, PrecisionTrackShapes.small),
+        modifier =
+            modifier
+                .then(if (fullWidth) Modifier.fillMaxWidth() else Modifier)
+                .background(TacBgElevated, PrecisionTrackShapes.small),
     ) {
         options.forEachIndexed { index, option ->
             TacSegmentedToggleOption(
@@ -53,11 +54,12 @@ private fun TacSegmentedToggleOption(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .clip(PrecisionTrackShapes.small)
-            .background(if (selected) TacAccent else TacBgElevated)
-            .clickable(onClick = onClick)
-            .padding(horizontal = Dimen.dp12, vertical = Dimen.dp4),
+        modifier =
+            modifier
+                .clip(PrecisionTrackShapes.small)
+                .background(if (selected) TacAccent else TacBgElevated)
+                .clickable(onClick = onClick)
+                .padding(horizontal = Dimen.dp12, vertical = Dimen.dp4),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -74,10 +76,11 @@ private fun TacSegmentedToggleOption(
 private fun TacSegmentedToggleCompactPreview() {
     RangeStatsTheme {
         TacSegmentedToggle(
-            options = listOf(
-                TacSegmentedToggleOptionUiModel(label = "G1", selected = true),
-                TacSegmentedToggleOptionUiModel(label = "G7", selected = false),
-            ),
+            options =
+                listOf(
+                    TacSegmentedToggleOptionUiModel(label = "G1", selected = true),
+                    TacSegmentedToggleOptionUiModel(label = "G7", selected = false),
+                ),
             onSelect = {},
         )
     }
@@ -88,10 +91,11 @@ private fun TacSegmentedToggleCompactPreview() {
 private fun TacSegmentedToggleFullWidthPreview() {
     RangeStatsTheme {
         TacSegmentedToggle(
-            options = listOf(
-                TacSegmentedToggleOptionUiModel(label = "Metric", selected = true),
-                TacSegmentedToggleOptionUiModel(label = "Imperial", selected = false),
-            ),
+            options =
+                listOf(
+                    TacSegmentedToggleOptionUiModel(label = "Metric", selected = true),
+                    TacSegmentedToggleOptionUiModel(label = "Imperial", selected = false),
+                ),
             onSelect = {},
             fullWidth = true,
         )

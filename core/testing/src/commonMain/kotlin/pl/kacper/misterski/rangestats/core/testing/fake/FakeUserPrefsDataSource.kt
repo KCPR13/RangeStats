@@ -5,12 +5,12 @@ import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 
 class FakeUserPrefsDataSource : UserPrefsDataSource {
-
-    var profile: UserProfile = UserProfile(
-        displayName = "Test User",
-        units = UnitSystem.METRIC,
-        defaultDistanceMeters = 25,
-    )
+    var profile: UserProfile =
+        UserProfile(
+            displayName = "Test User",
+            units = UnitSystem.METRIC,
+            defaultDistanceMeters = 25,
+        )
 
     var onboardingCompleted: Boolean = false
 

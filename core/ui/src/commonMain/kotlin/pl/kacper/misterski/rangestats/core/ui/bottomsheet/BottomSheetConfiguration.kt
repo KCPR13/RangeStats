@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats.core.ui.bottom_sheet
+package pl.kacper.misterski.rangestats.core.ui.bottomsheet
 
 data class BottomSheetConfiguration(
     val dismissOnBackPress: Boolean = true,

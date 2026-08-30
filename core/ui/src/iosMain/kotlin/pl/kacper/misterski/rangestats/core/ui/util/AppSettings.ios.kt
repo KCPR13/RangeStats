@@ -7,8 +7,8 @@ import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
 
 @Composable
-actual fun rememberOpenAppSettings(): () -> Unit {
-    return remember {
+actual fun rememberOpenAppSettings(): () -> Unit =
+    remember {
         {
             val url = NSURL(string = UIApplicationOpenSettingsURLString)
             UIApplication.sharedApplication.openURL(
@@ -18,4 +18,3 @@ actual fun rememberOpenAppSettings(): () -> Unit {
             )
         }
     }
-}
