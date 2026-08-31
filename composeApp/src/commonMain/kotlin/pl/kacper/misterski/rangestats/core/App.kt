@@ -1,14 +1,21 @@
 package pl.kacper.misterski.rangestats.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
+import pl.kacper.misterski.rangestats.core.navigation.NavigatorCommand
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
@@ -23,8 +30,28 @@ import pl.kacper.misterski.rangestats.feature.settings.ui.settingsFlow
 fun App() {
     RangeStatsTheme {
         val viewModel = koinViewModel<AppViewModel>()
+        val navigator = koinInject<Navigator>()
         val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
         val navController = rememberNavController()
+
+        LaunchedEffect(navController) {
+            navigator.commands.onEach { command ->
+                when (command) {
+                    is NavigatorCommand.NavigateTo ->
+                        navController.navigate(command.route.createRoute()) {
+                            command.options.popUpTo?.let { target ->
+                                popUpTo(target.route) { inclusive = command.options.popUpToInclusive }
+                            }
+                            launchSingleTop = command.options.launchSingleTop
+                        }
+
+                    NavigatorCommand.Back -> navController.navigateUp()
+                }
+
+            }.catch {
+                // TODO logging
+            }.collect()
+        }
 
         AnimatedLoader(isLoading = startDestination is AppStartDestination.Loading) {
             val ready = startDestination as AppStartDestination.Ready
@@ -38,7 +65,7 @@ private fun AppNavHost(
     navController: NavHostController,
     startDestination: String,
 ) {
-    val onBack: () -> Unit = { navController.navigateUp() }
+    //TODO a tego nie idzie tez przeniesc do Navigatora?
     val onBottomNavigate: (BottomNavDestination) -> Unit =
         { destination -> navController.navigateBottomNav(destination) }
 
@@ -46,36 +73,11 @@ private fun AppNavHost(
         navController = navController,
         startDestination = startDestination,
     ) {
-        onboarding(
-            onComplete = {
-                navController.navigate(AppRoutes.Dashboard.route) {
-                    popUpTo(AppRoutes.Onboarding.route) { inclusive = true }
-                }
-            },
-            onAddWeapon = {
-                navController.navigate(AppRoutes.AddWeapon.route)
-            },
-        )
-
-        dashboard(
-            onOpenHistory = {
-                navController.navigate(AppRoutes.History.route)
-            },
-            onBottomNavigate = onBottomNavigate,
-        )
-
-        sessionFlow(navController = navController, onBack = onBack)
-        historyFlow(
-            navController = navController,
-            onBack = onBack,
-            onBottomNavigate = onBottomNavigate,
-        )
-        settingsFlow(
-            navController = navController,
-            onBack = onBack,
-            onBottomNavigate = onBottomNavigate,
-        )
-
+        onboarding()
+        dashboard(onBottomNavigate = onBottomNavigate)
+        sessionFlow()
+        historyFlow(onBottomNavigate = onBottomNavigate)
+        settingsFlow(onBottomNavigate = onBottomNavigate)
         ballistics(onBottomNavigate = onBottomNavigate)
     }
 }

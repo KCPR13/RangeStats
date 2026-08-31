@@ -5,5 +5,4 @@ sealed class SessionSummaryAction {
     data object Save : SessionSummaryAction()
     data object Share : SessionSummaryAction()
     data object Back : SessionSummaryAction()
-    data object NavigationHandled : SessionSummaryAction()
 }

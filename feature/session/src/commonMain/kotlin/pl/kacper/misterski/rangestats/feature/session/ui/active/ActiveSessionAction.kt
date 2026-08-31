@@ -5,5 +5,4 @@ sealed class ActiveSessionAction {
     data object FinishSession : ActiveSessionAction()
     data object Back : ActiveSessionAction()
     data class OnStart(val sessionId: Long) : ActiveSessionAction()
-    data object NavigationHandled : ActiveSessionAction()
 }

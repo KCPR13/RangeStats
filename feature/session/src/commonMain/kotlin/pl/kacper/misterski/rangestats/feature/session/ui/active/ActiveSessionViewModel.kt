@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
 import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponByNameUseCase
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.NavOptions
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AddShotUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.AnalyzeTargetUseCase
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.FinishSessionUseCase
@@ -21,6 +24,7 @@ class ActiveSessionViewModel(
     private val finishSessionUseCase: FinishSessionUseCase,
     private val getSessionUseCase: GetSessionUseCase,
     private val getWeaponByNameUseCase: GetWeaponByNameUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(ActiveSessionUiModel())
@@ -30,9 +34,8 @@ class ActiveSessionViewModel(
         when (action) {
             is ActiveSessionAction.AnalyzeTarget -> analyze(action.imageBytes)
             ActiveSessionAction.FinishSession -> finish()
-            ActiveSessionAction.Back -> Unit
+            ActiveSessionAction.Back -> navigator.back()
             is ActiveSessionAction.OnStart -> loadSession(action.sessionId)
-            ActiveSessionAction.NavigationHandled -> _uiModel.update { it.copy(navigateToSummary = null) }
         }
     }
 
@@ -94,7 +97,13 @@ class ActiveSessionViewModel(
         viewModelScope.launch {
             _uiModel.update { it.copy(isLoading = true) }
             finishSessionUseCase(state.sessionId, score)
-                .onSuccess { _uiModel.update { it.copy(isLoading = false, navigateToSummary = state.sessionId) } }
+                .onSuccess {
+                    _uiModel.update { it.copy(isLoading = false) }
+                    navigator.navigateTo(
+                        AppRoutes.SessionSummary(state.sessionId),
+                        NavOptions(popUpTo = AppRoutes.ActiveSession(state.sessionId), popUpToInclusive = true),
+                    )
+                }
                 .onFailure { _uiModel.update { it.copy(isLoading = false) } }
         }
     }

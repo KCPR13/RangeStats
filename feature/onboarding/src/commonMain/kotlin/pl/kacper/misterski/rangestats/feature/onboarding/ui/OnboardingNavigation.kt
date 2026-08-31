@@ -1,7 +1,6 @@
 package pl.kacper.misterski.rangestats.feature.onboarding.ui
 
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -15,7 +14,7 @@ import pl.kacper.misterski.rangestats.core.ui.util.rememberCameraPermissionReque
 import pl.kacper.misterski.rangestats.core.ui.util.rememberLocationPermissionRequester
 import pl.kacper.misterski.rangestats.core.ui.util.rememberOpenAppSettings
 
-fun NavGraphBuilder.onboarding(onComplete: () -> Unit, onAddWeapon: () -> Unit) {
+fun NavGraphBuilder.onboarding() {
     composable(route = AppRoutes.Onboarding.route) {
         val viewModel = koinViewModel<OnboardingViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
@@ -38,21 +37,6 @@ fun NavGraphBuilder.onboarding(onComplete: () -> Unit, onAddWeapon: () -> Unit) 
             }
             lifecycleOwner.lifecycle.addObserver(observer)
             onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-        }
-
-        //TODO this navigation is tricky
-        LaunchedEffect(state.isCompleted) {
-            if (state.isCompleted) {
-                viewModel.onAction(OnboardingAction.NavigationHandled)
-                onComplete()
-            }
-        }
-
-        LaunchedEffect(state.navigateToAddWeapon) {
-            if (state.navigateToAddWeapon) {
-                viewModel.onAction(OnboardingAction.NavigateToAddWeapon)
-                onAddWeapon()
-            }
         }
 
         OnboardingScreen(

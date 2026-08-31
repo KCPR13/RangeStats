@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.Constants
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.NavOptions
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.StartSessionUseCase
 
 class NewSessionViewModel(
     private val startSessionUseCase: StartSessionUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(NewSessionUiModel())
@@ -25,8 +29,7 @@ class NewSessionViewModel(
             NewSessionAction.DecrementDistance -> changeDistance(-Constants.SESSION_DISTANCE_STEP)
             is NewSessionAction.TargetTypeSelected -> _uiModel.update { it.copy(targetType = action.type) }
             NewSessionAction.StartSession -> startNewSession()
-            NewSessionAction.Back -> Unit
-            NewSessionAction.NavigationHandled -> _uiModel.update { it.copy(navigateToActiveSession = null) }
+            NewSessionAction.Back -> navigator.back()
         }
     }
 
@@ -54,7 +57,11 @@ class NewSessionViewModel(
                 distanceMeters = state.distanceMeters,
                 targetType = state.targetType,
             ).onSuccess { session ->
-                _uiModel.update { it.copy(isLoading = false, navigateToActiveSession = session.id) }
+                _uiModel.update { it.copy(isLoading = false) }
+                navigator.navigateTo(
+                    AppRoutes.ActiveSession(session.id),
+                    NavOptions(popUpTo = AppRoutes.NewSession, popUpToInclusive = true),
+                )
             }.onFailure {
                 _uiModel.update { it.copy(isLoading = false) }
             }

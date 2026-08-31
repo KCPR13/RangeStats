@@ -13,9 +13,13 @@ import pl.kacper.misterski.rangestats.core.domain.enums.ShotgunGauge
 import pl.kacper.misterski.rangestats.core.domain.enums.WeaponType
 import pl.kacper.misterski.rangestats.core.domain.models.Ammunition
 import pl.kacper.misterski.rangestats.core.domain.usecase.AddWeaponUseCase
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
+import pl.kacper.misterski.rangestats.feature.settings.ui.WeaponAddedNotifier
 
 class AddWeaponViewModel(
     private val addWeaponUseCase: AddWeaponUseCase,
+    private val navigator: Navigator,
+    private val weaponAddedNotifier: WeaponAddedNotifier,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(AddWeaponUiModel())
@@ -28,7 +32,7 @@ class AddWeaponViewModel(
             is AddWeaponAction.TypeSelected -> onTypeSelected(action.type)
             is AddWeaponAction.AmmoSelected -> onAmmoSelected(action.option)
             AddWeaponAction.Save -> save()
-            AddWeaponAction.Reset -> _uiModel.update { AddWeaponUiModel(weaponTypeOptions = it.weaponTypeOptions) }
+            AddWeaponAction.Dismiss -> navigator.back()
         }
     }
 
@@ -74,7 +78,11 @@ class AddWeaponViewModel(
                 ammunition = ammunition
             )
                 .catch { _uiModel.update { it.copy(isSaving = false) } }
-                .collect { _uiModel.update { it.copy(isSaving = false, isSaved = true) } }
+                .collect {
+                    _uiModel.update { it.copy(isSaving = false) }
+                    weaponAddedNotifier.notify()
+                    navigator.back()
+                }
         }
     }
 }

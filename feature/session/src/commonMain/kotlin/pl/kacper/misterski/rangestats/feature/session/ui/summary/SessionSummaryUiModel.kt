@@ -12,7 +12,6 @@ data class SessionSummaryUiModel(
     val totalMisses: Int = 0,
     val zoneRows: List<ZoneRowUiModel> = emptyList(),
     val isLoading: Boolean = false,
-    val navigateToDashboard: Boolean = false,
 ) {
     data class ZoneRowUiModel(val label: String, val count: Int, val fraction: Float, val isMiss: Boolean)
 }

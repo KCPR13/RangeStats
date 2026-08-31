@@ -12,10 +12,13 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import pl.kacper.misterski.rangestats.core.domain.models.Session
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.GetSessionsUseCase
 
 class HistoryViewModel(
     private val getSessionsUseCase: GetSessionsUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(HistoryUiModel())
@@ -27,8 +30,7 @@ class HistoryViewModel(
 
     fun onAction(action: HistoryAction) {
         when (action) {
-            is HistoryAction.OpenDetail -> _uiModel.update { it.copy(navigateToDetail = action.sessionId) }
-            HistoryAction.NavigationHandled -> _uiModel.update { it.copy(navigateToDetail = null) }
+            is HistoryAction.OpenDetail -> navigator.navigateTo(AppRoutes.SessionDetail(action.sessionId))
         }
     }
 

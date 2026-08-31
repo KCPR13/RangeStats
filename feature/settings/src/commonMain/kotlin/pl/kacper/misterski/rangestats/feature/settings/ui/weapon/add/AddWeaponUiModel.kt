@@ -7,7 +7,6 @@ data class AddWeaponUiModel(
     val name: String = "",
     val selectedType: WeaponType = WeaponType.PISTOL,
     val isSaving: Boolean = false,
-    val isSaved: Boolean = false,
     val weaponTypeOptions: List<WeaponTypeOptionUiModel> = emptyList(),
     val ammoOptions: List<AmmoOptionUiModel> = WeaponType.PISTOL.toAmmoOptionUiModels(),
     val ammoLabelRes: StringResource = WeaponType.PISTOL.toAmmoLabelRes(),

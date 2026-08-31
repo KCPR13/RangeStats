@@ -49,6 +49,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.domain)
                 implementation(projects.core.data)
+                implementation(projects.core.navigation)
                 implementation(libs.kotlin.test)
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.koin.core)

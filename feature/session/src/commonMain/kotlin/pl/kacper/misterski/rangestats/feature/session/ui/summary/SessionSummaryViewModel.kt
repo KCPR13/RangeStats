@@ -9,11 +9,15 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponByNameUseCase
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.NavOptions
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.session.domain.usecase.GetSessionUseCase
 
 class SessionSummaryViewModel(
     private val getSessionUseCase: GetSessionUseCase,
     private val getWeaponByNameUseCase: GetWeaponByNameUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(SessionSummaryUiModel())
@@ -22,10 +26,12 @@ class SessionSummaryViewModel(
     fun onAction(action: SessionSummaryAction) {
         when (action) {
             is SessionSummaryAction.Load -> load(action.sessionId)
-            SessionSummaryAction.Save -> _uiModel.update { it.copy(navigateToDashboard = true) }
-            SessionSummaryAction.NavigationHandled -> _uiModel.update { it.copy(navigateToDashboard = false) }
+            SessionSummaryAction.Save -> navigator.navigateTo(
+                AppRoutes.Dashboard,
+                NavOptions(popUpTo = AppRoutes.Dashboard, popUpToInclusive = false, launchSingleTop = true),
+            )
             SessionSummaryAction.Share -> Unit
-            SessionSummaryAction.Back -> Unit
+            SessionSummaryAction.Back -> navigator.back()
         }
     }
 

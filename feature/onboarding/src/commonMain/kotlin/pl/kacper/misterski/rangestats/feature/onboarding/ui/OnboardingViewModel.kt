@@ -13,6 +13,9 @@ import pl.kacper.misterski.rangestats.core.domain.enums.AppPermission
 import pl.kacper.misterski.rangestats.core.domain.enums.PermissionStatus
 import pl.kacper.misterski.rangestats.core.domain.models.UserProfile
 import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponsUseCase
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.NavOptions
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CheckPermissionStatusUseCase
 import pl.kacper.misterski.rangestats.feature.onboarding.domain.usecase.CompleteOnboardingUseCase
 
@@ -20,6 +23,7 @@ class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
     private val checkPermissionStatusUseCase: CheckPermissionStatusUseCase,
     private val getWeaponsUseCase: GetWeaponsUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(OnboardingUiModel())
@@ -34,9 +38,7 @@ class OnboardingViewModel(
             is OnboardingAction.SelectUnitSystem -> _uiModel.update { it.copy(unitSystem = action.system) }
             OnboardingAction.DecrementDistance -> decrementDistance()
             OnboardingAction.IncrementDistance -> incrementDistance()
-            OnboardingAction.AddNewWeapon -> _uiModel.update { it.copy(navigateToAddWeapon = true) }
-            OnboardingAction.NavigationHandled -> _uiModel.update { it.copy(isCompleted = false) }
-            OnboardingAction.NavigateToAddWeapon -> _uiModel.update { it.copy(navigateToAddWeapon = false) }
+            OnboardingAction.AddNewWeapon -> navigator.navigateTo(AppRoutes.AddWeapon)
             is OnboardingAction.CameraPermissionResult -> handleCameraResult(action.status)
             is OnboardingAction.LocationPermissionResult -> handleLocationResult(action.status)
         }
@@ -130,7 +132,10 @@ class OnboardingViewModel(
                     defaultDistanceMeters = state.defaultDistanceMeters,
                 )
             )
-            _uiModel.update { it.copy(isCompleted = true) }
+            navigator.navigateTo(
+                AppRoutes.Dashboard,
+                NavOptions(popUpTo = AppRoutes.Onboarding, popUpToInclusive = true),
+            )
         }
     }
 

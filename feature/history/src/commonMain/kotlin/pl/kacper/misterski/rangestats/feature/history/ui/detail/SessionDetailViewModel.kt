@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetZone
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.DeleteSessionUseCase
 import pl.kacper.misterski.rangestats.feature.history.domain.usecase.GetSessionDetailUseCase
 
 class SessionDetailViewModel(
     private val getSessionDetailUseCase: GetSessionDetailUseCase,
     private val deleteSessionUseCase: DeleteSessionUseCase,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(SessionDetailUiModel())
@@ -23,8 +25,7 @@ class SessionDetailViewModel(
         when (action) {
             is SessionDetailAction.Load -> load(action.sessionId)
             SessionDetailAction.Delete -> delete()
-            SessionDetailAction.Back -> _uiModel.update { it.copy(navigateBack = true) }
-            SessionDetailAction.NavigationHandled -> _uiModel.update { it.copy(navigateBack = false) }
+            SessionDetailAction.Back -> navigator.back()
         }
     }
 
@@ -86,7 +87,7 @@ class SessionDetailViewModel(
         viewModelScope.launch {
             val sessionId = _uiModel.value.sessionId
             deleteSessionUseCase(sessionId)
-                .onSuccess { _uiModel.update { it.copy(navigateBack = true) } }
+                .onSuccess { navigator.back() }
         }
     }
 

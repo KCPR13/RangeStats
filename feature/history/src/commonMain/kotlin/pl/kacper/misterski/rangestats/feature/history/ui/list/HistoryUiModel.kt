@@ -12,5 +12,4 @@ data class SessionListItem(
 data class HistoryUiModel(
     val isLoading: Boolean = true,
     val sessions: List<SessionListItem> = emptyList(),
-    val navigateToDetail: Long? = null,
 )

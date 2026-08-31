@@ -18,8 +18,11 @@ import pl.kacper.misterski.rangestats.core.domain.converter.UnitConverter
 import pl.kacper.misterski.rangestats.core.domain.enums.UnitSystem
 import pl.kacper.misterski.rangestats.core.domain.usecase.DeleteWeaponUseCase
 import pl.kacper.misterski.rangestats.core.domain.usecase.GetWeaponsUseCase
+import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.GetUserProfileUseCase
 import pl.kacper.misterski.rangestats.feature.settings.domain.usecase.UpdateUserProfileUseCase
+import pl.kacper.misterski.rangestats.feature.settings.ui.WeaponAddedNotifier
 import kotlin.time.Duration.Companion.milliseconds
 
 class SettingsViewModel(
@@ -28,12 +31,20 @@ class SettingsViewModel(
     private val updateUserProfileUseCase: UpdateUserProfileUseCase,
     private val deleteWeaponUseCase: DeleteWeaponUseCase,
     private val unitConverter: UnitConverter,
+    private val navigator: Navigator,
+    private val weaponAddedNotifier: WeaponAddedNotifier,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(SettingsUiModel())
     val uiModel: StateFlow<SettingsUiModel> = _uiModel.asStateFlow()
 
     private var persistDistanceJob: Job? = null
+
+    init { // TODO to powinno tu byc?
+        viewModelScope.launch {
+            weaponAddedNotifier.onWeaponAdded.collect { fetchData() }
+        }
+    }
 
     fun onAction(action: SettingsAction) {
         when (action) {
@@ -46,6 +57,7 @@ class SettingsViewModel(
             is SettingsAction.UnitSystemChanged -> updateUnits(action.index)
             SettingsAction.OnStart -> fetchData()
             is SettingsAction.DeleteWeapon -> deleteWeapon(action.name)
+            SettingsAction.AddWeapon -> navigator.navigateTo(AppRoutes.AddWeapon)
         }
     }
 

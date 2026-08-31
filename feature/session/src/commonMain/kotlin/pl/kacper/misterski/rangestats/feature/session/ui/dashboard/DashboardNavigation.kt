@@ -8,20 +8,13 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
-fun NavGraphBuilder.dashboard(
-    onOpenHistory: () -> Unit,
-    onBottomNavigate: (BottomNavDestination) -> Unit,
-) {
+fun NavGraphBuilder.dashboard(onBottomNavigate: (BottomNavDestination) -> Unit) {
     composable(route = AppRoutes.Dashboard.route) {
         val viewModel = koinViewModel<DashboardViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
         DashboardScreen(
             state = state,
-            onAction = { action ->
-                when (action) {
-                    DashboardAction.OpenHistory -> onOpenHistory()
-                }
-            },
+            onAction = viewModel::onAction,
             onBottomNavigate = onBottomNavigate,
         )
     }

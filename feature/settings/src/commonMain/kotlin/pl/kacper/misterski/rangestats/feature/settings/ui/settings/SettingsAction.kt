@@ -10,4 +10,5 @@ sealed class SettingsAction {
     data object ConfirmDistanceInput : SettingsAction()
     data class UnitSystemChanged(val index: Int) : SettingsAction()
     data class DeleteWeapon(val name: String) : SettingsAction()
+    data object AddWeapon : SettingsAction()
 }

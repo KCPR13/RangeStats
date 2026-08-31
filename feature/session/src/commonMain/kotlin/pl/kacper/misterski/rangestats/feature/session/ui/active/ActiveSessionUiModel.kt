@@ -14,5 +14,4 @@ data class ActiveSessionUiModel(
     val totalMisses: Int = 0,
     val targets: List<TargetEntry> = emptyList(),
     val isLoading: Boolean = false,
-    val navigateToSummary: Long? = null,
 )

@@ -12,5 +12,4 @@ data class SessionDetailUiModel(
     val totalMisses: Int = 0,
     val shotCount: Int = 0,
     val zoneRows: List<ZoneRowUiModel> = emptyList(),
-    val navigateBack: Boolean = false,
 )

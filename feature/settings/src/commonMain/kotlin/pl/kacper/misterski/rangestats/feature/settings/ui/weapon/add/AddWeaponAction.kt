@@ -8,5 +8,5 @@ sealed class AddWeaponAction {
     data class TypeSelected(val type: WeaponType) : AddWeaponAction()
     data class AmmoSelected(val option: AddWeaponUiModel.AmmoOptionUiModel) : AddWeaponAction()
     data object Save : AddWeaponAction()
-    data object Reset : AddWeaponAction()
+    data object Dismiss : AddWeaponAction()
 }

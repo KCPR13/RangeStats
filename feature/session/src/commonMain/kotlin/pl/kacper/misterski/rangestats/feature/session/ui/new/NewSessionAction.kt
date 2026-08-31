@@ -10,5 +10,4 @@ sealed class NewSessionAction {
     data class TargetTypeSelected(val type: TargetType) : NewSessionAction()
     data object StartSession : NewSessionAction()
     data object Back : NewSessionAction()
-    data object NavigationHandled : NewSessionAction()
 }

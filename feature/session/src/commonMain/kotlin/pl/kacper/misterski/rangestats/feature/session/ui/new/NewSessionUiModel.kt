@@ -13,7 +13,6 @@ data class NewSessionUiModel(
     val targetType: TargetType = TargetType.ISSF_ROUND,
     val isLoading: Boolean = false,
     val canStart: Boolean = false,
-    val navigateToActiveSession: Long? = null,
 ) {
     data class WeaponRowUiModel(
         val name: String,

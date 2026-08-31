@@ -10,9 +10,7 @@ import androidx.navigation.navArgument
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 
-fun NavGraphBuilder.sessionDetail(
-    onBack: () -> Unit,
-) {
+fun NavGraphBuilder.sessionDetail() {
     composable(
         route = AppRoutes.SessionDetail.ROUTE,
         arguments = listOf(navArgument(AppRoutes.SessionDetail.ARG) { type = NavType.LongType }),
@@ -25,19 +23,9 @@ fun NavGraphBuilder.sessionDetail(
             viewModel.onAction(SessionDetailAction.Load(sessionId))
         }
 
-        LaunchedEffect(state.navigateBack) {
-            if (state.navigateBack) {
-                viewModel.onAction(SessionDetailAction.NavigationHandled)
-                onBack()
-            }
-        }
-
         SessionDetailScreen(
             state = state,
-            onAction = { action ->
-                if (action == SessionDetailAction.Back) onBack()
-                else viewModel.onAction(action)
-            },
+            onAction = viewModel::onAction,
         )
     }
 }
