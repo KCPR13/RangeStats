@@ -7,5 +7,7 @@ interface Navigator {
 
     fun navigateTo(route: AppRoutes, options: NavOptions = NavOptions())
 
+    fun navigateToBottomNav(destination: BottomNavDestination)
+
     fun back()
 }

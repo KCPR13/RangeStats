@@ -58,6 +58,7 @@ class SettingsViewModel(
             SettingsAction.OnStart -> fetchData()
             is SettingsAction.DeleteWeapon -> deleteWeapon(action.name)
             SettingsAction.AddWeapon -> navigator.navigateTo(AppRoutes.AddWeapon)
+            is SettingsAction.OnBottomNavigate -> navigator.navigateToBottomNav(action.destination)
         }
     }
 

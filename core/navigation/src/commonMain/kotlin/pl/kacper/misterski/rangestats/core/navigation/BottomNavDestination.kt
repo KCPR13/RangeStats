@@ -1,4 +1,4 @@
-package pl.kacper.misterski.rangestats.core.ui.enums
+package pl.kacper.misterski.rangestats.core.navigation
 
 enum class BottomNavDestination {
     Home,

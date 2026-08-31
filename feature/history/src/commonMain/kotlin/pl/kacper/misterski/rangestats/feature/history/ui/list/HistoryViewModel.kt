@@ -31,6 +31,7 @@ class HistoryViewModel(
     fun onAction(action: HistoryAction) {
         when (action) {
             is HistoryAction.OpenDetail -> navigator.navigateTo(AppRoutes.SessionDetail(action.sessionId))
+            is HistoryAction.OnBottomNavigate -> navigator.navigateToBottomNav(action.destination)
         }
     }
 

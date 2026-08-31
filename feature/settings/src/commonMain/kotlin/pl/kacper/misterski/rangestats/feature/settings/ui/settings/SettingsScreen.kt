@@ -41,7 +41,7 @@ import pl.kacper.misterski.rangestats.core.ui.component.WeaponIcon
 import pl.kacper.misterski.rangestats.core.ui.component.toUiModel
 import pl.kacper.misterski.rangestats.core.ui.core_placeholder_distance
 import pl.kacper.misterski.rangestats.core.ui.core_x
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme

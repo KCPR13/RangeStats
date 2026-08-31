@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacAccent

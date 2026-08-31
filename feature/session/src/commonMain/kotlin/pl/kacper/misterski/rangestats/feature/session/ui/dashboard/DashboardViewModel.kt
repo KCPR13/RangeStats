@@ -17,6 +17,7 @@ class DashboardViewModel(
     fun onAction(action: DashboardAction) {
         when (action) {
             DashboardAction.OpenHistory -> navigator.navigateTo(AppRoutes.History)
+            is DashboardAction.OnBottomNavigate -> navigator.navigateToBottomNav(action.destination)
         }
     }
 }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -13,11 +12,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
-import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
 import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.core.navigation.NavigatorCommand
 import pl.kacper.misterski.rangestats.core.ui.component.AnimatedLoader
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator.ballistics
 import pl.kacper.misterski.rangestats.feature.history.ui.historyFlow
@@ -65,36 +62,15 @@ private fun AppNavHost(
     navController: NavHostController,
     startDestination: String,
 ) {
-    //TODO a tego nie idzie tez przeniesc do Navigatora?
-    val onBottomNavigate: (BottomNavDestination) -> Unit =
-        { destination -> navController.navigateBottomNav(destination) }
-
     NavHost(
         navController = navController,
         startDestination = startDestination,
     ) {
         onboarding()
-        dashboard(onBottomNavigate = onBottomNavigate)
+        dashboard()
         sessionFlow()
-        historyFlow(onBottomNavigate = onBottomNavigate)
-        settingsFlow(onBottomNavigate = onBottomNavigate)
-        ballistics(onBottomNavigate = onBottomNavigate)
-    }
-}
-
-private fun NavController.navigateBottomNav(destination: BottomNavDestination) {
-    val route =
-        when (destination) {
-            BottomNavDestination.Home -> AppRoutes.Dashboard.route
-            BottomNavDestination.History -> AppRoutes.History.route
-            BottomNavDestination.NewSession -> AppRoutes.NewSession.route
-            BottomNavDestination.Ballistics -> AppRoutes.Ballistics.route
-            BottomNavDestination.Settings -> AppRoutes.Settings.route
-        }
-    navigate(route) {
-        if (destination != BottomNavDestination.NewSession) {
-            popUpTo(AppRoutes.Dashboard.route) { inclusive = false }
-            launchSingleTop = true
-        }
+        historyFlow()
+        settingsFlow()
+        ballistics()
     }
 }

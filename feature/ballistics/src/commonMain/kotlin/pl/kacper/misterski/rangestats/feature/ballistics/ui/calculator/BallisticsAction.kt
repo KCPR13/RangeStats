@@ -1,5 +1,7 @@
 package pl.kacper.misterski.rangestats.feature.ballistics.ui.calculator
 
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
+
 sealed class BallisticsAction {
     data object OnStart : BallisticsAction()
     data class SelectPreset(val name: String) : BallisticsAction()
@@ -11,4 +13,5 @@ sealed class BallisticsAction {
     data class UpdateTargetDistance(val value: String) : BallisticsAction()
     data class UpdateScopeHeight(val value: String) : BallisticsAction()
     data object Calculate : BallisticsAction()
+    data class OnBottomNavigate(val destination: BottomNavDestination) : BallisticsAction()
 }

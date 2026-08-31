@@ -6,9 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
-fun NavGraphBuilder.settings(onBottomNavigate: (BottomNavDestination) -> Unit) {
+fun NavGraphBuilder.settings() {
     composable(route = AppRoutes.Settings.route) {
         val viewModel = koinViewModel<SettingsViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
@@ -17,7 +16,7 @@ fun NavGraphBuilder.settings(onBottomNavigate: (BottomNavDestination) -> Unit) {
             model = state,
             onAction = viewModel::onAction,
             onAddWeapon = { viewModel.onAction(SettingsAction.AddWeapon) },
-            onBottomNavigate = onBottomNavigate,
+            onBottomNavigate = { viewModel.onAction(SettingsAction.OnBottomNavigate(it)) },
         )
     }
 }

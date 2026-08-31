@@ -56,6 +56,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.domain)
+                implementation(projects.core.navigation)
                 implementation(libs.bundles.compose)
                 implementation(libs.bundles.lifecycle)
                 implementation(libs.material.icons.extended)

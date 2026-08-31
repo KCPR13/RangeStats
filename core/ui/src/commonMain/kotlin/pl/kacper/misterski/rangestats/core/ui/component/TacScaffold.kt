@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.RangeStatsTheme
 import pl.kacper.misterski.rangestats.core.ui.theme.TacBgDeep
 

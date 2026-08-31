@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.kacper.misterski.rangestats.core.domain.enums.TargetType
 import pl.kacper.misterski.rangestats.core.domain.models.Session
 import pl.kacper.misterski.rangestats.core.ui.component.TacScaffold
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.LetterSpacing

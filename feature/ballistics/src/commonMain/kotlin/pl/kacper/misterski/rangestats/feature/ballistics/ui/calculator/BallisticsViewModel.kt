@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pl.kacper.misterski.rangestats.core.navigation.Navigator
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.exceptions.InvalidBallisticsInputException
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BallisticsInput
 import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BcModel
@@ -25,6 +26,7 @@ class BallisticsViewModel(
     private val getCaliberPresetsUseCase: GetCaliberPresetsUseCase,
     private val calculateTrajectoryUseCase: CalculateTrajectoryUseCase,
     private val ballisticsInputValidator: BallisticsInputValidator,
+    private val navigator: Navigator,
 ) : ViewModel() {
 
     private val _uiModel = MutableStateFlow(BallisticsUiModel())
@@ -84,6 +86,7 @@ class BallisticsViewModel(
             }
 
             BallisticsAction.Calculate -> calculate()
+            is BallisticsAction.OnBottomNavigate -> navigator.navigateToBottomNav(action.destination)
         }
     }
 

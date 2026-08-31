@@ -37,7 +37,7 @@ import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggl
 import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggleOptionUiModel
 import pl.kacper.misterski.rangestats.core.ui.component.TacTextField
 import pl.kacper.misterski.rangestats.core.ui.component.TacTopBar
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
+import pl.kacper.misterski.rangestats.core.navigation.BottomNavDestination
 import pl.kacper.misterski.rangestats.core.ui.theme.Dimen
 import pl.kacper.misterski.rangestats.core.ui.theme.FontSize
 import pl.kacper.misterski.rangestats.core.ui.theme.PrecisionTrackShapes

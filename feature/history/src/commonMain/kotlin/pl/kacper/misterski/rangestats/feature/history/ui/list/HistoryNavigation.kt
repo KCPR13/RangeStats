@@ -6,9 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
-fun NavGraphBuilder.history(onBottomNavigate: (BottomNavDestination) -> Unit) {
+fun NavGraphBuilder.history() {
     composable(route = AppRoutes.History.route) {
         val viewModel = koinViewModel<HistoryViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
@@ -16,7 +15,7 @@ fun NavGraphBuilder.history(onBottomNavigate: (BottomNavDestination) -> Unit) {
         HistoryScreen(
             state = state,
             onAction = viewModel::onAction,
-            onBottomNavigate = onBottomNavigate,
+            onBottomNavigate = { viewModel.onAction(HistoryAction.OnBottomNavigate(it)) },
         )
     }
 }

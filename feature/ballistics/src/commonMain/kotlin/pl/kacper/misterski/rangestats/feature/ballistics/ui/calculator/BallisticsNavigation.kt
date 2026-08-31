@@ -6,11 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
 import pl.kacper.misterski.rangestats.core.navigation.AppRoutes
-import pl.kacper.misterski.rangestats.core.ui.enums.BottomNavDestination
 
-fun NavGraphBuilder.ballistics(
-    onBottomNavigate: (BottomNavDestination) -> Unit,
-) {
+fun NavGraphBuilder.ballistics() {
     composable(route = AppRoutes.Ballistics.route) {
         val viewModel = koinViewModel<BallisticsViewModel>()
         val state by viewModel.uiModel.collectAsStateWithLifecycle()
@@ -18,7 +15,7 @@ fun NavGraphBuilder.ballistics(
         BallisticsScreen(
             state = state,
             onAction = viewModel::onAction,
-            onBottomNavigate = onBottomNavigate,
+            onBottomNavigate = { viewModel.onAction(BallisticsAction.OnBottomNavigate(it)) },
         )
     }
 }
