@@ -129,7 +129,11 @@ private fun DetailHero(state: SessionDetailUiModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = if (state.score != null) stringResource(Res.string.common_percent_format, state.score.toInt()) else stringResource(Res.string.common_score_empty),
+            text = if (state.score != null) {
+                stringResource(Res.string.common_percent_format, state.score.toInt())
+            } else {
+                stringResource(Res.string.common_score_empty)
+            },
             color = TacAccent,
             fontSize = FontSize.sp48,
             fontWeight = FontWeight.Bold,
@@ -143,7 +147,12 @@ private fun DetailHero(state: SessionDetailUiModel) {
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
-            text = stringResource(Res.string.detail_meta_format, state.locationName, state.distanceMeters, state.durationMinutes),
+            text = stringResource(
+                Res.string.detail_meta_format,
+                state.locationName,
+                state.distanceMeters,
+                state.durationMinutes,
+            ),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
         )
@@ -156,9 +165,21 @@ private fun StatsRow(state: SessionDetailUiModel) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(Dimen.dp8),
     ) {
-        StatMini(value = state.shotCount.toString(), label = stringResource(Res.string.detail_stat_shots), modifier = Modifier.weight(1f))
-        StatMini(value = state.totalHits.toString(), label = stringResource(Res.string.detail_stat_hits), modifier = Modifier.weight(1f))
-        StatMini(value = state.totalMisses.toString(), label = stringResource(Res.string.detail_stat_misses), modifier = Modifier.weight(1f))
+        StatMini(
+            value = state.shotCount.toString(),
+            label = stringResource(Res.string.detail_stat_shots),
+            modifier = Modifier.weight(1f),
+        )
+        StatMini(
+            value = state.totalHits.toString(),
+            label = stringResource(Res.string.detail_stat_hits),
+            modifier = Modifier.weight(1f),
+        )
+        StatMini(
+            value = state.totalMisses.toString(),
+            label = stringResource(Res.string.detail_stat_misses),
+            modifier = Modifier.weight(1f),
+        )
     }
 }
 
@@ -171,7 +192,13 @@ private fun StatMini(value: String, label: String, modifier: Modifier = Modifier
             .padding(vertical = Dimen.dp8),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = value, color = TacTextPrimary, fontSize = FontSize.sp16, fontWeight = FontWeight.SemiBold, lineHeight = FontSize.sp16)
+        Text(
+            text = value,
+            color = TacTextPrimary,
+            fontSize = FontSize.sp16,
+            fontWeight = FontWeight.SemiBold,
+            lineHeight = FontSize.sp16,
+        )
         Text(text = label, color = TacTextMuted, fontSize = FontSize.sp9)
     }
 }
@@ -264,13 +291,13 @@ private fun SessionDetailScreenPreview() {
                 totalMisses = 8,
                 shotCount = 70,
                 zoneRows = listOf(
-                    ZoneRowUiModel("X", 0, 0f, false),
-                    ZoneRowUiModel("10", 18, 1f, false),
-                    ZoneRowUiModel("9", 14, 0.78f, false),
-                    ZoneRowUiModel("8", 10, 0.56f, false),
-                    ZoneRowUiModel("7", 6, 0.33f, false),
-                    ZoneRowUiModel("6", 4, 0.22f, false),
-                    ZoneRowUiModel("✕", 8, 0.44f, true),
+                    ZoneRowUiModel(label = "X", count = 0, fraction = 0f, isMiss = false),
+                    ZoneRowUiModel(label = "10", count = 18, fraction = 1f, isMiss = false),
+                    ZoneRowUiModel(label = "9", count = 14, fraction = 0.78f, isMiss = false),
+                    ZoneRowUiModel(label = "8", count = 10, fraction = 0.56f, isMiss = false),
+                    ZoneRowUiModel(label = "7", count = 6, fraction = 0.33f, isMiss = false),
+                    ZoneRowUiModel(label = "6", count = 4, fraction = 0.22f, isMiss = false),
+                    ZoneRowUiModel(label = "✕", count = 8, fraction = 0.44f, isMiss = true),
                 ),
             ),
             onAction = {},
