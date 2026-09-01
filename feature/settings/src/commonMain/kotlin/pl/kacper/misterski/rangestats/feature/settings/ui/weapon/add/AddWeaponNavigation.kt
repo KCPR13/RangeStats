@@ -17,8 +17,9 @@ fun NavGraphBuilder.addWeapon() {
         AddWeaponSheet(
             state = state,
             onAction = viewModel::onAction,
-            onDismiss = { viewModel.onAction(AddWeaponAction.Dismiss) }, // TODO to po co ten dismiss jak jest on Action?
-            modifier = Modifier.wrapContentSize()
+            // TODO to po co ten dismiss jak jest on Action?
+            onDismiss = { viewModel.onAction(AddWeaponAction.Dismiss) },
+            modifier = Modifier.wrapContentSize(),
         )
     }
 }

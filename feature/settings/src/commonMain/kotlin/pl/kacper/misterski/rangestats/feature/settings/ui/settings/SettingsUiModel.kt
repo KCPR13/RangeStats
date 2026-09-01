@@ -12,7 +12,11 @@ import pl.kacper.misterski.rangestats.core.ui.component.toggle.TacSegmentedToggl
 import pl.kacper.misterski.rangestats.core.ui.core_unit_suffix_meters
 
 data class SettingsUiModel(
-    val profile: UserProfile = UserProfile("", UnitSystem.METRIC, 25),
+    val profile: UserProfile = UserProfile(
+        displayName = "",
+        units = UnitSystem.METRIC,
+        defaultDistanceMeters = DEFAULT_DISTANCE_METERS,
+    ),
     val weapons: List<WeaponUiModel> = emptyList(),
     val isLoading: Boolean = false,
     val distanceEdit: DistanceEditUiModel = DistanceEditUiModel(),

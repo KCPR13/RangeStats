@@ -8,11 +8,29 @@ naming:
 style:
   MagicNumber:
     ignorePropertyDeclaration: true
+    # buildUponDefaultConfig replaces this list wholesale, so the default excludes are repeated
+    # here verbatim, plus androidHostTest/androidDeviceTest — this project's AGP 9 source-set
+    # names, which detekt's bundled default (still on the old androidTest/androidUnitTest naming)
+    # doesn't know about.
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/androidUnitTest/**'
+      - '**/androidInstrumentedTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
+      - '**/androidHostTest/**'
+      - '**/androidDeviceTest/**'
   UnusedPrivateMember:
     ignoreAnnotated: ['Preview']
 
 complexity:
   LongParameterList:
     ignoreAnnotated: ['Composable']
+    constructorThreshold: 8
   LongMethod:
     ignoreAnnotated: ['Composable']
+  TooManyFunctions:
+    thresholdInClasses: 12

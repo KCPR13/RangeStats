@@ -273,7 +273,7 @@ private fun SettingsScreenPreview() {
     RangeStatsTheme {
         SettingsScreen(
             model = SettingsUiModel(
-                profile = UserProfile("Operator", UnitSystem.METRIC, 25),
+                profile = UserProfile(displayName = "Operator", units = UnitSystem.METRIC, defaultDistanceMeters = 25),
                 weapons = listOf(
                     SettingsUiModel.WeaponUiModel(
                         "Glock 17",
