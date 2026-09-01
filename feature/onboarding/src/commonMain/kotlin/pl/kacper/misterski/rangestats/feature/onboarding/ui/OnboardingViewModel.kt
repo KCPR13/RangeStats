@@ -40,7 +40,7 @@ class OnboardingViewModel(
             OnboardingAction.IncrementDistance -> incrementDistance()
             OnboardingAction.AddNewWeapon -> navigator.navigateTo(AppRoutes.AddWeapon)
             is OnboardingAction.CameraPermissionResult -> handleCameraResult(action.status)
-            is OnboardingAction.LocationPermissionResult -> handleLocationResult(action.status)
+            is OnboardingAction.LocationPermissionResult -> handleLocationResult()
         }
     }
 
@@ -60,19 +60,21 @@ class OnboardingViewModel(
         }
     }
 
-    private fun handleLocationResult(status: PermissionStatus) {
+    private fun handleLocationResult() {
         advancePage()
     }
 
     private fun incrementDistance() {
         val current = _uiModel.value
-        val newDistance = (current.defaultDistanceMeters + DISTANCE_STEP_IN_METERS).coerceIn(current.minDistance, current.maxDistance)
+        val newDistance = (current.defaultDistanceMeters + DISTANCE_STEP_IN_METERS)
+            .coerceIn(current.minDistance, current.maxDistance)
         _uiModel.update { it.copy(defaultDistanceMeters = newDistance, distanceLabel = "$newDistance m") }
     }
 
     private fun decrementDistance() {
         val current = _uiModel.value
-        val newDistance = (current.defaultDistanceMeters - DISTANCE_STEP_IN_METERS).coerceIn(current.minDistance, current.maxDistance)
+        val newDistance = (current.defaultDistanceMeters - DISTANCE_STEP_IN_METERS)
+            .coerceIn(current.minDistance, current.maxDistance)
         _uiModel.update { it.copy(defaultDistanceMeters = newDistance, distanceLabel = "$newDistance m") }
     }
 
