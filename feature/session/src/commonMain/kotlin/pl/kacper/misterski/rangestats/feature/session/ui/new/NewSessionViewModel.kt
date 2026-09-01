@@ -38,11 +38,14 @@ class NewSessionViewModel(
     }
 
     private fun selectWeapon(weaponName: String) {
-        _uiModel.update { it.copy(selectedWeaponName = weaponName, canStart = it.locationName.isNotBlank() && weaponName.isNotBlank()) }
+        _uiModel.update {
+            it.copy(selectedWeaponName = weaponName, canStart = it.locationName.isNotBlank() && weaponName.isNotBlank())
+        }
     }
 
     private fun changeDistance(delta: Int) {
-        val newDist = (_uiModel.value.distanceMeters + delta).coerceIn(Constants.SESSION_DISTANCE_MIN, Constants.SESSION_DISTANCE_MAX)
+        val newDist = (_uiModel.value.distanceMeters + delta)
+            .coerceIn(Constants.SESSION_DISTANCE_MIN, Constants.SESSION_DISTANCE_MAX)
         _uiModel.update { it.copy(distanceMeters = newDist) }
     }
 

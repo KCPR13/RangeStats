@@ -167,7 +167,12 @@ private fun ActiveSessionHeader(state: ActiveSessionUiModel, onBack: () -> Unit)
                 letterSpacing = LetterSpacing.em12,
             )
             Text(
-                text = stringResource(Res.string.active_session_header_meta_format, state.locationName, state.ammoLabel, state.distanceMeters),
+                text = stringResource(
+                    Res.string.active_session_header_meta_format,
+                    state.locationName,
+                    state.ammoLabel,
+                    state.distanceMeters,
+                ),
                 color = TacTextMuted,
                 fontSize = FontSize.sp11,
             )
@@ -193,7 +198,10 @@ private fun SessionStatsBar(state: ActiveSessionUiModel) {
     ) {
         StatItem(value = state.targetCount.toString(), label = stringResource(Res.string.active_session_stat_targets))
         StatDivider()
-        StatItem(value = stringResource(Res.string.common_percent_format, state.avgScore.toInt()), label = stringResource(Res.string.active_session_stat_avg_score))
+        StatItem(
+            value = stringResource(Res.string.common_percent_format, state.avgScore.toInt()),
+            label = stringResource(Res.string.active_session_stat_avg_score),
+        )
         StatDivider()
         StatItem(value = state.totalHits.toString(), label = stringResource(Res.string.active_session_stat_hits))
         StatDivider()
@@ -298,7 +306,11 @@ private fun TargetRow(target: TargetEntry) {
                 .background(TacBgElevated, RoundedCornerShape(Dimen.dp4)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = stringResource(Res.string.active_session_shot_icon), color = TacTextMuted, fontSize = FontSize.sp16)
+            Text(
+                text = stringResource(Res.string.active_session_shot_icon),
+                color = TacTextMuted,
+                fontSize = FontSize.sp16,
+            )
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(

@@ -23,17 +23,8 @@ fun Session.toUiModel(weapon: Weapon?): SessionSummaryUiModel {
     val maxZoneCount = zones.values.maxOrNull()?.coerceAtLeast(1) ?: 1
     val zoneRows = ZONE_ORDER.map { zone ->
         val count = zones[zone] ?: 0
-        val label = when (zone) {
-            TargetZone.X -> "X"
-            TargetZone.TEN -> "10"
-            TargetZone.NINE -> "9"
-            TargetZone.EIGHT -> "8"
-            TargetZone.SEVEN -> "7"
-            TargetZone.SIX -> "6"
-            TargetZone.MISS -> "✕"
-        }
         SessionSummaryUiModel.ZoneRowUiModel(
-            label = label,
+            label = zone.toLabel(),
             count = count,
             fraction = count.toFloat() / maxZoneCount,
             isMiss = zone == TargetZone.MISS,
@@ -52,4 +43,14 @@ fun Session.toUiModel(weapon: Weapon?): SessionSummaryUiModel {
         targetCount = shots.size,
         zoneRows = zoneRows,
     )
+}
+
+private fun TargetZone.toLabel(): String = when (this) {
+    TargetZone.X -> "X"
+    TargetZone.TEN -> "10"
+    TargetZone.NINE -> "9"
+    TargetZone.EIGHT -> "8"
+    TargetZone.SEVEN -> "7"
+    TargetZone.SIX -> "6"
+    TargetZone.MISS -> "✕"
 }

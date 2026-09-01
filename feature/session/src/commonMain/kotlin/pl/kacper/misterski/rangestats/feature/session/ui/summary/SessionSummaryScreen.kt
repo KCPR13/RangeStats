@@ -149,7 +149,12 @@ private fun SummaryHero(state: SessionSummaryUiModel) {
         )
         Spacer(Modifier.height(Dimen.dp4))
         Text(
-            text = stringResource(Res.string.summary_session_meta_format, state.ammoLabel, state.distanceMeters, state.durationMinutes),
+            text = stringResource(
+                Res.string.summary_session_meta_format,
+                state.ammoLabel,
+                state.distanceMeters,
+                state.durationMinutes,
+            ),
             color = TacTextMuted,
             fontSize = FontSize.sp10,
         )
