@@ -8,6 +8,7 @@ internal fun dragCoefficient(model: BcModel, mach: Double): Double {
     return interpolateCd(table, mach)
 }
 
+@Suppress("ReturnCount")
 private fun interpolateCd(table: List<Pair<Double, Double>>, mach: Double): Double {
     if (mach <= table.first().first) return table.first().second
     if (mach >= table.last().first) return table.last().second

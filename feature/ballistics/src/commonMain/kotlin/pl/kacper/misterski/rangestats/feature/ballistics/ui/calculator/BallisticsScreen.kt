@@ -297,7 +297,11 @@ private fun ResultSection(result: BallisticsUiModel.BallisticsResultUiModel) {
         ) {
             ResultCard(
                 label = stringResource(Res.string.ballistics_result_drop),
-                value = stringResource(result.dropFormatRes, stringResource(result.dropSignRes), result.dropDisplayValue),
+                value = stringResource(
+                    result.dropFormatRes,
+                    stringResource(result.dropSignRes),
+                    result.dropDisplayValue,
+                ),
                 valueColor = if (result.dropAboveLoS) TacGreen else TacRed,
                 modifier = Modifier.weight(1f),
             )

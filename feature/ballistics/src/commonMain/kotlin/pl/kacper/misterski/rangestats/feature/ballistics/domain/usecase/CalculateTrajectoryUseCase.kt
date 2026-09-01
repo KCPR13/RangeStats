@@ -14,6 +14,9 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+//TODO separate file
+private data class TrajectoryPoint(val x: Double, val y: Double, val vx: Double, val vy: Double, val t: Double)
+
 class CalculateTrajectoryUseCase(
     private val ioDispatcher: CoroutineDispatcher,
 ) {
@@ -23,7 +26,7 @@ class CalculateTrajectoryUseCase(
 
         val bcMetric = input.ballisticCoefficient * BC_CONVERSION
         val massKg = input.bulletMassGrains * GRAIN_TO_KG
-        val scopeHeightM = input.scopeHeightMm / 1000.0
+        val scopeHeightM = input.scopeHeightMm / MM_PER_M
 
         val boreAngle = findZeroAngle(
             v0 = input.muzzleVelocityMs,
@@ -61,17 +64,23 @@ class CalculateTrajectoryUseCase(
         zeroRangeM: Double,
         scopeHeightM: Double,
     ): Double {
-        var lo = -0.1
-        var hi = 0.1
-        repeat(60) {
+        var lo = -INITIAL_ANGLE_RANGE_RAD
+        var hi = INITIAL_ANGLE_RANGE_RAD
+        repeat(BISECTION_ITERATIONS) {
             val mid = (lo + hi) / 2.0
-            val y = integrateY(v0, bcMetric, bcModel, mid, zeroRangeM)
-            if (y < scopeHeightM) lo = mid else hi = mid
+            val point = integrate(v0, bcMetric, bcModel, mid, zeroRangeM)
+            if (point.y < scopeHeightM) lo = mid else hi = mid
         }
         return (lo + hi) / 2.0
     }
 
-    private fun integrateY(v0: Double, bcMetric: Double, bcModel: BcModel, angleRad: Double, targetX: Double): Double {
+    private fun integrate(
+        v0: Double,
+        bcMetric: Double,
+        bcModel: BcModel,
+        angleRad: Double,
+        targetX: Double,
+    ): TrajectoryPoint {
         var vx = v0 * cos(angleRad)
         var vy = v0 * sin(angleRad)
         var x = 0.0
@@ -87,7 +96,7 @@ class CalculateTrajectoryUseCase(
             y += vy * DT
             t += DT
         }
-        return y
+        return TrajectoryPoint(x, y, vx, vy, t)
     }
 
     private fun simulate(
@@ -99,28 +108,13 @@ class CalculateTrajectoryUseCase(
         scopeHeightM: Double,
         targetDistanceM: Double,
     ): BallisticsResult {
-        var vx = v0 * cos(boreAngleRad)
-        var vy = v0 * sin(boreAngleRad)
-        var x = 0.0
-        var y = 0.0
-        var t = 0.0
-
-        while (x < targetDistanceM && t < MAX_FLIGHT_SEC) {
-            val v = sqrt(vx * vx + vy * vy)
-            val drag = dragRetardation(v, bcMetric, bcModel)
-            vx -= drag * vx * DT
-            vy -= (drag * vy + GRAVITY) * DT
-            x += vx * DT
-            y += vy * DT
-            t += DT
-        }
-
-        val vFinal = sqrt(vx * vx + vy * vy)
+        val point = integrate(v0, bcMetric, bcModel, boreAngleRad, targetDistanceM)
+        val vFinal = sqrt(point.vx * point.vx + point.vy * point.vy)
         return BallisticsResult(
-            dropMm = (y - scopeHeightM) * 1000.0,
+            dropMm = (point.y - scopeHeightM) * MM_PER_M,
             remainingVelocityMs = vFinal,
             energyJoules = 0.5 * massKg * vFinal * vFinal,
-            timeOfFlightSec = t,
+            timeOfFlightSec = point.t,
         )
     }
 
@@ -139,5 +133,8 @@ class CalculateTrajectoryUseCase(
         private const val MAX_FLIGHT_SEC = 10.0
         private const val SPEED_OF_SOUND = 340.3
         private val DRAG_FORM_FACTOR = PI / 8.0
+        private const val MM_PER_M = 1000.0
+        private const val INITIAL_ANGLE_RANGE_RAD = 0.1
+        private const val BISECTION_ITERATIONS = 60
     }
 }

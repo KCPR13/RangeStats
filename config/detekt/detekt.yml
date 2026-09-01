@@ -11,8 +11,8 @@ style:
     # buildUponDefaultConfig replaces this list wholesale, so the default excludes are repeated
     # here verbatim, plus androidHostTest/androidDeviceTest — this project's AGP 9 source-set
     # names, which detekt's bundled default (still on the old androidTest/androidUnitTest naming)
-    # doesn't know about.
-    excludes:
+    # doesn't know about. Reused (YAML anchor) by other rules with the same gap.
+    excludes: &testSourceSets
       - '**/test/**'
       - '**/androidTest/**'
       - '**/commonTest/**'
@@ -25,12 +25,19 @@ style:
       - '**/androidDeviceTest/**'
   UnusedPrivateMember:
     ignoreAnnotated: ['Preview']
+  ThrowsCount:
+    # A UseCase's validate() throwing one dedicated exception per independent field check (see the
+    # `usecase` skill) is a sequence of guard clauses, not a code smell — this excludes exactly that
+    # shape from the count instead of raising `max` project-wide.
+    excludeGuardClauses: true
 
 complexity:
   LongParameterList:
     ignoreAnnotated: ['Composable']
     constructorThreshold: 8
+    functionThreshold: 8
   LongMethod:
     ignoreAnnotated: ['Composable']
   TooManyFunctions:
     thresholdInClasses: 12
+    excludes: *testSourceSets

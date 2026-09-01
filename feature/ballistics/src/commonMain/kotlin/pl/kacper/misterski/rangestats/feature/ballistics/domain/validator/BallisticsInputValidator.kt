@@ -5,7 +5,7 @@ import pl.kacper.misterski.rangestats.feature.ballistics.domain.model.BcModel
 
 class BallisticsInputValidator {
 
-    @Suppress("LongParameterList")
+    @Suppress("LongParameterList", "ReturnCount")
     fun validate(
         muzzleVelocity: String,
         bulletMass: String,

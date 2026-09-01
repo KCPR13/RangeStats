@@ -9,6 +9,7 @@ class BallisticsInputValidatorTest {
 
     private val validator = BallisticsInputValidator()
 
+    @Suppress("LongParameterList")
     private fun validate(
         muzzleVelocity: String = "800",
         bulletMass: String = "175",
